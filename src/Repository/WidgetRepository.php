@@ -51,8 +51,27 @@ class WidgetRepository implements WidgetRepositoryInterface
      */
     public function getList(PaginationInterface $pagination)
     {
-        // todo
-        return [];
+        $query = [
+            'limit' => $pagination->getLimit(),
+            'offset' => $pagination->getOffset(),
+        ];
+
+        $response = $this->client->requestGet('widgets', $query);
+        $this->checkResponse($response, [200, 204]);
+        $responseData = json_decode((string)$response->getBody(), true);
+
+        if (!isset($responseData['_embedded']['widgets'])) {
+            return [];
+        }
+
+        $widgets = (array)$responseData['_embedded']['widgets'];
+        $widgetsList = [];
+
+        foreach ($widgets as $widgetData) {
+            $widgetsList[] = $this->widgetFactory->fromAPI($widgetData);
+        }
+
+        return $widgetsList;
     }
 
     /**
