@@ -7,6 +7,7 @@ use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Exception;
+use Psr\Http\Message\ResponseInterface;
 
 class WidgetRepository implements WidgetRepositoryInterface
 {
@@ -26,14 +27,15 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @param WidgetInterface $widget
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
-     * @throws \CallbackHunterAPIv2\Exception\ValidateException
+     * @throws Exception\ChangeOfPaidPropertiesException
+     * @throws Exception\Exception
+     * @throws Exception\WidgetValidateException
      */
     public function save(WidgetInterface $widget)
     {
         $response = $this->client->requestPost('widgets', $widget->toApi());
+        $this->checkResponse($response, 201);
         $responseData = json_decode((string)$response->getBody(), true);
-        $this->checkResponse($responseData);
 
         return $this->widgetFactory->fromAPI($responseData);
     }
@@ -41,6 +43,11 @@ class WidgetRepository implements WidgetRepositoryInterface
     /**
      * @param PaginationInterface $pagination
      * @return WidgetInterface[]
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws Exception\ChangeOfPaidPropertiesException
+     * @throws Exception\Exception
+     * @throws Exception\WidgetValidateException
+     *
      */
     public function getList(PaginationInterface $pagination)
     {
@@ -48,24 +55,44 @@ class WidgetRepository implements WidgetRepositoryInterface
         return [];
     }
 
-    private function checkResponse($responseData)
+    /**
+     * @param ResponseInterface $response
+     * @param int|array $statusCodeOk
+     * @throws Exception\ChangeOfPaidPropertiesException
+     * @throws Exception\Exception
+     * @throws Exception\WidgetValidateException
+     */
+    private function checkResponse(ResponseInterface $response, $statusCodeOk)
     {
-        if (!isset($responseData['status'], $responseData['title'])) {
-            throw new Exception\InvalidArgumentException('Error bad response data');
+        $codes = [];
+
+        if (is_array($statusCodeOk)) {
+            $codes = $statusCodeOk;
+        } else {
+            $codes[] = $statusCodeOk;
         }
 
-        $statusCode = (int)$responseData['status'];
-        $msg = $responseData['title'];
+        $statusCode = $response->getStatusCode();
 
-        switch($statusCode) {
-            case (400):
-                throw new Exception\ValidateException($msg, $statusCode);
+        switch(true) {
+            case(in_array($statusCode, $codes, true)):
                 break;
-            case (402):
-                throw new Exception\ValidateException($msg, $statusCode);
+            case ($statusCode === 400):
+                $data = json_decode((string)$response->getBody(), true);
+                throw new Exception\WidgetValidateException(
+                    (isset($data['title']) ? $data['title'] : 'Error'),
+                    $statusCode
+                );
+                break;
+            case ($statusCode === 402):
+                $data = json_decode((string)$response->getBody(), true);
+                throw new Exception\ChangeOfPaidPropertiesException(
+                    (isset($data['title']) ? $data['title'] : 'Error'),
+                    $statusCode
+                );
                 break;
             default:
-                throw new Exception\Exception('Error');
+                throw new Exception\Exception('Error', $statusCode);
         }
     }
 }
