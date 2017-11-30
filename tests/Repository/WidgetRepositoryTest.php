@@ -10,6 +10,13 @@ use Psr\Http\Message\ResponseInterface;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use CallbackHunterAPIv2\ValueObject\Pagination;
+use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
+use CallbackHunterAPIv2\Entity\Widget\Settings\ImagesInterface;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
+use CallbackHunterAPIv2\Type\FileForUploadInterface;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Image;
 
 /**
  * Class WidgetRepositoryTest
@@ -303,8 +310,18 @@ class WidgetRepositoryTest extends TestCase
         'offset' => Pagination::DEFAULT_OFFSET,
     ];
 
-    public function testSave()
+    public function testSaveWithEmptyImages()
     {
+        $image = new Image();
+
+        $images = new Images();
+        $images->setButtonLogo($image);
+        $images->setIconLogoSlider($image);
+        $images->setBackgroundSlider($image);
+
+        $settings = new Settings();
+        $settings->setImages($images);
+
         $this->widget->expects($this->once())
             ->method('toApi')
             ->willReturn($this->defaultWidgetToApi);
@@ -327,6 +344,10 @@ class WidgetRepositoryTest extends TestCase
             ->method('fromAPI')
             ->with($this->defaultSaveResponseBody)
             ->willReturn($expectedWidget);
+
+        $this->widget->expects($this->once())
+            ->method('getSettings')
+            ->willReturn($settings);
 
         $widgetRepository = new WidgetRepository($this->client, $this->widgetFactory);
 
