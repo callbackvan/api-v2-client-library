@@ -4,5 +4,27 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
 interface PositionInterface
 {
+    /**
+     * @return int
+     */
+    public function getX();
 
+    /**
+     * @param int $x
+     *
+     * @return $this
+     */
+    public function setX($x);
+
+    /**
+     * @return int
+     */
+    public function getY();
+
+    /**
+     * @param int $x
+     *
+     * @return $this
+     */
+    public function setY($x);
 }
