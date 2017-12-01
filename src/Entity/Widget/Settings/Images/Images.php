@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Widget\Settings\Images;
+namespace CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 
 class Images
 {

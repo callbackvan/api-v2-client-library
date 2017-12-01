@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Widget\Settings\Channels;
+namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
 class ChannelMobileOnly
 {

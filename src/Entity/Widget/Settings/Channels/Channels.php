@@ -1,9 +1,8 @@
 <?php
 
-namespace Entity\Widget\Settings\Channels;
+namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
-use Entity\Exceptions;
+use CallbackHunterAPIv2\Exception;
 
 class Channels
 {
@@ -133,7 +132,7 @@ class Channels
      * @param string $channel
      * @param string $key
      * @param boolean $value
-     * @throws Exceptions\InvalidArgument
+     * @throws Exception\InvalidArgumentException
      */
     public function setActivity($channel, $key, $value)
     {
@@ -145,14 +144,14 @@ class Channels
                 break;
             case 'isDesktopEnabled':
                 if (!method_exists($obj, 'setIsDesktopEnabled')) {
-                    throw new Exceptions\InvalidArgument(
+                    throw new Exception\InvalidArgumentException(
                         'Changing of "isDesktopEnabled" not available for ' . $channel
                     );
                 }
                 $obj->setIsDesktopEnabled($value);
                 break;
             default:
-                throw new Exceptions\InvalidArgument('Invalid key ' . $key);
+                throw new Exception\InvalidArgumentException('Invalid key ' . $key);
         }
     }
 
@@ -160,7 +159,7 @@ class Channels
      * @param $channel
      *
      * @return Channel|ChannelMobileOnly
-     * @throws Exceptions\InvalidArgument
+     * @throws Exception\InvalidArgumentException
      */
     private function get($channel)
     {
@@ -190,7 +189,7 @@ class Channels
                 $obj = $this->getSkype();
                 break;
             default:
-                throw new Exceptions\InvalidArgument('Unknown channel ' . $channel);
+                throw new Exception\InvalidArgumentException('Unknown channel ' . $channel);
         }
 
         return $obj;
