@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Repository;
+namespace Tests\ValueObject;
 
 use PHPUnit\Framework\TestCase;
 use CallbackHunterAPIv2\ValueObject\Pagination;
 
 /**
  * Class PaginationTest
- * @package Tests\Repository
+ * @package Tests\ValueObject
  * @covers \CallbackHunterAPIv2\ValueObject\Pagination
  */
 class PaginationTest extends TestCase
