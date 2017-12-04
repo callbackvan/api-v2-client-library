@@ -35,7 +35,11 @@ class WidgetRepository implements WidgetRepositoryInterface
      */
     public function save(WidgetInterface $widget)
     {
-        $response = $this->client->requestPost('widgets', $widget->toApi());
+        if ($widget->getUid()) {
+            $response = $this->client->requestPost('widgets/' . $widget->getUid(), $widget->toApi());
+        } else {
+            $response = $this->client->requestPost('widgets', $widget->toApi());
+        }
         $this->checkResponse($response, 201);
         $responseData = json_decode((string)$response->getBody(), true);
 
@@ -132,6 +136,24 @@ class WidgetRepository implements WidgetRepositoryInterface
     }
 
     /**
+     * @param string $uid
+     * @return WidgetInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws Exception\ChangeOfPaidPropertiesException
+     * @throws Exception\Exception
+     * @throws Exception\WidgetValidateException
+     * @throws Exception\ResourceNotFoundException
+     */
+    public function get($uid)
+    {
+        $response = $this->client->requestGet('widgets/' . $uid);
+        $this->checkResponse($response, 200);
+        $responseData = json_decode((string)$response->getBody(), true);
+
+        return $this->widgetFactory->fromAPI($responseData);
+    }
+
+    /**
      * @param ResponseInterface $response
      * @param array|int $statusCodeOk
      * @throws Exception\ChangeOfPaidPropertiesException
@@ -158,14 +180,14 @@ class WidgetRepository implements WidgetRepositoryInterface
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\WidgetValidateException(
                     (isset($data['title']) ? $data['title'] : 'Error'),
-                    $statusCode
+                    (isset($data['invalidParams']) ? (array)$data['invalidParams'] : [])
                 );
                 break;
             case ($statusCode === 402):
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\ChangeOfPaidPropertiesException(
                     (isset($data['title']) ? $data['title'] : 'Error'),
-                    $statusCode
+                    (isset($data['invalidParams']) ? (array)$data['invalidParams'] : [])
                 );
                 break;
             case ($statusCode === 404):
