@@ -4,7 +4,6 @@
   "description": "Official library for APIv2 of CallbackHunter",
   "homepage": "https://callbackhunter.com/",
   "license": "MIT",
-  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Artur Altynbaev",
