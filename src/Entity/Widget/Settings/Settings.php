@@ -69,4 +69,18 @@ class Settings
     {
         return $this->channels;
     }
+
+    /**
+     * @return array
+     */
+    public function toApi()
+    {
+        return [
+            'colors' => $this->colors->toApi(),
+            'position' => $this->position->toApi(),
+            'images' => $this->images->toApi(),
+            'channels' => $this->channels->toApi(),
+        ];
+    }
+
 }

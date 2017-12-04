@@ -2,28 +2,21 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
-class ChannelMobileOnly
+class ChannelMobileOnly extends Channel
 {
     /** @var boolean */
-    private $isMobileEnabled = true;
+    protected $isMobileEnabled = true;
 
-    /**
-     * @return bool
-     */
-    public function isMobileEnabled()
-    {
-        return $this->isMobileEnabled;
-    }
+    /** @var boolean */
+    protected $isDesktopEnabled = false;
 
     /**
      * @param bool $isEnabled
      *
      * @return $this
      */
-    public function setIsMobileEnabled($isEnabled)
+    public function setIsDesktopEnabled($isEnabled)
     {
-        $this->isMobileEnabled = !empty($isEnabled);
-
         return $this;
     }
 }

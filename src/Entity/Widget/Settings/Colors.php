@@ -59,4 +59,14 @@ class Colors implements ColorsInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function toApi()
+    {
+        return [
+            'iconBackground' => $this->getIconBackground(),
+            'backgroundSlider' => $this->getBackgroundSlider(),
+        ];
+    }
 }

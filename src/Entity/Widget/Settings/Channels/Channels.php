@@ -2,9 +2,10 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
+use CallbackHunterAPIv2\Entity\Widget\Settings\ChannelInterface;
 use CallbackHunterAPIv2\Exception;
 
-class Channels
+class Channels implements ChannelInterface
 {
     const CHANNELS_LIST = [
         'callback',
@@ -156,7 +157,7 @@ class Channels
     }
 
     /**
-     * @param $channel
+     * @param string $channel
      *
      * @return Channel|ChannelMobileOnly
      * @throws Exception\InvalidArgumentException
@@ -193,5 +194,22 @@ class Channels
         }
 
         return $obj;
+    }
+
+    /**
+     * @return array
+     */
+    public function toApi()
+    {
+        $result = [];
+
+        foreach (self::CHANNELS_LIST as $cName) {
+            try {
+                $result[$cName] = $this->get($cName)->toApi();
+            } catch (\Exception $e) {
+            }
+        }
+
+        return $result;
     }
 }

@@ -3,7 +3,7 @@
 namespace CallbackHunterAPIv2\Entity\Widget;
 
 
-interface WidgetInterface
+interface WidgetInterface extends BaseEntityInterface
 {
     /**
      * @return string

@@ -2,10 +2,12 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
+use CallbackHunterAPIv2\Entity\Widget\Settings\ChannelInterface;
+
 /**
  * Class Channel
  */
-class Channel
+class Channel implements ChannelInterface
 {
     /**
      * Отображать ли канал связи на десктопе
@@ -59,5 +61,16 @@ class Channel
         $this->isDesktopEnabled = !empty($isEnabled);
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toApi()
+    {
+        return [
+            'isDesktopEnabled' => $this->isDesktopEnabled(),
+            'isMobileEnabled' => $this->isMobileEnabled(),
+        ];
     }
 }

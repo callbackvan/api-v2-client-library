@@ -58,4 +58,15 @@ class Position implements PositionInterface
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function toApi()
+    {
+        return [
+            'x' => $this->getX(),
+            'y' => $this->getY(),
+        ];
+    }
 }

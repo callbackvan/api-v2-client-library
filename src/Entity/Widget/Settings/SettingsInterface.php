@@ -2,11 +2,9 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\PositionInterface;
-use CallbackHunterAPIv2\Entity\Widget\Settings\ColorsInterface;
-use CallbackHunterAPIv2\Entity\Widget\Settings\ImagesInterface;
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
 
-interface SettingsInterface
+interface SettingsInterface extends BaseEntityInterface
 {
     /**
      * @return PositionInterface

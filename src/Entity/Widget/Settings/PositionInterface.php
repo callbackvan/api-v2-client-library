@@ -2,7 +2,9 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
-interface PositionInterface
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+
+interface PositionInterface extends BaseEntityInterface
 {
     /**
      * @return int

@@ -144,4 +144,16 @@ class Widget implements WidgetInterface
         return $this->settings;
     }
 
+    /**
+     * @return array
+     */
+    public function toApi()
+    {
+        return [
+            'isActive' => $this->isActive(),
+            'site' => $this->getSite(),
+            'settings' => $this->settings-> toApi(),
+        ];
+    }
+
 }
