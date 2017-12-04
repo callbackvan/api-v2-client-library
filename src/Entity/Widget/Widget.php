@@ -43,6 +43,14 @@ class Widget implements WidgetInterface
     private $settings;
 
     /**
+     * @param Settings\Settings $settings
+     */
+    public function __construct(Settings\Settings $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    /**
      * @return string
      */
     public function getUid()
