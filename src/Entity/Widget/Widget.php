@@ -152,7 +152,7 @@ class Widget implements WidgetInterface
         return [
             'isActive' => $this->isActive(),
             'site' => $this->getSite(),
-            'settings' => $this->settings-> toApi(),
+            'settings' => $this->settings->toApi(),
         ];
     }
 

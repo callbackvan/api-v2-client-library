@@ -20,4 +20,9 @@ interface SettingsInterface extends BaseEntityInterface
      * @return ImagesInterface
      */
     public function getImages();
+
+    /**
+     * @return ChannelInterface
+     */
+    public function getChannels();
 }
