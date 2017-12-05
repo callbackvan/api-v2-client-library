@@ -143,6 +143,11 @@ class WidgetRepositoryTest extends TestCase
     }
 
     /**
+     * @param $uid
+     * @param $pathPart
+     * @param $files
+     * @param $responseBody
+     * @param $method
      * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::save
      * @dataProvider widgetDataProvider
      */

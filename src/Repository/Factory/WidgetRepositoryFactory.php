@@ -2,10 +2,9 @@
 
 namespace CallbackHunterAPIv2\Repository\Factory;
 
-use CallbackHunterAPIv2\Client;
-use CallbackHunterAPIv2\ValueObject\Credentials;
+use CallbackHunterAPIv2\ClientFactory;
 use CallbackHunterAPIv2\Repository\WidgetRepository;
-use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
+use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 
 /**
  * Class WidgetRepositoryFactory
@@ -15,17 +14,32 @@ use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
  */
 class WidgetRepositoryFactory
 {
+    /** @var ClientFactory  */
+    private $clientFactory;
+
+    /** @var WidgetFactoryInterface  */
+    private $widgetFactory;
+
+    /**
+     * WidgetRepositoryFactory constructor.
+     * @param ClientFactory $clientFactory
+     * @param WidgetFactoryInterface $widgetFactory
+     */
+    public function __construct(ClientFactory $clientFactory, WidgetFactoryInterface $widgetFactory)
+    {
+        $this->clientFactory = $clientFactory;
+        $this->widgetFactory = $widgetFactory;
+    }
+
     /**
      * @param integer $userId
      * @param string $key
      * @return WidgetRepository
      */
-    public static function make($userId, $key)
+    public function make($userId, $key)
     {
-        $credentials = new Credentials($userId, $key);
-        $client = new Client(new \GuzzleHttp\Client, $credentials);
-        $widgetFactory = new WidgetFactory();
+        $client = $this->clientFactory->makeWithAPICredentials($userId, $key);
 
-        return new WidgetRepository($client, $widgetFactory);
+        return new WidgetRepository($client, $this->widgetFactory);
     }
 }

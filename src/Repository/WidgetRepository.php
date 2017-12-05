@@ -75,7 +75,6 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @throws Exception\Exception
      * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
-     *
      */
     public function getList(PaginationInterface $pagination)
     {
@@ -178,6 +177,11 @@ class WidgetRepository implements WidgetRepositoryInterface
     /**
      * @param array $images
      * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws Exception\ChangeOfPaidPropertiesException
+     * @throws Exception\Exception
+     * @throws Exception\WidgetValidateException
+     * @throws Exception\ResourceNotFoundException
      */
     private function uploadImages(array $images)
     {
