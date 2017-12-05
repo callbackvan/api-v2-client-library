@@ -34,7 +34,7 @@ class Pagination implements PaginationInterface
     public function setOffset($offset)
     {
         $this->checkNumber($offset, self::MIN_OFFSET);
-        $this->offset = $offset;
+        $this->offset = (int)$offset;
     }
 
     /**
@@ -53,7 +53,7 @@ class Pagination implements PaginationInterface
     public function setLimit($limit)
     {
         $this->checkNumber($limit, self::MIN_LIMIT, self::MAX_LIMIT);
-        $this->limit = $limit;
+        $this->limit = (int)$limit;
     }
 
     /**

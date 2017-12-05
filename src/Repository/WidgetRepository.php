@@ -18,6 +18,9 @@ class WidgetRepository implements WidgetRepositoryInterface
     /** @var WidgetFactoryInterface  */
     private $widgetFactory;
 
+    /** @var WidgetInterface  */
+    private $resultWidget;
+
     public function __construct(ClientInterface $client, WidgetFactoryInterface $widgetFactory)
     {
         $this->client = $client;
@@ -25,6 +28,8 @@ class WidgetRepository implements WidgetRepositoryInterface
     }
 
     /**
+     * Создание, изменение виджета
+     *
      * @param WidgetInterface $widget
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -35,6 +40,8 @@ class WidgetRepository implements WidgetRepositoryInterface
      */
     public function save(WidgetInterface $widget)
     {
+        $this->resultWidget = null;
+
         if ($widget->getUid()) {
             $response = $this->client->requestPost('widgets/' . $widget->getUid(), $widget->toApi());
         } else {
@@ -43,64 +50,24 @@ class WidgetRepository implements WidgetRepositoryInterface
         $this->checkResponse($response, 201);
         $responseData = json_decode((string)$response->getBody(), true);
 
-        $resultWidget = $this->widgetFactory->fromAPI($responseData);
+        $this->resultWidget = $this->widgetFactory->fromAPI($responseData);
 
         $images = $widget->getSettings()->getImages();
-        $path = sprintf('/widgets/%s/settings/images/', $resultWidget->getUid());
-        $imageNames = [];
-
         $imagesForUpload = [
             'buttonLogo' => $images->getButtonLogo(),
             'iconLogoSlider' => $images->getIconLogoSlider(),
             'backgroundSlider' => $images->getBackgroundSlider(),
         ];
 
-        /**
-         * @var string $pathPart
-         * @var AbstractImage $image
-         */
-        foreach ($imagesForUpload as $pathPart => $image) {
-            $data = $image->getForUpload();
+        $imageNames = $this->uploadImages($imagesForUpload);
+        $this->setResultWidgetImageNames($imageNames);
 
-            if ($data === null) {
-                continue;
-            }
-
-            $response = $this->client->uploadFile($path . $pathPart, $data);
-            $this->checkResponse($response, 201);
-
-            $responseData = json_decode((string)$response->getBody(), true);
-
-            if (isset($responseData['name'], $responseData['value'])) {
-                $imageNames[$responseData['name']] = $responseData['value'];
-            }
-        }
-
-        if (isset($imageNames['displayName'])) {
-            $resultWidget->getSettings()
-                ->getImages()
-                ->getButtonLogo()
-                ->setName($imageNames['displayName']);
-        }
-
-        if (isset($imageNames['iconLogoSlider'])) {
-            $resultWidget->getSettings()
-                ->getImages()
-                ->getIconLogoSlider()
-                ->setName($imageNames['iconLogoSlider']);
-        }
-
-        if (isset($imageNames['backgroundSlider'])) {
-            $resultWidget->getSettings()
-                ->getImages()
-                ->getBackgroundSlider()
-                ->setName($imageNames['backgroundSlider']);
-        }
-
-        return $resultWidget;
+        return $this->resultWidget;
     }
 
     /**
+     * Получение списка виджетов
+     *
      * @param PaginationInterface $pagination
      * @return WidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -136,6 +103,8 @@ class WidgetRepository implements WidgetRepositoryInterface
     }
 
     /**
+     * Получение информации о виджете
+     *
      * @param string $uid
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -198,7 +167,71 @@ class WidgetRepository implements WidgetRepositoryInterface
                 );
                 break;
             default:
-                throw new Exception\Exception('Error', $statusCode);
+                $data = json_decode((string)$response->getBody(), true);
+                throw new Exception\Exception(
+                    (isset($data['title']) ? $data['title'] : 'Error'),
+                    $statusCode
+                );
+        }
+    }
+
+    /**
+     * @param array $images
+     * @return array
+     */
+    private function uploadImages(array $images)
+    {
+        $path = sprintf('/widgets/%s/settings/images/', $this->resultWidget->getUid());
+        $imageNames = [];
+
+        /**
+         * @var string $pathPart
+         * @var AbstractImage $image
+         */
+        foreach ($images as $pathPart => $image) {
+            $data = $image->getForUpload();
+
+            if ($data === null) {
+                continue;
+            }
+
+            $response = $this->client->uploadFile($path . $pathPart, $data);
+            $this->checkResponse($response, 201);
+
+            $responseData = json_decode((string)$response->getBody(), true);
+
+            if (isset($responseData['name'], $responseData['value'])) {
+                $imageNames[$responseData['name']] = $responseData['value'];
+            }
+        }
+
+        return $imageNames;
+    }
+
+    /**
+     * @param $imageNames
+     */
+    private function setResultWidgetImageNames($imageNames)
+    {
+        if (isset($imageNames['displayName'])) {
+            $this->resultWidget->getSettings()
+                ->getImages()
+                ->getButtonLogo()
+                ->setName($imageNames['displayName']);
+        }
+
+        if (isset($imageNames['iconLogoSlider'])) {
+            $this->resultWidget->getSettings()
+                ->getImages()
+                ->getIconLogoSlider()
+                ->setName($imageNames['iconLogoSlider']);
+        }
+
+        if (isset($imageNames['backgroundSlider'])) {
+            $this->resultWidget->getSettings()
+                ->getImages()
+                ->getBackgroundSlider()
+                ->setName($imageNames['backgroundSlider']);
         }
     }
 }

@@ -8,13 +8,16 @@ use CallbackHunterAPIv2\ValueObject\Pagination;
 /**
  * Class PaginationTest
  * @package Tests\ValueObject
- * @covers \CallbackHunterAPIv2\ValueObject\Pagination
  */
 class PaginationTest extends TestCase
 {
     /** @var Pagination  */
     private $pagination;
 
+    /**
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::setOffset
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::getOffset
+     */
     public function testSetOffset()
     {
         $newOffset = 5;
@@ -23,6 +26,11 @@ class PaginationTest extends TestCase
         $this->assertEquals($newOffset, $this->pagination->getOffset());
     }
 
+    /**
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::setLimit
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::getLimit
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::checkNumber
+     */
     public function testSetLimit()
     {
         $newLimit = 15;
@@ -32,6 +40,8 @@ class PaginationTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::setLimit
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::checkNumber
      * @expectedException \CallbackHunterAPIv2\Exception\ValidateException
      */
     public function testSetLimitThrowValidateExceptionWithParamGreaterMaxLimit()
@@ -41,12 +51,24 @@ class PaginationTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::setLimit
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::checkNumber
      * @expectedException \CallbackHunterAPIv2\Exception\ValidateException
      */
     public function testSetLimitThrowValidateExceptionWithParamLessMinLimit()
     {
         $number = Pagination::MIN_LIMIT - 1;
         $this->pagination->setLimit($number);
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\ValueObject\Pagination::setOffset
+     * @expectedException \CallbackHunterAPIv2\Exception\ValidateException
+     */
+    public function testSetOffsetThrowValidateExceptionWithParamLessMinLimit()
+    {
+        $number = Pagination::MIN_LIMIT - 1;
+        $this->pagination->setOffset($number);
     }
 
     protected function setUp()
