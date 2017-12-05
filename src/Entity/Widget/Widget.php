@@ -43,9 +43,9 @@ class Widget implements WidgetInterface
     private $settings;
 
     /**
-     * @param Settings\Settings $settings
+     * @param Settings\SettingsInterface $settings
      */
-    public function __construct(Settings\Settings $settings)
+    public function __construct(Settings\SettingsInterface $settings)
     {
         $this->settings = $settings;
     }
@@ -61,11 +61,13 @@ class Widget implements WidgetInterface
     /**
      * @param string $uid
      *
-     * @return void
+     * @return $this
      */
     public function setUid($uid)
     {
         $this->uid = (string)$uid;
+
+        return $this;
     }
 
     /**
@@ -79,11 +81,13 @@ class Widget implements WidgetInterface
     /**
      * @param string $code
      *
-     * @return void
+     * @return $this;
      */
     public function setCode($code)
     {
         $this->uid = (string)$code;
+
+        return $this;
     }
 
     /**
@@ -111,11 +115,13 @@ class Widget implements WidgetInterface
     /**
      * @param string $site
      *
-     * @return void
+     * @return $this;
      */
     public function setSite($site)
     {
         $this->site = (string)$site;
+
+        return $this;
     }
 
     /**
@@ -129,11 +135,13 @@ class Widget implements WidgetInterface
     /**
      * @param boolean $isActive
      *
-     * @return void
+     * @return $this
      */
     public function setIsActive($isActive)
     {
         $this->isActive = (bool)$isActive;
+
+        return $this;
     }
 
     /**
