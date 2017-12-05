@@ -97,7 +97,7 @@ class Widget implements WidgetInterface
             return self::WIDGET_LINK_PREFIX . $this->code;
         }
 
-        return null;
+        return '';
     }
 
     /**

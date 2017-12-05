@@ -5,13 +5,12 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
-class Settings
+class Settings implements SettingsInterface
 {
+    /** @var Colors */
     private $colors;
 
-    /**
-     * @var Position
-     */
+    /** @var Position */
     private $position;
 
     /** @var Images\Images */
@@ -82,5 +81,4 @@ class Settings
             'channels' => $this->channels->toApi(),
         ];
     }
-
 }
