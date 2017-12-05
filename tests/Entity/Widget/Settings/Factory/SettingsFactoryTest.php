@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Channels\Factory;
+namespace Tests\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory;
@@ -154,3 +154,4 @@ class SettingsFactoryTest extends TestCase
         );
     }
 }
+
