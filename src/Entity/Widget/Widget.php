@@ -6,7 +6,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings;
 
 class Widget implements WidgetInterface
 {
-    const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js?hunter_code=';
+    const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js';
 
     /**
      * Идентификатор виджета
@@ -75,7 +75,7 @@ class Widget implements WidgetInterface
      */
     public function getCode()
     {
-        return $this->uid;
+        return $this->code;
     }
 
     /**
@@ -85,7 +85,7 @@ class Widget implements WidgetInterface
      */
     public function setCode($code)
     {
-        $this->uid = (string)$code;
+        $this->code = (string)$code;
 
         return $this;
     }
@@ -97,11 +97,13 @@ class Widget implements WidgetInterface
      */
     public function getLink()
     {
+        $link = self::WIDGET_LINK_PREFIX;
+
         if (!empty($this->code)) {
-            return self::WIDGET_LINK_PREFIX . $this->code;
+            $link .= '?hunter_code=' . $this->code;
         }
 
-        return '';
+        return $link;
     }
 
     /**
@@ -158,6 +160,7 @@ class Widget implements WidgetInterface
     public function toApi()
     {
         return [
+            'uid' => $this->getUid(),
             'isActive' => $this->isActive(),
             'site' => $this->getSite(),
             'settings' => $this->settings->toApi(),
