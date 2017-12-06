@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class WidgetFactoryTest extends TestCase
 {
-
     /** @var WidgetFactory */
     private $widgetFactory;
 
@@ -20,7 +19,7 @@ class WidgetFactoryTest extends TestCase
     private $widgetDataSample;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\WidgetFactory::fromApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::fromApi()
      */
     public function testFromApi()
     {

@@ -6,17 +6,17 @@ use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
 
 class Images implements BaseEntityInterface
 {
-    /** @var string */
+    /** @var ButtonLogoImage */
     private $buttonLogo;
 
-    /** @var string */
+    /** @var IconLogoSliderImage */
     private $iconLogoSlider;
 
-    /** @var string */
+    /** @var BackgroundSliderImage */
     private $backgroundSlider;
 
     /**
-     * @return string
+     * @return ButtonLogoImage
      */
     public function getButtonLogo()
     {
@@ -24,7 +24,7 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @param string $buttonLogo
+     * @param ButtonLogoImage $buttonLogo
      *
      * @return $this
      */
@@ -36,7 +36,7 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @return string
+     * @return IconLogoSliderImage
      */
     public function getIconLogoSlider()
     {
@@ -44,7 +44,7 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @param string $iconLogoSlider
+     * @param IconLogoSliderImage $iconLogoSlider
      *
      * @return $this
      */
@@ -56,7 +56,7 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @return string
+     * @return BackgroundSliderImage
      */
     public function getBackgroundSlider()
     {
@@ -64,7 +64,7 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @param string $backgroundSlider
+     * @param BackgroundSliderImage $backgroundSlider
      *
      * @return $this
      */
@@ -80,10 +80,16 @@ class Images implements BaseEntityInterface
      */
     public function toApi()
     {
-        return [
-            'buttonLogo'       => $this->getButtonLogo(),
-            'iconLogoSlider'   => $this->getIconLogoSlider(),
-            'backgroundSlider' => $this->getBackgroundSlider(),
-        ];
+        $logos = ['buttonLogo', 'iconLogoSlider', 'backgroundSlider'];
+        $res = [];
+
+        foreach ($logos as $logo) {
+            $logoObj = $this->{'get' . ucfirst($logo)}();
+            if (is_object($logoObj) && method_exists($logoObj, 'getName')) {
+                $res[$logo] = (string)$logoObj->getName();
+            }
+        }
+
+        return $res;
     }
 }

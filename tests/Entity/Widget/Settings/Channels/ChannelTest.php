@@ -17,10 +17,10 @@ class ChannelTest extends TestCase
     public function testIsMobileEnabled()
     {
         $this->channel->setIsMobileEnabled(true);
-        $this->assertSame(true, $this->channel->isMobileEnabled());
+        $this->assertTrue(true, $this->channel->isMobileEnabled());
 
         $this->channel->setIsMobileEnabled(false);
-        $this->assertSame(false, $this->channel->isMobileEnabled());
+        $this->assertFalse(false, $this->channel->isMobileEnabled());
     }
 
     /**
@@ -30,10 +30,10 @@ class ChannelTest extends TestCase
     public function testIsDesktopEnabled()
     {
         $this->channel->setIsDesktopEnabled(true);
-        $this->assertSame(true, $this->channel->isDesktopEnabled());
+        $this->assertTrue(true, $this->channel->isDesktopEnabled());
 
         $this->channel->setIsDesktopEnabled(false);
-        $this->assertSame(false, $this->channel->isDesktopEnabled());
+        $this->assertFalse(false, $this->channel->isDesktopEnabled());
     }
 
     /**

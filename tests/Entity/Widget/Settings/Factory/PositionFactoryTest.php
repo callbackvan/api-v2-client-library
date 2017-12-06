@@ -23,7 +23,7 @@ class PositionFactoryTest extends TestCase
         $this->assertInstanceOf(Position::class, $response);
 
         $expected = new Position();
-        $expected->setX((int)$this->example['x'])->setY((int)$this->example['y']);
+        $expected->setX($this->example['x'])->setY($this->example['y']);
 
         $this->assertEquals($expected, $response);
     }

@@ -67,7 +67,9 @@ class ChannelsFactoryTest extends TestCase
             $fromApi[$cName] = [];
 
             $localRandomPropNames = $randomPropNames;
-            for ($j = 0; $j < count(self::AVAILABLE_PROPERTIES) ; $j++) {
+            $max = count(self::AVAILABLE_PROPERTIES);
+
+            for ($j = 0; $j < $max ; $j++) {
                 shuffle($localRandomPropNames);
                 $prop = array_shift($localRandomPropNames);
                 if ($prop !== $unknownPropName) {
