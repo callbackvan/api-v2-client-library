@@ -3,55 +3,10 @@
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
-use \GuzzleHttp\Psr7;
 
 class ImagesFactory implements ImagesFactoryInterface
 {
     const NAMESPACE_FOR_IMG = '\CallbackHunterAPIv2\Entity\Widget\Settings\Images';
-
-    /**
-     * @param string $pathToFile
-     *
-     * @return Psr7\Stream
-     */
-    protected function createStream($pathToFile)
-    {
-        $stream = null;
-
-        if (!is_file($pathToFile) || !is_readable($pathToFile)) {
-            return $stream;
-        }
-
-        try {
-            $stream = Psr7\stream_for(fopen($pathToFile, 'rb'));
-        } catch (\Exception $e) {
-        }
-
-        return $stream;
-    }
-
-    /**
-     * @param string $imageType buttonLogo|iconLogoSlider|backgroundSlider
-     * @param string $pathToFile
-     *
-     * @return Images\AbstractImage|null
-     */
-    public function createImageOfTypeAndPath($imageType, $pathToFile)
-    {
-        $imgObj = $this->createImageOfType($imageType);
-
-        if (null === $imgObj) {
-            return null;
-        }
-
-        $fileStream = $this->createStream($pathToFile);
-
-        if (null !== $fileStream) {
-            $imgObj->setForUpload($fileStream);
-        }
-
-        return $imgObj;
-    }
 
     /**
      * @param string $imageType
