@@ -57,4 +57,14 @@ interface WidgetInterface extends BaseEntityInterface
      * @return Settings\SettingsInterface
      */
     public function getSettings();
+
+    /**
+     * @return boolean
+     */
+    public function isNew();
+
+    /**
+     * @return array
+     */
+    public function toApi();
 }
