@@ -16,7 +16,6 @@ class ChannelsFactory implements ChannelsFactoryInterface
     public function fromAPI(array $data)
     {
         $availableChannels = Channels::CHANNELS_LIST;
-        $availableProperties = ['isDesktopEnabled', 'isMobileEnabled'];
 
         foreach ($availableChannels as $cName) {
             $availableChannels[$cName] = ($cName === 'viber') ? new ChannelMobileOnly() : new Channel();
@@ -27,9 +26,11 @@ class ChannelsFactory implements ChannelsFactoryInterface
                 continue;
             }
 
+            /** @var $data bool[][][] */
             foreach ($data[$cName] as $k => $v) {
-                if (in_array($k, $availableProperties, true)) {
-                    $cObj->{'set'.ucfirst($k)}($v);
+                $method = 'set'.ucfirst($k);
+                if (is_callable([$cObj, $method])) {
+                    $cObj->{$method}($v);
                 }
             }
         }
