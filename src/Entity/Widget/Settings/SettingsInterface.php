@@ -2,24 +2,28 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\PositionInterface;
-use CallbackHunterAPIv2\Entity\Widget\Settings\ColorsInterface;
-use CallbackHunterAPIv2\Entity\Widget\Settings\ImagesInterface;
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 
-interface SettingsInterface
+interface SettingsInterface extends BaseEntityInterface
 {
     /**
-     * @return PositionInterface
+     * @return Position
      */
     public function getPosition();
 
     /**
-     * @return ColorsInterface
+     * @return Colors
      */
     public function getColors();
 
     /**
-     * @return ImagesInterface
+     * @return Images\Images
      */
     public function getImages();
+
+    /**
+     * @return Channels
+     */
+    public function getChannels();
 }

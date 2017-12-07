@@ -2,8 +2,7 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-
-interface WidgetInterface
+interface WidgetInterface extends BaseEntityInterface
 {
     /**
      * @return string
@@ -15,8 +14,8 @@ interface WidgetInterface
      * @return void
      */
     public function setUid($uid);
-    /**
 
+    /**
      * @return string
      */
     public function getCode();
@@ -58,11 +57,6 @@ interface WidgetInterface
      * @return Settings\SettingsInterface
      */
     public function getSettings();
-
-    /**
-     * @return boolean
-     */
-    public function isNew();
 
     /**
      * @return array

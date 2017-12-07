@@ -1,0 +1,121 @@
+<?php
+
+namespace Tests\Entity\Widget;
+
+use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Widget;
+use PHPUnit\Framework\TestCase;
+
+class WidgetTest extends TestCase
+{
+    /** @var Widget */
+    private $entity;
+    /** @var array */
+    private $example;
+    /** @var Settings */
+    private $settings;
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setIsActive
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::isActive
+     */
+    public function testIsActive()
+    {
+        $this->entity->setIsActive(true);
+        $this->assertTrue($this->entity->isActive());
+
+        $this->entity->setIsActive(false);
+        $this->assertFalse($this->entity->isActive());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getCode()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setCode()
+     */
+    public function testCode()
+    {
+        $this->entity->setCode($this->example['code']);
+        $this->assertSame($this->example['code'], $this->entity->getCode());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getUid()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setUid()
+     */
+    public function testUid()
+    {
+        $this->entity->setUid($this->example['uid']);
+        $this->assertSame($this->example['uid'], $this->entity->getUid());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getSite()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setSite()
+     */
+    public function testSite()
+    {
+        $this->entity->setSite($this->example['site']);
+        $this->assertSame($this->example['site'], $this->entity->getSite());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getSettings()
+     */
+    public function testGetSettings()
+    {
+        $this->assertSame($this->settings, $this->entity->getSettings());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getLink()
+     */
+    public function testGetLink()
+    {
+        $expected = Widget::WIDGET_LINK_PREFIX . '?hunter_code=' . $this->example['code'];
+        $this->entity->setCode($this->example['code']);
+        $this->assertSame($expected, $this->entity->getLink());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::toApi()
+     */
+    public function testToApi()
+    {
+        $expected = [
+            'uid' => $this->example['uid'],
+            'isActive' => $this->example['isActive'],
+            'site' => $this->example['site'],
+            'settings' => null
+        ];
+
+        $this->entity->setSite($expected['site']);
+        $this->entity->setUid($expected['uid']);
+        $this->entity->setIsActive($expected['isActive']);
+        $this->entity->setCode($this->example['code']);
+
+        $this->settings
+            ->expects($this->once())
+            ->method('toApi')
+            ->willReturn($expected['settings']);
+
+        $this->assertSame($expected, $this->entity->toApi());
+    }
+
+    /**
+     * Sets up the fixture, for example, open a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->example = [
+            'uid' => '123f6bcd4621d373cade4e832627b4f6',
+            'isActive' => true,
+            'site'     => 'example.com',
+            'code'     => 'd9729xcv74992cc3482b350163a1a010',
+        ];
+
+        $this->settings = $this->createMock(Settings::class);
+        $this->entity = new Widget($this->settings);
+    }
+}
