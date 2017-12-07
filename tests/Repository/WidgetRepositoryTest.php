@@ -10,8 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use CallbackHunterAPIv2\ValueObject\Pagination;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
-use CallbackHunterAPIv2\Entity\Widget\Settings\ImagesInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Type\FileForUploadInterface;
 
@@ -100,7 +100,7 @@ class WidgetRepositoryTest extends TestCase
             ->method('getSettings')
             ->willReturn($settings);
 
-        $images = $this->createMock(ImagesInterface::class);
+        $images = $this->createMock(Images::class);
 
         $settings->expects($this->once())
             ->method('getImages')
@@ -190,7 +190,7 @@ class WidgetRepositoryTest extends TestCase
             ->method('getSettings')
             ->willReturn($settings);
 
-        $images = $this->createMock(ImagesInterface::class);
+        $images = $this->createMock(Images::class);
 
         $settings->expects($this->once())
             ->method('getImages')
@@ -263,7 +263,7 @@ class WidgetRepositoryTest extends TestCase
             ->method('getSettings')
             ->willReturn($resultSettings);
 
-        $resultImages = $this->createMock(ImagesInterface::class);
+        $resultImages = $this->createMock(Images::class);
 
         $resultSettings->expects($this->once())
             ->method('getImages')
