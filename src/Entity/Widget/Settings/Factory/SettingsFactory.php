@@ -6,7 +6,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 
-class SettingsFactory implements SettingsFactoryInterface
+class SettingsFactory
 {
     /**
      * @var ColorsFactory

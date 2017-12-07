@@ -2,11 +2,12 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory;
 
+use CallbackHunterAPIv2\Entity\Widget\Factory\BaseFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 
-class ChannelsFactory implements ChannelsFactoryInterface
+class ChannelsFactory implements BaseFactoryInterface
 {
     /**
      * @param array $data

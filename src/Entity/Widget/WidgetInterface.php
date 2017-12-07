@@ -2,7 +2,6 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-
 interface WidgetInterface extends BaseEntityInterface
 {
     /**

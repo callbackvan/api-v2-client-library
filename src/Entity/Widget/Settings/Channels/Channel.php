@@ -2,12 +2,12 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\ChannelInterface;
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
 
 /**
  * Class Channel
  */
-class Channel implements ChannelInterface
+class Channel implements BaseEntityInterface
 {
     /**
      * Отображать ли канал связи на десктопе

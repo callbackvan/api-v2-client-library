@@ -2,10 +2,10 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\ChannelInterface;
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
 use CallbackHunterAPIv2\Exception;
 
-class Channels implements ChannelInterface
+class Channels implements BaseEntityInterface
 {
     const CHANNELS_LIST = [
         'callback',

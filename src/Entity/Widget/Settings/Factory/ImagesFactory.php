@@ -2,9 +2,10 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 
+use CallbackHunterAPIv2\Entity\Widget\Factory\BaseFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 
-class ImagesFactory implements ImagesFactoryInterface
+class ImagesFactory implements BaseFactoryInterface
 {
     const NAMESPACE_FOR_IMG = '\CallbackHunterAPIv2\Entity\Widget\Settings\Images';
 

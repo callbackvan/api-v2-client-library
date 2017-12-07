@@ -2,12 +2,14 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+
 /**
  * Class Position
  *
  * Позиционирование элемента
  */
-class Position implements PositionInterface
+class Position implements BaseEntityInterface
 {
     /**
      * @var int

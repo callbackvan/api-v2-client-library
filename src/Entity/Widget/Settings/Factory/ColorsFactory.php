@@ -2,14 +2,15 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 
+use CallbackHunterAPIv2\Entity\Widget\Factory\BaseFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings;
 
-class ColorsFactory implements ColorsFactoryInterface
+class ColorsFactory implements BaseFactoryInterface
 {
     /**
      * @param array $data
      *
-     * @return Settings\ColorsInterface
+     * @return Settings\Colors
      */
     public function fromAPI(array $data)
     {

@@ -2,13 +2,10 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Factory;
 
-use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
-
-interface WidgetFactoryInterface
+interface BaseFactoryInterface
 {
     /**
      * @param array $data
-     * @return WidgetInterface
      */
     public function fromAPI(array $data);
 }

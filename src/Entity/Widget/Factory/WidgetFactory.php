@@ -7,7 +7,7 @@ use CallbackHunterAPIv2\Entity\Widget\Widget;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 
 
-class WidgetFactory implements WidgetFactoryInterface
+class WidgetFactory implements BaseFactoryInterface
 {
     /**
      * @var SettingsFactory

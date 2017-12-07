@@ -3,26 +3,27 @@
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
 use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 
 interface SettingsInterface extends BaseEntityInterface
 {
     /**
-     * @return PositionInterface
+     * @return Position
      */
     public function getPosition();
 
     /**
-     * @return ColorsInterface
+     * @return Colors
      */
     public function getColors();
 
     /**
-     * @return ImagesInterface
+     * @return Images\Images
      */
     public function getImages();
 
     /**
-     * @return ChannelInterface
+     * @return Channels
      */
     public function getChannels();
 }

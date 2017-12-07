@@ -2,12 +2,14 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+
 /**
  * Class Colors
  *
  * Цвета для элементов виджета
  */
-class Colors implements ColorsInterface
+class Colors implements BaseEntityInterface
 {
     /**
      * @var string
