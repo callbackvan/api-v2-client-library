@@ -14,7 +14,8 @@
     "php": ">=5.6",
     "guzzlehttp/guzzle": "^6.3",
     "guzzlehttp/psr7": "^1.4",
-    "callbackhunter/apiv2client": "*@dev"
+    "callbackhunter/apiv2client": "*@dev",
+    "hoa/math": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.0",
