@@ -33,7 +33,7 @@ class WidgetFactoryTest extends TestCase
 
         $expected = (new Widget\Widget($settings))
             ->setUid($this->widgetDataSample['uid'])
-            ->setIsActive($this->widgetDataSample['uid'])
+            ->setIsActive($this->widgetDataSample['isActive'])
             ->setSite($this->widgetDataSample['site'])
             ->setCode($this->widgetDataSample['code']);
 
