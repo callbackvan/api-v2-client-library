@@ -5,6 +5,7 @@ namespace Tests\Entity\Widget\Settings\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
+use Hoa\Math\Combinatorics\Combination\CartesianProduct;
 use PHPUnit\Framework\TestCase;
 
 class ChannelsTest extends TestCase
@@ -17,76 +18,188 @@ class ChannelsTest extends TestCase
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::get()
+     * @param string $channelName
+     *
+     * @dataProvider provideChannelsList
      */
-    public function testGet()
+    public function testGet($channelName)
     {
+        $this->invokeMethod($this->channels, 'get', [$channelName]);
+    }
+
+    public function provideChannelsList()
+    {
+        $res = [];
         foreach (Channels::CHANNELS_LIST as $channelName) {
-            $this->invokeMethod($this->channels, 'get', [$channelName]);
+            $res[] = [$channelName];
         }
+
+        return $res;
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::setActivity()
+     *
+     * @param string $channelName
+     * @param string $method
+     * @param bool $status
+     *
+     * @dataProvider provideSetActivity
      */
-    public function testSetActivity()
+    public function testSetActivity($channelName, $method, $status)
     {
-        $methods = ['isMobileEnabled', 'isDesktopEnabled'];
-        $status  = [true, false];
+        $this->assertNull($this->channels->setActivity($channelName, $method, $status));
+    }
 
-        foreach (Channels::CHANNELS_LIST as $channelName) {
-            $this->channels->setActivity(
-                $channelName,
-                $methods[rand(0, count($methods) - 1)],
-                $status[rand(0, count($status) - 1)]
-            );
+    public function provideSetActivity()
+    {
+        $res = [];
+
+        $tuples = new CartesianProduct(
+            Channels::CHANNELS_LIST,
+            ['isMobileEnabled', 'isDesktopEnabled'],
+            [true, false]
+        );
+
+        foreach($tuples as $i => $tuple) {
+            $res[] = $tuple;
         }
+
+        return $res;
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getBuiltIn()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getCallback()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getFacebook()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getSkype()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getSMS()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getTelegram()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getViber()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getVk()
      */
-    public function testGetSingleChannel()
+    public function testGetBuiltIn()
     {
         $this->assertInstanceOf(Channel::class, $this->channels->getBuiltIn());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getCallback()
+     */
+    public function testGetCallback()
+    {
         $this->assertInstanceOf(Channel::class, $this->channels->getCallback());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getFacebook()
+     */
+    public function testGetFacebook()
+    {
         $this->assertInstanceOf(Channel::class, $this->channels->getFacebook());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getSkype()
+     */
+    public function testGetSkype()
+    {
         $this->assertInstanceOf(Channel::class, $this->channels->getSkype());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getSMS()
+     */
+    public function testGetSMS()
+    {
         $this->assertInstanceOf(Channel::class, $this->channels->getSMS());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getTelegram()
+     */
+    public function testGetTelegram()
+    {
         $this->assertInstanceOf(Channel::class, $this->channels->getTelegram());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getViber()
+     */
+    public function testGetViber()
+    {
         $this->assertInstanceOf(ChannelMobileOnly::class, $this->channels->getViber());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getVk()
+     */
+    public function testGetVk()
+    {
         $this->assertInstanceOf(Channel::class, $this->channels->getVk());
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::setActivity()
+     *
      * @expectedException \CallbackHunterAPIv2\Exception\InvalidArgumentException
+     *
+     * @param string $channelName
+     * @param string $method
+     * @param bool $status
+     *
+     * @dataProvider provideActivityForUnknownChannel
      */
-    public function testSetActivityForUnknownChannel()
+    public function testSetActivityForUnknownChannel($channelName, $method, $status)
     {
-        $methods = ['isMobileEnabled', 'isDesktopEnabled'];
-        $status  = [true, false];
-
         $this->channels->setActivity(
-            'sdgfdghfghjgj',
-            $methods[rand(0, count($methods) - 1)],
-            $status[rand(0, count($status) - 1)]
+            $channelName,
+            $method,
+            $status
         );
+    }
+
+    public function provideActivityForUnknownChannel()
+    {
+        $res = [];
+
+        $tuples = new CartesianProduct(
+            ['_channelThatIsUnknown_'],
+            ['isMobileEnabled', 'isDesktopEnabled'],
+            [true, false]
+        );
+
+        foreach ($tuples as $i => $tuple) {
+            $res[] = $tuple;
+        }
+
+        return $res;
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::get()
      * @expectedException \CallbackHunterAPIv2\Exception\InvalidArgumentException
      */
-    public function testGetWithWrongKey()
+    public function testGetWithWrongChannel()
     {
         $this->invokeMethod($this->channels, 'get', ['abrakadabra']);
+    }
+
+    public function testToApi()
+    {
+        $expected = [];
+        $oneToApi = [
+            'isDesktopEnabled' => true,
+            'isMobileEnabled'  => true,
+        ];
+
+        foreach (Channels::CHANNELS_LIST as $item) {
+            $expected[$item] = [
+                'isDesktopEnabled' => true,
+                'isMobileEnabled'  => true
+            ];
+        }
+
+        foreach ($this->initialChannels as $channel) {
+            $channel->expects($this->once())->method('toApi')->willReturn($oneToApi);
+        }
+
+        $toApiResult = $this->channels->toApi();
+
+        $this->assertEquals($expected, $toApiResult);
     }
 
     protected function setUp()
@@ -94,17 +207,12 @@ class ChannelsTest extends TestCase
         parent::setUp();
 
         $this->initialChannels = [];
-        $possibleArg = [true, false];
 
         for ($i = 0; $i < 8; $i++) {
-            $this->initialChannels[] = (new Channel())
-                ->setIsDesktopEnabled($possibleArg[rand(0, 1)])
-                ->setIsMobileEnabled($possibleArg[rand(0, 1)]);
+            $this->initialChannels[] = $this->createMock(Channel::class);
         }
+        $this->initialChannels[6] = $this->createMock(ChannelMobileOnly::class);
 
-        $this->initialChannels[6] = (new ChannelMobileOnly())
-            ->setIsDesktopEnabled($possibleArg[rand(0, 1)])
-            ->setIsMobileEnabled($possibleArg[rand(0, 1)]);
 
         $this->channels = new Channels(...$this->initialChannels);
     }
