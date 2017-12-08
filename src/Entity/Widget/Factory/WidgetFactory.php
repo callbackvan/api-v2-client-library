@@ -6,7 +6,6 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Widget;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 
-
 class WidgetFactory implements BaseFactoryInterface
 {
     /**

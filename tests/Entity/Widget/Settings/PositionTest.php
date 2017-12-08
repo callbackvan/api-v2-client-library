@@ -67,5 +67,4 @@ class PositionTest extends TestCase
             'y' => 88,
         ];
     }
-
 }

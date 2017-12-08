@@ -166,5 +166,4 @@ class Widget implements WidgetInterface
             'settings' => $this->settings->toApi(),
         ];
     }
-
 }

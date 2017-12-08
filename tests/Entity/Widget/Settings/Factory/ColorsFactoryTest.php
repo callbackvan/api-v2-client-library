@@ -2,8 +2,8 @@
 
 namespace Tests\Entity\Widget\Settings\Factory;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ColorsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Colors;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ColorsFactory;
 use PHPUnit\Framework\TestCase;
 
 class ColorsFactoryTest extends TestCase
@@ -39,5 +39,4 @@ class ColorsFactoryTest extends TestCase
             'backgroundSlider' => 'fff',
         ];
     }
-
 }

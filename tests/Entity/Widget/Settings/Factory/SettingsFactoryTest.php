@@ -154,4 +154,3 @@ class SettingsFactoryTest extends TestCase
         );
     }
 }
-

@@ -2,12 +2,12 @@
 
 namespace CallbackHunterAPIv2\Repository;
 
+use CallbackHunterAPIv2\ClientInterface;
+use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
-use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
-use CallbackHunterAPIv2\ValueObject\PaginationInterface;
-use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Exception;
+use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class WidgetRepository implements WidgetRepositoryInterface
@@ -54,8 +54,8 @@ class WidgetRepository implements WidgetRepositoryInterface
 
         $images = $widget->getSettings()->getImages();
         $imagesForUpload = [
-            'buttonLogo' => $images->getButtonLogo(),
-            'iconLogoSlider' => $images->getIconLogoSlider(),
+            'buttonLogo'       => $images->getButtonLogo(),
+            'iconLogoSlider'   => $images->getIconLogoSlider(),
             'backgroundSlider' => $images->getBackgroundSlider(),
         ];
 
@@ -79,7 +79,7 @@ class WidgetRepository implements WidgetRepositoryInterface
     public function getList(PaginationInterface $pagination)
     {
         $query = [
-            'limit' => $pagination->getLimit(),
+            'limit'  => $pagination->getLimit(),
             'offset' => $pagination->getOffset(),
         ];
 
@@ -123,7 +123,8 @@ class WidgetRepository implements WidgetRepositoryInterface
 
     /**
      * @param ResponseInterface $response
-     * @param array|int $statusCodeOk
+     * @param array|int         $statusCodeOk
+     *
      * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\Exception
      * @throws Exception\WidgetValidateException
@@ -141,8 +142,8 @@ class WidgetRepository implements WidgetRepositoryInterface
 
         $statusCode = $response->getStatusCode();
 
-        switch(true) {
-            case(in_array($statusCode, $codes, true)):
+        switch (true) {
+            case (in_array($statusCode, $codes, true)):
                 break;
             case ($statusCode === 400):
                 $data = json_decode((string)$response->getBody(), true);
@@ -189,7 +190,7 @@ class WidgetRepository implements WidgetRepositoryInterface
         $imageNames = [];
 
         /**
-         * @var string $pathPart
+         * @var string        $pathPart
          * @var AbstractImage $image
          */
         foreach ($images as $pathPart => $image) {

@@ -26,5 +26,4 @@ class ColorsFactory implements BaseFactoryInterface
 
         return $colors;
     }
-
 }

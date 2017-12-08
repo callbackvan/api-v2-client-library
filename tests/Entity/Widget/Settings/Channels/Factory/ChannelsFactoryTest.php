@@ -2,9 +2,8 @@
 
 namespace Tests\Entity\Widget\Settings\Channels\Factory;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
-
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory;
 use PHPUnit\Framework\TestCase;
 
 class ChannelsFactoryTest extends TestCase
@@ -69,11 +68,13 @@ class ChannelsFactoryTest extends TestCase
             $localRandomPropNames = $randomPropNames;
             $max = count(self::AVAILABLE_PROPERTIES);
 
-            for ($j = 0; $j < $max ; $j++) {
+            for ($j = 0; $j < $max; $j++) {
                 shuffle($localRandomPropNames);
                 $prop = array_shift($localRandomPropNames);
                 if ($prop !== $unknownPropName) {
-                    $fromApi[$cName][$prop] = self::AVAILABLE_ARGS[rand(0, count( self::AVAILABLE_ARGS)-1)];
+                    $fromApi[$cName][$prop] = self::AVAILABLE_ARGS[mt_rand(
+                        0, count(self::AVAILABLE_ARGS) - 1
+                    )];
                 }
             }
         }

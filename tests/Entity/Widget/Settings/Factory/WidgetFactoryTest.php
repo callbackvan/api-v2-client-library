@@ -2,9 +2,9 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Factory;
 
+use CallbackHunterAPIv2\Entity\Widget;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
-use CallbackHunterAPIv2\Entity\Widget;
 use PHPUnit\Framework\TestCase;
 
 class WidgetFactoryTest extends TestCase
@@ -107,4 +107,3 @@ class WidgetFactoryTest extends TestCase
         $this->widgetFactory = new WidgetFactory($this->settingsFactory);
     }
 }
-

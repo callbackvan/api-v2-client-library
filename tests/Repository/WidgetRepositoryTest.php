@@ -2,18 +2,18 @@
 
 namespace Tests\Repository;
 
-use PHPUnit\Framework\TestCase;
 use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
-use CallbackHunterAPIv2\Repository\WidgetRepository;
-use Psr\Http\Message\ResponseInterface;
-use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
-use CallbackHunterAPIv2\ValueObject\PaginationInterface;
-use CallbackHunterAPIv2\ValueObject\Pagination;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
-use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
+use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
+use CallbackHunterAPIv2\Repository\WidgetRepository;
 use CallbackHunterAPIv2\Type\FileForUploadInterface;
+use CallbackHunterAPIv2\ValueObject\Pagination;
+use CallbackHunterAPIv2\ValueObject\PaginationInterface;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class WidgetRepositoryTest
@@ -230,26 +230,26 @@ class WidgetRepositoryTest extends TestCase
         $format = '/widgets/%s/settings/images/' . $pathPart;
         $path = sprintf($format, $uid);
 
-       if ($pathPart === 'buttonLogo') {
-           $this->client->expects($this->once())
+        if ($pathPart === 'buttonLogo') {
+            $this->client->expects($this->once())
                ->method('uploadFile')
                ->with($path, $buttonLogo->getForUpload())
                ->willReturn($responseUploadImage);
-       }
+        }
 
-       if ($pathPart === 'iconLogoSlider') {
-           $this->client->expects($this->once())
+        if ($pathPart === 'iconLogoSlider') {
+            $this->client->expects($this->once())
                ->method('uploadFile')
                ->with($path, $iconLogoSlider->getForUpload())
                ->willReturn($responseUploadImage);
-       }
+        }
 
-       if ($pathPart === 'backgroundSlider') {
-           $this->client->expects($this->once())
+        if ($pathPart === 'backgroundSlider') {
+            $this->client->expects($this->once())
                ->method('uploadFile')
                ->with($path, $backgroundSlider->getForUpload())
                ->willReturn($responseUploadImage);
-       }
+        }
 
         $responseUploadImage->expects($this->once())
             ->method('getStatusCode')
@@ -341,10 +341,14 @@ class WidgetRepositoryTest extends TestCase
         $dataToApi = $this->defaultWidgetToApi;
         $dataToApi['site'] = '';
         $errorResponseBody = [
-            'type' => 'https://developers.callbackhunter.com/#errorWidgetValidation',
-            'title' => 'Переданы неверные настройки виджета',
-            'status' => 400,
-            'detail' => 'Один или несколько параметров виджета были переданы в неверном формате. Обратите внимание, что список доступных параметров с указанием ограничений по ним можно увидеть в документации по адресу https://developers.callbackhunter.com/#WidgetNotSaved',
+            'type'          => 'https://developers.callbackhunter.com/#errorWidgetValidation',
+            'title'         => 'Переданы неверные настройки виджета',
+            'status'        => 400,
+            'detail'        => 'Один или несколько параметров виджета '.
+                'были переданы в неверном формате. Обратите внимание,'.
+                ' что список доступных параметров с указанием ограничений '.
+                'по ним можно увидеть в документации по адресу '.
+                'https://developers.callbackhunter.com/#WidgetNotSaved',
             'invalidParams' =>[
                 [
                     'name' => 'site',
@@ -379,10 +383,15 @@ class WidgetRepositoryTest extends TestCase
     public function testSaveThrowChangeOfPaidPropertiesException()
     {
         $errorResponseBody = [
-            'type' => 'https://developers.callbackhunter.com/#errorChangingOfPaidProperties',
-            'title' => 'Попытка изменить платные настройки',
-            'status' => 402,
-            'detail' => 'Для изменения переданных параметров необходимо оплатить аккаунт. Обратите внимание, что список доступных параметров с указанием ограничений по ним можно увидеть в документации по адресу https://developers.callbackhunter.com/#WidgetNotSaved',
+            'type'          => 'https://developers.callbackhunter.com/#errorChangingOfPaidProperties',
+            'title'         => 'Попытка изменить платные настройки',
+            'status'        => 402,
+            'detail'        => 'Для изменения переданных параметров необходимо '
+                .
+                'оплатить аккаунт. Обратите внимание, что список доступных '.
+                'параметров с указанием ограничений по ним можно увидеть в '.
+                'документации по адресу '.
+                'https://developers.callbackhunter.com/#WidgetNotSaved',
             'invalidParams' => [
                 [
                     'name' => 'settings.colors.iconBackground',
@@ -417,10 +426,12 @@ class WidgetRepositoryTest extends TestCase
     public function testSaveThrowResourceNotFoundException()
     {
         $errorResponseBody = [
-            'type' => 'https://developers.callbackhunter.com/#error404',
-            'title' => 'Заправшиваемый ресурс не найден',
+            'type'   => 'https://developers.callbackhunter.com/#error404',
+            'title'  => 'Заправшиваемый ресурс не найден',
             'status' => 404,
-            'detail' => 'Обратите внимание, что список доступных ресурсов можно увидеть в документации по адресу https://developers.callbackhunter.com/',
+            'detail' => 'Обратите внимание, что список доступных '.
+                'ресурсов можно увидеть в документации по адресу '.
+                'https://developers.callbackhunter.com/',
         ];
 
         $this->widget->expects($this->once())
@@ -587,10 +598,12 @@ class WidgetRepositoryTest extends TestCase
     public function testGetThrowResourceNotFoundException()
     {
         $errorResponseBody = [
-            'type' => 'https://developers.callbackhunter.com/#error404',
-            'title' => 'Заправшиваемый ресурс не найден',
+            'type'   => 'https://developers.callbackhunter.com/#error404',
+            'title'  => 'Заправшиваемый ресурс не найден',
             'status' => 404,
-            'detail' => 'Обратите внимание, что список доступных ресурсов можно увидеть в документации по адресу https://developers.callbackhunter.com/',
+            'detail' => 'Обратите внимание, что список доступных '.
+                'ресурсов можно увидеть в документации по адресу '.
+                'https://developers.callbackhunter.com/',
         ];
         $uid = '123f6bcd4621d373cade4e832627b4f6';
 

@@ -63,5 +63,4 @@ class ImagesFactoryTest extends TestCase
             'backgroundSlider' => '3.png',
         ];
     }
-
 }

@@ -5,11 +5,10 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 class BackgroundSliderImage extends AbstractImage
 {
     /**
-     * @var string
+     * BackgroundSliderImage constructor.
      */
-    protected $baseUrl = 'https://cdn.callbackhunter.com/uploads/slide_image/';
-
+    public function __construct()
+    {
+        $this->baseUrl = 'https://cdn.callbackhunter.com/uploads/slide_image/';
+    }
 }
-
-
-

@@ -2,9 +2,9 @@
 
 namespace Tests\Entity\Widget\Settings\Channels;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use Hoa\Math\Combinatorics\Combination\CartesianProduct;
 use PHPUnit\Framework\TestCase;
 
@@ -61,7 +61,7 @@ class ChannelsTest extends TestCase
             [true, false]
         );
 
-        foreach($tuples as $i => $tuple) {
+        foreach ($tuples as $i => $tuple) {
             $res[] = $tuple;
         }
 

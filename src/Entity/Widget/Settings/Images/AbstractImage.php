@@ -9,7 +9,7 @@ abstract class AbstractImage
     /**
      * @var string
      */
-    protected $baseUrl = '';
+    protected $baseUrl;
 
     /**
      * @var string

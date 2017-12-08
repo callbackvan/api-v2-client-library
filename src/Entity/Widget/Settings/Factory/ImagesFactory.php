@@ -38,7 +38,7 @@ class ImagesFactory implements BaseFactoryInterface
     {
         $images = new Images\Images();
 
-        foreach($data as $iconType => $iconFile) {
+        foreach ($data as $iconType => $iconFile) {
             if (!is_string($iconType)) {
                 continue;
             }

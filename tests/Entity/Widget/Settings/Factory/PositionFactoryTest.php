@@ -38,5 +38,4 @@ class PositionFactoryTest extends TestCase
             'y' => 88,
         ];
     }
-
 }
