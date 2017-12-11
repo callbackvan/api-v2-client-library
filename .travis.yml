@@ -8,7 +8,6 @@ install:
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev --no-interaction
-  - composer run code-style-install
 script:
   - composer test
   - composer code-style

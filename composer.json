@@ -41,7 +41,7 @@
     }
   },
   "scripts": {
-    "src-code-style-install": "\"./vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility",
+    "code-style-install": "\"./vendor/bin/phpcs\" --config-set installed_paths vendor/wimg/php-compatibility",
     "src-code-style-check": "phpcs --standard=./phpcs.xml ./src",
     "src-code-style-compatibility": "phpcs --standard=PHPCompatibility --runtime-set testVersion 5.6 ./src",
     "src-code-style-fix": "phpcbf --standard=./phpcs.xml ./src",
