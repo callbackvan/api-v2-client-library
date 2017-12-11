@@ -38,6 +38,16 @@ class Pagination implements PaginationInterface
     }
 
     /**
+     * @throws Exception\ValidateException
+     */
+    public function nextPage()
+    {
+        $limit = $this->getLimit();
+        $offset = $this->getOffset();
+        $this->setOffset($limit + $offset);
+    }
+
+    /**
      * @return integer
      */
     public function getLimit()

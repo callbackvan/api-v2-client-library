@@ -71,6 +71,37 @@ class PaginationTest extends TestCase
         $this->pagination->setOffset($number);
     }
 
+    /**
+     * @covers       \CallbackHunterAPIv2\ValueObject\Pagination::nextPage
+     * @uses         \CallbackHunterAPIv2\ValueObject\Pagination::setLimit
+     * @uses         \CallbackHunterAPIv2\ValueObject\Pagination::setOffset
+     * @uses         \CallbackHunterAPIv2\ValueObject\Pagination::getOffset
+     *
+     * @param $limit
+     * @param $offset
+     * @param $expectedOffset
+     *
+     * @dataProvider nextPageProvider
+     */
+    public function testNextPage($limit, $offset, $expectedOffset)
+    {
+        $this->pagination->setLimit($limit);
+        $this->pagination->setOffset($offset);
+        $this->pagination->nextPage();
+
+        $this->assertSame($expectedOffset, $this->pagination->getOffset());
+    }
+
+    public function nextPageProvider()
+    {
+        return [
+            [10, 0, 10],
+            [10, 100, 110],
+            [10, 12, 22],
+            [1, 21, 22],
+        ];
+    }
+
     protected function setUp()
     {
         parent::setUp();
