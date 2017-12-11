@@ -28,7 +28,7 @@ class Images implements BaseEntityInterface
      *
      * @return $this
      */
-    public function setButtonLogo($buttonLogo)
+    public function setButtonLogo(ButtonLogoImage $buttonLogo)
     {
         $this->buttonLogo = $buttonLogo;
 
@@ -48,7 +48,7 @@ class Images implements BaseEntityInterface
      *
      * @return $this
      */
-    public function setIconLogoSlider($iconLogoSlider)
+    public function setIconLogoSlider(IconLogoSliderImage $iconLogoSlider)
     {
         $this->iconLogoSlider = $iconLogoSlider;
 
@@ -68,7 +68,7 @@ class Images implements BaseEntityInterface
      *
      * @return $this
      */
-    public function setBackgroundSlider($backgroundSlider)
+    public function setBackgroundSlider(BackgroundSliderImage $backgroundSlider)
     {
         $this->backgroundSlider = $backgroundSlider;
 
