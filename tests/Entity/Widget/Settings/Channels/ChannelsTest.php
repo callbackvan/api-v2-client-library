@@ -21,7 +21,8 @@ class ChannelsTest extends TestCase
     public function testGetCallback()
     {
         $this->assertSame(
-            $this->channels['callback'], $this->entity->getCallback()
+            $this->channels['callback'],
+            $this->entity->getCallback()
         );
     }
 
@@ -41,7 +42,8 @@ class ChannelsTest extends TestCase
     public function testGetBuiltIn()
     {
         $this->assertSame(
-            $this->channels['builtIn'], $this->entity->getBuiltIn()
+            $this->channels['builtIn'],
+            $this->entity->getBuiltIn()
         );
     }
 
@@ -52,7 +54,8 @@ class ChannelsTest extends TestCase
     public function testGetTelegram()
     {
         $this->assertSame(
-            $this->channels['telegram'], $this->entity->getTelegram()
+            $this->channels['telegram'],
+            $this->entity->getTelegram()
         );
     }
 
@@ -72,7 +75,8 @@ class ChannelsTest extends TestCase
     public function testGetFacebook()
     {
         $this->assertSame(
-            $this->channels['facebook'], $this->entity->getFacebook()
+            $this->channels['facebook'],
+            $this->entity->getFacebook()
         );
     }
 
