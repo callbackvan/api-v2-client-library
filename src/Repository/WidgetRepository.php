@@ -44,7 +44,8 @@ class WidgetRepository implements WidgetRepositoryInterface
 
         if ($widget->getUid()) {
             $response = $this->client->requestPost(
-                'widgets/'.$widget->getUid(), $widget->toAPI()
+                'widgets/'.$widget->getUid(),
+                $widget->toAPI()
             );
         } else {
             $response = $this->client->requestPost('widgets', $widget->toAPI());
