@@ -28,8 +28,12 @@ class SettingsFactory
      */
     private $channelsFactory;
 
-    public function __construct($colorsFactory, $positionFactory, $imagesFactory, $channelsFactory)
-    {
+    public function __construct(
+        ColorsFactory $colorsFactory,
+        PositionFactory $positionFactory,
+        ImagesFactory $imagesFactory,
+        ChannelsFactory $channelsFactory
+    ) {
         $this->colorsFactory = $colorsFactory;
         $this->positionFactory = $positionFactory;
         $this->imagesFactory = $imagesFactory;
@@ -43,10 +47,18 @@ class SettingsFactory
      */
     public function fromAPI(array $data)
     {
-        $colors = $this->colorsFactory->fromAPI(isset($data['colors']) ? $data['colors'] : []);
-        $position = $this->positionFactory->fromAPI(isset($data['position']) ? $data['position'] : []);
-        $images = $this->imagesFactory->fromAPI(isset($data['images']) ? $data['images'] : []);
-        $channels = $this->channelsFactory->fromAPI(isset($data['channels']) ? $data['channels'] : []);
+        $colors = $this->colorsFactory->fromAPI(
+            isset($data['colors']) ? $data['colors'] : []
+        );
+        $position = $this->positionFactory->fromAPI(
+            isset($data['position']) ? $data['position'] : []
+        );
+        $images = $this->imagesFactory->fromAPI(
+            isset($data['images']) ? $data['images'] : []
+        );
+        $channels = $this->channelsFactory->fromAPI(
+            isset($data['channels']) ? $data['channels'] : []
+        );
 
         return new Settings(
             $colors,

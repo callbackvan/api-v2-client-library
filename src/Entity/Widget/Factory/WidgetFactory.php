@@ -6,14 +6,14 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Widget;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 
-class WidgetFactory implements BaseFactoryInterface
+class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
 {
     /**
      * @var SettingsFactory
      */
     private $settingsFactory;
 
-    public function __construct($settingsFactory)
+    public function __construct(SettingsFactory $settingsFactory)
     {
         $this->settingsFactory = $settingsFactory;
     }
