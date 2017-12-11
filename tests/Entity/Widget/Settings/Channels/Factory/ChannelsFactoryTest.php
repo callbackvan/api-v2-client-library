@@ -72,9 +72,8 @@ class ChannelsFactoryTest extends TestCase
                 shuffle($localRandomPropNames);
                 $prop = array_shift($localRandomPropNames);
                 if ($prop !== $unknownPropName) {
-                    $fromApi[$cName][$prop] = self::AVAILABLE_ARGS[mt_rand(
-                        0, count(self::AVAILABLE_ARGS) - 1
-                    )];
+                    $index = mt_rand(0, count(self::AVAILABLE_ARGS) - 1);
+                    $fromApi[$cName][$prop] = self::AVAILABLE_ARGS[$index];
                 }
             }
         }
