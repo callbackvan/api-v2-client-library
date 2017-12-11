@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Channels;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Channels;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
@@ -12,6 +12,7 @@ class ChannelMobileOnlyTest extends TestCase
     private $channel;
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::isMobileEnabled()
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::setIsMobileEnabled()
      */
@@ -25,6 +26,7 @@ class ChannelMobileOnlyTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::isDesktopEnabled()
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::setIsDesktopEnabled()
      */
@@ -38,9 +40,9 @@ class ChannelMobileOnlyTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::toAPI()
      */
-    public function testToApiAll()
+    public function testToAPIAll()
     {
         $this->channel->setIsDesktopEnabled(true);
         $this->channel->setIsMobileEnabled(false);
@@ -50,13 +52,13 @@ class ChannelMobileOnlyTest extends TestCase
             'isMobileEnabled' => false,
         ];
 
-        $this->assertSame($expected, $this->channel->toApi());
+        $this->assertSame($expected, $this->channel->toAPI());
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::toAPI()
      */
-    public function testToApiSingle()
+    public function testToAPISingle()
     {
         $this->channel->setIsMobileEnabled(true);
 
@@ -65,7 +67,7 @@ class ChannelMobileOnlyTest extends TestCase
             'isMobileEnabled' => true
         ];
 
-        $this->assertSame($expected, $this->channel->toApi());
+        $this->assertSame($expected, $this->channel->toAPI());
     }
 
     protected function setUp()

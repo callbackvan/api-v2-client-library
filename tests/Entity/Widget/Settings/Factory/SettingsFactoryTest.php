@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Factory;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory;
@@ -38,9 +38,10 @@ class SettingsFactoryTest extends TestCase
     private $channelsFactory;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory::fromAPI()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory::fromAPI
      */
-    public function testFromApi()
+    public function testFromAPI()
     {
         $colors = $this->createMock(Colors::class);
         $position = $this->createMock(Position::class);

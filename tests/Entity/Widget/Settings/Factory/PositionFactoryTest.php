@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Factory;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\PositionFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Position;

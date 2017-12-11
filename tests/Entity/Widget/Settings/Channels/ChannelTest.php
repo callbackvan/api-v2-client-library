@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Channels;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Channels;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use PHPUnit\Framework\TestCase;
@@ -37,9 +37,9 @@ class ChannelTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::toAPI()
      */
-    public function testToApiAll()
+    public function testToAPIAll()
     {
         $this->channel->setIsDesktopEnabled(true);
         $this->channel->setIsMobileEnabled(false);
@@ -49,13 +49,13 @@ class ChannelTest extends TestCase
             'isMobileEnabled' => false,
         ];
 
-        $this->assertSame($expected, $this->channel->toApi());
+        $this->assertSame($expected, $this->channel->toAPI());
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::toAPI()
      */
-    public function testToApiSingle()
+    public function testToAPISingle()
     {
         $this->channel->setIsDesktopEnabled(true);
 
@@ -64,7 +64,7 @@ class ChannelTest extends TestCase
             'isMobileEnabled' => null
         ];
 
-        $this->assertSame($expected, $this->channel->toApi());
+        $this->assertSame($expected, $this->channel->toAPI());
     }
 
     protected function setUp()

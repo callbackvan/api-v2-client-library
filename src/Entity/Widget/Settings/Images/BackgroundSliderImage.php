@@ -9,6 +9,8 @@ class BackgroundSliderImage extends AbstractImage
      */
     public function __construct()
     {
-        $this->baseUrl = 'https://cdn.callbackhunter.com/uploads/slide_image/';
+        parent::__construct(
+            'https://cdn.callbackhunter.com/uploads/slide_image/'
+        );
     }
 }

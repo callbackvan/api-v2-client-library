@@ -66,7 +66,7 @@ class Channel implements BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         return [
             'isDesktopEnabled' => $this->isDesktopEnabled(),

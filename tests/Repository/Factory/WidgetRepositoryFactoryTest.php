@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Repository\Factory;
+namespace CallbackHunterAPIv2\Tests\Repository\Factory;
 
-use PHPUnit\Framework\TestCase;
 use CallbackHunterAPIv2\ClientFactory;
-use CallbackHunterAPIv2\Repository\WidgetRepository;
-use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
+use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
+use CallbackHunterAPIv2\Repository\WidgetRepository;
+use PHPUnit\Framework\TestCase;
 
 class WidgetRepositoryFactoryTest extends TestCase
 {

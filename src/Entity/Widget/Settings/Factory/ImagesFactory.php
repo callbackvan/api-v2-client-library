@@ -39,10 +39,6 @@ class ImagesFactory implements BaseFactoryInterface
         $images = new Images\Images();
 
         foreach ($data as $iconType => $iconFile) {
-            if (!is_string($iconType)) {
-                continue;
-            }
-
             $logoObj = $this->createImageOfType($iconType);
 
             if (null === $logoObj) {

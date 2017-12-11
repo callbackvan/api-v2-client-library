@@ -78,7 +78,7 @@ class Images implements BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         $logos = ['buttonLogo', 'iconLogoSlider', 'backgroundSlider'];
         $res = [];

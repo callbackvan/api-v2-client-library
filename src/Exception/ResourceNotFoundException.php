@@ -8,5 +8,4 @@ namespace CallbackHunterAPIv2\Exception;
  */
 class ResourceNotFoundException extends Exception
 {
-
 }

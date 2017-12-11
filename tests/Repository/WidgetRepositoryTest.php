@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Repository;
+namespace CallbackHunterAPIv2\Tests\Repository;
 
 use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
@@ -41,7 +41,7 @@ class WidgetRepositoryTest extends TestCase
     private $path = 'widgets';
 
     /** @var array  */
-    private $defaultWidgetToApi = [ 'foo' => 'bar' ];
+    private $defaultWidgetToAPI = ['foo' => 'bar'];
 
     /** @var array  */
     private $defaultSaveResponseBody = [ 'bar' => 'foo' ];
@@ -59,11 +59,11 @@ class WidgetRepositoryTest extends TestCase
      */
     public function testSave($uid)
     {
-        $widgetToApi = $this->defaultWidgetToApi;
+        $widgetToAPI = $this->defaultWidgetToAPI;
 
         if ($uid !== null) {
             $this->path .= '/';
-            $widgetToApi['uid'] = $uid;
+            $widgetToAPI['uid'] = $uid;
         }
 
         $widget = $this->widget;
@@ -72,12 +72,12 @@ class WidgetRepositoryTest extends TestCase
             ->willReturn($uid);
 
         $this->widget->expects($this->once())
-            ->method('toApi')
-            ->willReturn($widgetToApi);
+            ->method('toAPI')
+            ->willReturn($widgetToAPI);
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path . $uid, $widgetToApi)
+            ->with($this->path.$uid, $widgetToAPI)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -153,21 +153,21 @@ class WidgetRepositoryTest extends TestCase
      */
     public function testSaveWithSetImage($uid, $pathPart, $files, $responseBody, $method)
     {
-        $widgetToApi = $this->defaultWidgetToApi;
+        $widgetToAPI = $this->defaultWidgetToAPI;
 
         if ($uid !== null) {
-            $widgetToApi['uid'] = $uid;
+            $widgetToAPI['uid'] = $uid;
         }
 
         $responseBody['value'] = 'some.png';
 
         $this->widget->expects($this->once())
-            ->method('toApi')
-            ->willReturn($widgetToApi);
+            ->method('toAPI')
+            ->willReturn($widgetToAPI);
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path, $widgetToApi)
+            ->with($this->path, $widgetToAPI)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -338,8 +338,8 @@ class WidgetRepositoryTest extends TestCase
      */
     public function testSaveThrowWidgetValidateException()
     {
-        $dataToApi = $this->defaultWidgetToApi;
-        $dataToApi['site'] = '';
+        $dataToAPI = $this->defaultWidgetToAPI;
+        $dataToAPI['site'] = '';
         $errorResponseBody = [
             'type'          => 'https://developers.callbackhunter.com/#errorWidgetValidation',
             'title'         => 'Переданы неверные настройки виджета',
@@ -358,12 +358,12 @@ class WidgetRepositoryTest extends TestCase
         ];
 
         $this->widget->expects($this->once())
-            ->method('toApi')
-            ->willReturn($dataToApi);
+            ->method('toAPI')
+            ->willReturn($dataToAPI);
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path, $dataToApi)
+            ->with($this->path, $dataToAPI)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -401,12 +401,12 @@ class WidgetRepositoryTest extends TestCase
         ];
 
         $this->widget->expects($this->once())
-            ->method('toApi')
-            ->willReturn($this->defaultWidgetToApi);
+            ->method('toAPI')
+            ->willReturn($this->defaultWidgetToAPI);
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path, $this->defaultWidgetToApi)
+            ->with($this->path, $this->defaultWidgetToAPI)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -435,12 +435,12 @@ class WidgetRepositoryTest extends TestCase
         ];
 
         $this->widget->expects($this->once())
-            ->method('toApi')
-            ->willReturn($this->defaultWidgetToApi);
+            ->method('toAPI')
+            ->willReturn($this->defaultWidgetToAPI);
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path, $this->defaultWidgetToApi)
+            ->with($this->path, $this->defaultWidgetToAPI)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -464,12 +464,12 @@ class WidgetRepositoryTest extends TestCase
         ];
 
         $this->widget->expects($this->once())
-            ->method('toApi')
-            ->willReturn($this->defaultWidgetToApi);
+            ->method('toAPI')
+            ->willReturn($this->defaultWidgetToAPI);
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path, $this->defaultWidgetToApi)
+            ->with($this->path, $this->defaultWidgetToAPI)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())

@@ -144,11 +144,6 @@ class Channels implements BaseEntityInterface
                 $obj->setIsMobileEnabled($value);
                 break;
             case 'isDesktopEnabled':
-                if (!method_exists($obj, 'setIsDesktopEnabled')) {
-                    throw new Exception\InvalidArgumentException(
-                        'Changing of "isDesktopEnabled" not available for ' . $channel
-                    );
-                }
                 $obj->setIsDesktopEnabled($value);
                 break;
             default:
@@ -162,7 +157,7 @@ class Channels implements BaseEntityInterface
      * @return Channel|ChannelMobileOnly
      * @throws Exception\InvalidArgumentException
      */
-    private function get($channel)
+    public function get($channel)
     {
         switch (strtolower($channel)) {
             case 'callback':
@@ -199,13 +194,13 @@ class Channels implements BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         $result = [];
 
         foreach (self::CHANNELS_LIST as $cName) {
             try {
-                $result[$cName] = $this->get($cName)->toApi();
+                $result[$cName] = $this->get($cName)->toAPI();
             } catch (\Exception $e) {
             }
         }

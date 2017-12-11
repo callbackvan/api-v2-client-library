@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Images;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Images;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\BackgroundSliderImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\ButtonLogoImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\IconLogoSliderImage;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use PHPUnit\Framework\TestCase;
 
 class ImagesTest extends TestCase
@@ -34,7 +34,7 @@ class ImagesTest extends TestCase
     /**
      * @var array
      */
-    private $expectedToApiResponse;
+    private $expectedToAPIResponse;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::getButtonLogo
@@ -70,47 +70,47 @@ class ImagesTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::toAPI()
      */
-    public function testToApiAll()
+    public function testToAPIAll()
     {
         $this->images->setButtonLogo($this->buttonLogoImage);
         $this->buttonLogoImage
             ->expects($this->once())
             ->method('getName')
-            ->willReturn($this->expectedToApiResponse['buttonLogo']);
+            ->willReturn($this->expectedToAPIResponse['buttonLogo']);
 
         $this->images->setIconLogoSlider($this->iconLogoSliderImage);
         $this->iconLogoSliderImage
             ->expects($this->once())
             ->method('getName')
-            ->willReturn($this->expectedToApiResponse['iconLogoSlider']);
+            ->willReturn($this->expectedToAPIResponse['iconLogoSlider']);
 
         $this->images->setBackgroundSlider($this->backgroundSliderImage);
         $this->backgroundSliderImage
             ->expects($this->once())
             ->method('getName')
-            ->willReturn($this->expectedToApiResponse['backgroundSlider']);
+            ->willReturn($this->expectedToAPIResponse['backgroundSlider']);
 
-        $this->assertSame($this->expectedToApiResponse, $this->images->toApi());
+        $this->assertSame($this->expectedToAPIResponse, $this->images->toAPI());
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::toAPI()
      */
-    public function testToApiPartial()
+    public function testToAPIPartial()
     {
         $this->images->setButtonLogo($this->buttonLogoImage);
         $this->buttonLogoImage
             ->expects($this->once())
             ->method('getName')
-            ->willReturn($this->expectedToApiResponse['buttonLogo']);
+            ->willReturn($this->expectedToAPIResponse['buttonLogo']);
 
         $expected = [
-            'buttonLogo' => $this->expectedToApiResponse['buttonLogo']
+            'buttonLogo' => $this->expectedToAPIResponse['buttonLogo'],
         ];
 
-        $this->assertSame($expected, $this->images->toApi());
+        $this->assertSame($expected, $this->images->toAPI());
     }
 
     protected function setUp()
@@ -122,7 +122,7 @@ class ImagesTest extends TestCase
         $this->backgroundSliderImage = $this->createMock(BackgroundSliderImage::class);
 
         $this->images = new Images();
-        $this->expectedToApiResponse = [
+        $this->expectedToAPIResponse = [
             'buttonLogo' => '1.png',
             'iconLogoSlider' => '2.png',
             'backgroundSlider' => '3.png',

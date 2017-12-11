@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Position;
 use PHPUnit\Framework\TestCase;
@@ -34,27 +34,27 @@ class PositionTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::toAPI()
      */
-    public function testToApiAll()
+    public function testToAPIAll()
     {
         $this->position->setX($this->example['x']);
         $this->position->setY($this->example['y']);
 
-        $this->assertSame($this->example, $this->position->toApi());
+        $this->assertSame($this->example, $this->position->toAPI());
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::toAPI()
      */
-    public function testToApiPartial()
+    public function testToAPIPartial()
     {
         $this->position->setY($this->example['y']);
 
         $expected = $this->example;
         $expected['x'] = $this->position->getX();
 
-        $this->assertSame($expected, $this->position->toApi());
+        $this->assertSame($expected, $this->position->toAPI());
     }
 
     protected function setUp()

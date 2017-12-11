@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Factory;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImageForUploadFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImagesFactory;
@@ -13,7 +13,7 @@ class ImageForUploadFactoryTest extends TestCase
     private $imageForUploadFactory;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImageForUploadFactory::createFromPath()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImageForUploadFactory::createFromPath
      */
     public function testCreateImageOfTypeAndPath()
     {

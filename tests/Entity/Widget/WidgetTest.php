@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Widget;
@@ -59,7 +59,8 @@ class WidgetTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getSettings()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getSettings
      */
     public function testGetSettings()
     {
@@ -77,9 +78,9 @@ class WidgetTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::toApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::toAPI()
      */
-    public function testToApi()
+    public function testToAPI()
     {
         $expected = [
             'uid' => $this->example['uid'],
@@ -95,10 +96,10 @@ class WidgetTest extends TestCase
 
         $this->settings
             ->expects($this->once())
-            ->method('toApi')
+            ->method('toAPI')
             ->willReturn($expected['settings']);
 
-        $this->assertSame($expected, $this->entity->toApi());
+        $this->assertSame($expected, $this->entity->toAPI());
     }
 
     /**

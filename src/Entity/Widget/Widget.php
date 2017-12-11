@@ -157,13 +157,13 @@ class Widget implements WidgetInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         return [
-            'uid' => $this->getUid(),
+            'uid'      => $this->getUid(),
             'isActive' => $this->isActive(),
-            'site' => $this->getSite(),
-            'settings' => $this->settings->toApi(),
+            'site'     => $this->getSite(),
+            'settings' => $this->settings->toAPI(),
         ];
     }
 }

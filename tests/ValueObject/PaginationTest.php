@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\ValueObject;
+namespace CallbackHunterAPIv2\Tests\ValueObject;
 
-use PHPUnit\Framework\TestCase;
 use CallbackHunterAPIv2\ValueObject\Pagination;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PaginationTest

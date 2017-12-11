@@ -9,7 +9,9 @@ abstract class AbstractImage
     /**
      * @var string
      */
-    protected $baseUrl;
+    private $baseUrl;
+
+
 
     /**
      * @var string
@@ -22,11 +24,21 @@ abstract class AbstractImage
     private $imageForUpload;
 
     /**
+     * AbstractImage constructor.
+     *
+     * @param string $baseUrl
+     */
+    public function __construct($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+    }
+
+    /**
      * @return string
      */
     public function getURL()
     {
-        return $this->name ? sprintf('%s/%s', $this->baseUrl, $this->name) : '';
+        return $this->name ? $this->baseUrl.$this->name : '';
     }
 
     /**

@@ -64,7 +64,7 @@ class Colors implements BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         return [
             'iconBackground' => $this->getIconBackground(),

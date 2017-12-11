@@ -9,7 +9,8 @@ class IconLogoSliderImage extends AbstractImage
      */
     public function __construct()
     {
-        $this->baseUrl
-            = 'https://cdn.callbackhunter.com/uploads/brand_large_logo/';
+        parent::__construct(
+            'https://cdn.callbackhunter.com/uploads/brand_large_logo/'
+        );
     }
 }

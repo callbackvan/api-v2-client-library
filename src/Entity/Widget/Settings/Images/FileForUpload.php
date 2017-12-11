@@ -38,7 +38,7 @@ class FileForUpload implements FileForUploadInterface
      *
      * @return $this
      */
-    public function setStream($stream)
+    public function setStream(StreamInterface $stream)
     {
         $this->stream = $stream;
 

@@ -7,5 +7,5 @@ interface BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi();
+    public function toAPI();
 }

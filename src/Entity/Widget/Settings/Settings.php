@@ -2,8 +2,8 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 
 class Settings implements SettingsInterface
 {
@@ -72,13 +72,13 @@ class Settings implements SettingsInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         return [
-            'colors' => $this->colors->toApi(),
-            'position' => $this->position->toApi(),
-            'images' => $this->images->toApi(),
-            'channels' => $this->channels->toApi(),
+            'colors'   => $this->colors->toAPI(),
+            'position' => $this->position->toAPI(),
+            'images'   => $this->images->toAPI(),
+            'channels' => $this->channels->toAPI(),
         ];
     }
 }

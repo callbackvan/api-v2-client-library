@@ -61,5 +61,5 @@ interface WidgetInterface extends BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi();
+    public function toAPI();
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Channels\Factory;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Channels\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory;
@@ -18,9 +18,9 @@ class ChannelsFactoryTest extends TestCase
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory::fromAPI()
      */
-    public function testFromApi()
+    public function testFromAPI()
     {
-        $sampleData = $this->generateFromApiSample(1);
+        $sampleData = $this->generateFromAPISample();
 
         $channels = $this->channelsFactory->fromAPI($sampleData);
 
@@ -37,48 +37,35 @@ class ChannelsFactoryTest extends TestCase
     /**
      * Генератор массива каналов для тестирования fromAPi
      *
-     * @param int $numOfChannels сколько каналов задать в массиве из возможных
-     *
      * @return array
      */
-    protected function generateFromApiSample($numOfChannels = 0)
+    protected function generateFromAPISample()
     {
-        $fromApi = [];
+        $fromAPI = [];
 
         $unknownPropName = 'unknownMethod';
 
         $randomChannelNames = self::AVAILABLE_CHANNELS;
         $randomPropNames = array_merge(self::AVAILABLE_PROPERTIES, [$unknownPropName]);
 
-        $maxNum = count(self::AVAILABLE_CHANNELS);
 
-        if ((int)$numOfChannels <= 0) {
-            $numOfChannels = $maxNum;
-        }
+        shuffle($randomChannelNames);
+        $cName = array_shift($randomChannelNames);
+        $fromAPI[$cName] = [];
 
-        if ((int)$numOfChannels >= $maxNum) {
-            $numOfChannels = $maxNum;
-        }
+        $localRandomPropNames = $randomPropNames;
+        $max = count(self::AVAILABLE_PROPERTIES);
 
-        for ($i = 0; $i < $numOfChannels; $i++) {
-            shuffle($randomChannelNames);
-            $cName = array_shift($randomChannelNames);
-            $fromApi[$cName] = [];
-
-            $localRandomPropNames = $randomPropNames;
-            $max = count(self::AVAILABLE_PROPERTIES);
-
-            for ($j = 0; $j < $max; $j++) {
-                shuffle($localRandomPropNames);
-                $prop = array_shift($localRandomPropNames);
-                if ($prop !== $unknownPropName) {
-                    $index = mt_rand(0, count(self::AVAILABLE_ARGS) - 1);
-                    $fromApi[$cName][$prop] = self::AVAILABLE_ARGS[$index];
-                }
+        for ($j = 0; $j < $max; $j++) {
+            shuffle($localRandomPropNames);
+            $prop = array_shift($localRandomPropNames);
+            if ($prop !== $unknownPropName) {
+                $index = mt_rand(0, count(self::AVAILABLE_ARGS) - 1);
+                $fromAPI[$cName][$prop] = self::AVAILABLE_ARGS[$index];
             }
         }
 
-        return $fromApi;
+        return $fromAPI;
     }
 
     protected function setUp()

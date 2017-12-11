@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity\Widget\Settings\Factory;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImagesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\ButtonLogoImage;
@@ -58,9 +58,10 @@ class ImagesFactoryTest extends TestCase
 
         $this->imagesFactory = new ImagesFactory();
         $this->example = [
-            'buttonLogo' => '1.png',
-            'iconLogoSlider' => '2.png',
+            'buttonLogo'       => '1.png',
+            'iconLogoSlider'   => '2.png',
             'backgroundSlider' => '3.png',
+            'imageTest'        => '4.png',
         ];
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Exception;
+namespace CallbackHunterAPIv2\Tests\Exception;
 
-use PHPUnit\Framework\TestCase;
 use CallbackHunterAPIv2\Exception\ChangeOfPaidPropertiesException;
+use PHPUnit\Framework\TestCase;
 
 class ChangeOfPaidPropertiesExceptionTest extends TestCase
 {

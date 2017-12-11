@@ -19,9 +19,10 @@ class WidgetFactoryTest extends TestCase
     private $widgetDataSample;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::fromApi()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::fromAPI
      */
-    public function testFromApi()
+    public function testFromAPI()
     {
         $settings = $this->createMock(Settings::class);
 

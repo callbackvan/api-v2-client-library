@@ -64,7 +64,7 @@ class Position implements BaseEntityInterface
     /**
      * @return array
      */
-    public function toApi()
+    public function toAPI()
     {
         return [
             'x' => $this->getX(),
