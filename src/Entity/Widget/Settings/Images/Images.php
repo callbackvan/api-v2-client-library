@@ -6,6 +6,13 @@ use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
 
 class Images implements BaseEntityInterface
 {
+    const TYPES
+        = [
+            'ButtonLogo',
+            'IconLogoSlider',
+            'BackgroundSlider',
+        ];
+
     /** @var ButtonLogoImage */
     private $buttonLogo;
 
@@ -16,23 +23,28 @@ class Images implements BaseEntityInterface
     private $backgroundSlider;
 
     /**
+     * Images constructor.
+     *
+     * @param ButtonLogoImage       $buttonLogo
+     * @param IconLogoSliderImage   $iconLogoSlider
+     * @param BackgroundSliderImage $backgroundSlider
+     */
+    public function __construct(
+        ButtonLogoImage $buttonLogo,
+        IconLogoSliderImage $iconLogoSlider,
+        BackgroundSliderImage $backgroundSlider
+    ) {
+        $this->buttonLogo = $buttonLogo;
+        $this->iconLogoSlider = $iconLogoSlider;
+        $this->backgroundSlider = $backgroundSlider;
+    }
+
+    /**
      * @return ButtonLogoImage
      */
     public function getButtonLogo()
     {
         return $this->buttonLogo;
-    }
-
-    /**
-     * @param ButtonLogoImage $buttonLogo
-     *
-     * @return $this
-     */
-    public function setButtonLogo(ButtonLogoImage $buttonLogo)
-    {
-        $this->buttonLogo = $buttonLogo;
-
-        return $this;
     }
 
     /**
@@ -44,18 +56,6 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @param IconLogoSliderImage $iconLogoSlider
-     *
-     * @return $this
-     */
-    public function setIconLogoSlider(IconLogoSliderImage $iconLogoSlider)
-    {
-        $this->iconLogoSlider = $iconLogoSlider;
-
-        return $this;
-    }
-
-    /**
      * @return BackgroundSliderImage
      */
     public function getBackgroundSlider()
@@ -64,32 +64,14 @@ class Images implements BaseEntityInterface
     }
 
     /**
-     * @param BackgroundSliderImage $backgroundSlider
-     *
-     * @return $this
-     */
-    public function setBackgroundSlider(BackgroundSliderImage $backgroundSlider)
-    {
-        $this->backgroundSlider = $backgroundSlider;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function toAPI()
     {
-        $logos = ['buttonLogo', 'iconLogoSlider', 'backgroundSlider'];
-        $res = [];
-
-        foreach ($logos as $logo) {
-            $logoObj = $this->{'get' . ucfirst($logo)}();
-            if (is_object($logoObj) && method_exists($logoObj, 'getName')) {
-                $res[$logo] = (string)$logoObj->getName();
-            }
-        }
-
-        return $res;
+        return [
+            'buttonLogo'       => $this->getButtonLogo()->getName(),
+            'iconLogoSlider'   => $this->getIconLogoSlider()->getName(),
+            'backgroundSlider' => $this->getBackgroundSlider()->getName(),
+        ];
     }
 }

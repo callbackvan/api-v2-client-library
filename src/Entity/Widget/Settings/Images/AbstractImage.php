@@ -11,8 +11,6 @@ abstract class AbstractImage
      */
     private $baseUrl;
 
-
-
     /**
      * @var string
      */

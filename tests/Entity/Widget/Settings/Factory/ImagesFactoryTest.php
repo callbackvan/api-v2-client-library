@@ -20,7 +20,7 @@ class ImagesFactoryTest extends TestCase
      */
     public function testCreateImageOfKnownType()
     {
-        $img = $this->imagesFactory->createImageOfType('buttonLogo');
+        $img = $this->imagesFactory->createImageOfType('ButtonLogo');
         $this->assertInstanceOf(ButtonLogoImage::class, $img);
     }
 

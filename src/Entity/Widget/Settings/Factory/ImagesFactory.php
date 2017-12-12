@@ -36,25 +36,21 @@ class ImagesFactory implements BaseFactoryInterface
      */
     public function fromAPI(array $data)
     {
-        $images = new Images\Images();
+        $images = [];
 
-        foreach ($data as $iconType => $iconFile) {
+        foreach (Images\Images::TYPES as $iconType) {
             $logoObj = $this->createImageOfType($iconType);
 
-            if (null === $logoObj) {
-                continue;
-            }
+            if ($logoObj instanceof Images\AbstractImage) {
+                $APIName = lcfirst($iconType);
+                if (isset($data[$APIName])) {
+                    $logoObj->setName($data[$APIName]);
+                }
 
-            if (method_exists($logoObj, 'setName')) {
-                $logoObj->setName($iconFile);
-            }
-
-            $setter = 'set' . ucfirst($iconType);
-            if (method_exists($images, $setter)) {
-                $images->{$setter}($logoObj);
+                $images[] = $logoObj;
             }
         }
 
-        return $images;
+        return new Images\Images(...$images);
     }
 }

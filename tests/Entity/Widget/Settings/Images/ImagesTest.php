@@ -15,18 +15,21 @@ class ImagesTest extends TestCase
 
     /**
      * Mock
+     *
      * @var ButtonLogoImage
      */
     private $buttonLogoImage;
 
     /**
      * Mock
+     *
      * @var IconLogoSliderImage
      */
     private $iconLogoSliderImage;
 
     /**
      * Mock
+     *
      * @var BackgroundSliderImage
      */
     private $backgroundSliderImage;
@@ -37,36 +40,45 @@ class ImagesTest extends TestCase
     private $expectedToAPIResponse;
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::getButtonLogo
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::setButtonLogo
      */
     public function testButtonLogo()
     {
-        $this->images->setButtonLogo($this->buttonLogoImage);
-        $this->assertSame($this->buttonLogoImage, $this->images->getButtonLogo());
-        $this->assertInstanceOf(ButtonLogoImage::class, $this->images->getButtonLogo());
+        $this->assertSame(
+            $this->buttonLogoImage, $this->images->getButtonLogo()
+        );
+        $this->assertInstanceOf(
+            ButtonLogoImage::class, $this->images->getButtonLogo()
+        );
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::getIconLogoSlider
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::setIconLogoSlider
      */
     public function testIconLogoSlider()
     {
-        $this->images->setIconLogoSlider($this->iconLogoSliderImage);
-        $this->assertSame($this->iconLogoSliderImage, $this->images->getIconLogoSlider());
-        $this->assertInstanceOf(IconLogoSliderImage::class, $this->images->getIconLogoSlider());
+        $this->assertSame(
+            $this->iconLogoSliderImage, $this->images->getIconLogoSlider()
+        );
+        $this->assertInstanceOf(
+            IconLogoSliderImage::class, $this->images->getIconLogoSlider()
+        );
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::getBackgroundSlider
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::setBackgroundSlider
      */
     public function testGetBackgroundSlider()
     {
-        $this->images->setBackgroundSlider($this->backgroundSliderImage);
-        $this->assertSame($this->backgroundSliderImage, $this->images->getBackgroundSlider());
-        $this->assertInstanceOf(BackgroundSliderImage::class, $this->images->getBackgroundSlider());
+        $this->assertSame(
+            $this->backgroundSliderImage, $this->images->getBackgroundSlider()
+        );
+        $this->assertInstanceOf(
+            BackgroundSliderImage::class, $this->images->getBackgroundSlider()
+        );
     }
 
     /**
@@ -74,57 +86,44 @@ class ImagesTest extends TestCase
      */
     public function testToAPIAll()
     {
-        $this->images->setButtonLogo($this->buttonLogoImage);
         $this->buttonLogoImage
             ->expects($this->once())
             ->method('getName')
             ->willReturn($this->expectedToAPIResponse['buttonLogo']);
 
-        $this->images->setIconLogoSlider($this->iconLogoSliderImage);
         $this->iconLogoSliderImage
             ->expects($this->once())
             ->method('getName')
             ->willReturn($this->expectedToAPIResponse['iconLogoSlider']);
 
-        $this->images->setBackgroundSlider($this->backgroundSliderImage);
         $this->backgroundSliderImage
             ->expects($this->once())
             ->method('getName')
             ->willReturn($this->expectedToAPIResponse['backgroundSlider']);
 
-        $this->assertSame($this->expectedToAPIResponse, $this->images->toAPI());
-    }
-
-    /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::toAPI()
-     */
-    public function testToAPIPartial()
-    {
-        $this->images->setButtonLogo($this->buttonLogoImage);
-        $this->buttonLogoImage
-            ->expects($this->once())
-            ->method('getName')
-            ->willReturn($this->expectedToAPIResponse['buttonLogo']);
-
-        $expected = [
-            'buttonLogo' => $this->expectedToAPIResponse['buttonLogo'],
-        ];
-
-        $this->assertSame($expected, $this->images->toAPI());
+        $this->assertEquals(
+            $this->expectedToAPIResponse, $this->images->toAPI()
+        );
     }
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->buttonLogoImage = $this->createMock(ButtonLogoImage::class);
-        $this->iconLogoSliderImage = $this->createMock(IconLogoSliderImage::class);
-        $this->backgroundSliderImage = $this->createMock(BackgroundSliderImage::class);
-
-        $this->images = new Images();
+        $this->images = new Images(
+            $this->buttonLogoImage = $this->createMock(
+                ButtonLogoImage::class
+            ),
+            $this->iconLogoSliderImage = $this->createMock(
+                IconLogoSliderImage::class
+            ),
+            $this->backgroundSliderImage = $this->createMock(
+                BackgroundSliderImage::class
+            )
+        );
         $this->expectedToAPIResponse = [
-            'buttonLogo' => '1.png',
-            'iconLogoSlider' => '2.png',
+            'buttonLogo'       => '1.png',
+            'iconLogoSlider'   => '2.png',
             'backgroundSlider' => '3.png',
         ];
     }
