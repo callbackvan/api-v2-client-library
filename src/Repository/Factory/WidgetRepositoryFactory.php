@@ -3,8 +3,8 @@
 namespace CallbackHunterAPIv2\Repository\Factory;
 
 use CallbackHunterAPIv2\ClientFactory;
-use CallbackHunterAPIv2\Repository\WidgetRepository;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
+use CallbackHunterAPIv2\Repository\WidgetRepository;
 
 /**
  * Class WidgetRepositoryFactory
@@ -33,12 +33,16 @@ class WidgetRepositoryFactory
 
     /**
      * @param integer $userId
-     * @param string $key
+     * @param string  $key
+     * @param array   $config
+     *
      * @return WidgetRepository
      */
-    public function make($userId, $key)
+    public function make($userId, $key, array $config = [])
     {
-        $client = $this->clientFactory->makeWithAPICredentials($userId, $key);
+        $client = $this->clientFactory->makeWithAPICredentials(
+            $userId, $key, $config
+        );
 
         return new WidgetRepository($client, $this->widgetFactory);
     }
