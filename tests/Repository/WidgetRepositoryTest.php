@@ -62,7 +62,7 @@ class WidgetRepositoryTest extends TestCase
      */
     public function testSave($uid)
     {
-        $widgetToAPI = $this->defaultWidgetToAPI;
+        $data = $widgetToAPI = $this->defaultWidgetToAPI;
 
         if ($uid !== null) {
             $this->path .= '/';
@@ -80,12 +80,12 @@ class WidgetRepositoryTest extends TestCase
 
         $this->client->expects($this->once())
             ->method('requestPost')
-            ->with($this->path.$uid, $widgetToAPI)
+            ->with($this->path.$uid, $data)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
             ->method('getStatusCode')
-            ->willReturn(201);
+            ->willReturn($uid !== null ? 200 : 201);
         $this->response->expects($this->once())
             ->method('getBody')
             ->willReturn(json_encode($this->defaultSaveResponseBody));

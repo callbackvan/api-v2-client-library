@@ -43,14 +43,17 @@ class WidgetRepository implements WidgetRepositoryInterface
         $data = $this->removeNullValues($widget->toAPI());
 
         if ($widget->getUid()) {
+            $expectedCode = 200;
+            unset($data['uid']);
             $response = $this->client->requestPost(
                 'widgets/'.$widget->getUid(),
                 $data
             );
         } else {
+            $expectedCode = 201;
             $response = $this->client->requestPost('widgets', $data);
         }
-        $this->checkResponse($response, 201);
+        $this->checkResponse($response, $expectedCode);
         $responseData = json_decode((string)$response->getBody(), true);
 
         $saved = $this->widgetFactory->fromAPI($responseData);
