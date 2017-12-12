@@ -12,17 +12,15 @@ use Psr\Http\Message\ResponseInterface;
 
 class WidgetRepository implements WidgetRepositoryInterface
 {
-    /** @var ClientInterface  */
+    /** @var ClientInterface */
     private $client;
 
-    /** @var WidgetFactoryInterface  */
+    /** @var WidgetFactoryInterface */
     private $widgetFactory;
 
-    /** @var WidgetInterface  */
-    private $resultWidget;
-
-    public function __construct(ClientInterface $client, WidgetFactoryInterface $widgetFactory)
-    {
+    public function __construct(ClientInterface $client,
+        WidgetFactoryInterface $widgetFactory
+    ) {
         $this->client = $client;
         $this->widgetFactory = $widgetFactory;
     }
@@ -31,6 +29,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * Создание, изменение виджета
      *
      * @param WidgetInterface $widget
+     *
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
@@ -40,20 +39,20 @@ class WidgetRepository implements WidgetRepositoryInterface
      */
     public function save(WidgetInterface $widget)
     {
-        $this->resultWidget = null;
+        $data = $this->removeNullValues($widget->toAPI());
 
         if ($widget->getUid()) {
             $response = $this->client->requestPost(
                 'widgets/'.$widget->getUid(),
-                $widget->toAPI()
+                $data
             );
         } else {
-            $response = $this->client->requestPost('widgets', $widget->toAPI());
+            $response = $this->client->requestPost('widgets', $data);
         }
         $this->checkResponse($response, 201);
         $responseData = json_decode((string)$response->getBody(), true);
 
-        $this->resultWidget = $this->widgetFactory->fromAPI($responseData);
+        $saved = $this->widgetFactory->fromAPI($responseData);
 
         $images = $widget->getSettings()->getImages();
         $imagesForUpload = [
@@ -62,16 +61,17 @@ class WidgetRepository implements WidgetRepositoryInterface
             'backgroundSlider' => $images->getBackgroundSlider(),
         ];
 
-        $imageNames = $this->uploadImages($imagesForUpload);
-        $this->setResultWidgetImageNames($imageNames);
+        $imageNames = $this->uploadImages($saved, $imagesForUpload);
+        $this->setResultWidgetImageNames($imageNames, $saved);
 
-        return $this->resultWidget;
+        return $saved;
     }
 
     /**
      * Получение списка виджетов
      *
      * @param PaginationInterface $pagination
+     *
      * @return WidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
@@ -108,6 +108,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * Получение информации о виджете
      *
      * @param string $uid
+     *
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
@@ -117,7 +118,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      */
     public function get($uid)
     {
-        $response = $this->client->requestGet('widgets/' . $uid);
+        $response = $this->client->requestGet('widgets/'.$uid);
         $this->checkResponse($response, 200);
         $responseData = json_decode((string)$response->getBody(), true);
 
@@ -152,14 +153,16 @@ class WidgetRepository implements WidgetRepositoryInterface
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\WidgetValidateException(
                     (isset($data['title']) ? $data['title'] : 'Error'),
-                    (isset($data['invalidParams']) ? (array)$data['invalidParams'] : [])
+                    (isset($data['invalidParams'])
+                        ? (array)$data['invalidParams'] : [])
                 );
                 break;
             case ($statusCode === 402):
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\ChangeOfPaidPropertiesException(
                     (isset($data['title']) ? $data['title'] : 'Error'),
-                    (isset($data['invalidParams']) ? (array)$data['invalidParams'] : [])
+                    (isset($data['invalidParams'])
+                        ? (array)$data['invalidParams'] : [])
                 );
                 break;
             case ($statusCode === 404):
@@ -179,17 +182,21 @@ class WidgetRepository implements WidgetRepositoryInterface
     }
 
     /**
-     * @param array $images
+     * @param WidgetInterface $widget
+     * @param array           $images
+     *
      * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\Exception
-     * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
+     * @throws Exception\WidgetValidateException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function uploadImages(array $images)
+    private function uploadImages(WidgetInterface $widget, array $images)
     {
-        $path = sprintf('/widgets/%s/settings/images/', $this->resultWidget->getUid());
+        $path = sprintf(
+            '/widgets/%s/settings/images/', $widget->getUid()
+        );
         $imageNames = [];
 
         /**
@@ -203,7 +210,7 @@ class WidgetRepository implements WidgetRepositoryInterface
                 continue;
             }
 
-            $response = $this->client->uploadFile($path . $pathPart, $data);
+            $response = $this->client->uploadFile($path.$pathPart, $data);
             $this->checkResponse($response, 201);
 
             $responseData = json_decode((string)$response->getBody(), true);
@@ -217,29 +224,62 @@ class WidgetRepository implements WidgetRepositoryInterface
     }
 
     /**
-     * @param $imageNames
+     * @param array           $imageNames
+     * @param WidgetInterface $widget
      */
-    private function setResultWidgetImageNames($imageNames)
+    private function setResultWidgetImageNames($imageNames,
+        WidgetInterface $widget
+    )
     {
         if (isset($imageNames['displayName'])) {
-            $this->resultWidget->getSettings()
+            $widget->getSettings()
                 ->getImages()
                 ->getButtonLogo()
                 ->setName($imageNames['displayName']);
         }
 
         if (isset($imageNames['iconLogoSlider'])) {
-            $this->resultWidget->getSettings()
+            $widget->getSettings()
                 ->getImages()
                 ->getIconLogoSlider()
                 ->setName($imageNames['iconLogoSlider']);
         }
 
         if (isset($imageNames['backgroundSlider'])) {
-            $this->resultWidget->getSettings()
+            $widget->getSettings()
                 ->getImages()
                 ->getBackgroundSlider()
                 ->setName($imageNames['backgroundSlider']);
         }
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function removeNullValues(array $data)
+    {
+        foreach ($data as $key => $value) {
+            if ($value === null) {
+                unset($data[$key]);
+                continue;
+            }
+
+            if (!is_array($value)) {
+                continue;
+            }
+
+
+            $value = $this->removeNullValues($value);
+            if (!count($value)) {
+                unset($data[$key]);
+                continue;
+            }
+
+            $data[$key] = $value;
+        }
+
+        return $data;
     }
 }

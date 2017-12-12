@@ -17,44 +17,47 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class WidgetRepositoryTest
+ *
  * @package Tests\Repository
- * @covers \CallbackHunterAPIv2\Repository\WidgetRepository
+ * @covers  \CallbackHunterAPIv2\Repository\WidgetRepository
  */
 class WidgetRepositoryTest extends TestCase
 {
-    /** @var ClientInterface  */
+    /** @var ClientInterface */
     private $client;
 
-    /** @var WidgetInterface  */
+    /** @var WidgetInterface */
     private $widget;
 
-    /** @var WidgetFactoryInterface  */
+    /** @var WidgetFactoryInterface */
     private $widgetFactory;
 
     /** @var WidgetRepository */
     private $widgetRepository;
 
-    /** @var ResponseInterface  */
+    /** @var ResponseInterface */
     private $response;
 
-    /** @var string  */
+    /** @var string */
     private $path = 'widgets';
 
-    /** @var array  */
+    /** @var array */
     private $defaultWidgetToAPI = ['foo' => 'bar'];
 
-    /** @var array  */
-    private $defaultSaveResponseBody = [ 'bar' => 'foo' ];
+    /** @var array */
+    private $defaultSaveResponseBody = ['bar' => 'foo'];
 
-    /** @var array  */
-    private $defaultQuery = [
-        'limit' => Pagination::DEFAULT_LIMIT,
-        'offset' => Pagination::DEFAULT_OFFSET,
-    ];
+    /** @var array */
+    private $defaultQuery
+        = [
+            'limit'  => Pagination::DEFAULT_LIMIT,
+            'offset' => Pagination::DEFAULT_OFFSET,
+        ];
 
     /**
      * @param string $uid
-     * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::save
+     *
+     * @covers       \CallbackHunterAPIv2\Repository\WidgetRepository::save
      * @dataProvider widgetUidProvider
      */
     public function testSave($uid)
@@ -131,14 +134,16 @@ class WidgetRepositoryTest extends TestCase
             ->method('getBackgroundSlider')
             ->willReturn($backgroundSlider);
 
-        $this->assertSame($resultWidget, $this->widgetRepository->save($widget));
+        $this->assertSame(
+            $resultWidget, $this->widgetRepository->save($widget)
+        );
     }
 
     public function widgetUidProvider()
     {
         return [
-            [ '123f6bcd4621d373cade4e832627b4f6' ],
-            [ null ],
+            ['123f6bcd4621d373cade4e832627b4f6'],
+            [null],
         ];
     }
 
@@ -148,11 +153,13 @@ class WidgetRepositoryTest extends TestCase
      * @param $files
      * @param $responseBody
      * @param $method
-     * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::save
+     *
+     * @covers       \CallbackHunterAPIv2\Repository\WidgetRepository::save
      * @dataProvider widgetDataProvider
      */
-    public function testSaveWithSetImage($uid, $pathPart, $files, $responseBody, $method)
-    {
+    public function testSaveWithSetImage($uid, $pathPart, $files, $responseBody,
+        $method
+    ) {
         $widgetToAPI = $this->defaultWidgetToAPI;
 
         if ($uid !== null) {
@@ -227,28 +234,28 @@ class WidgetRepositoryTest extends TestCase
             ->method('getUid')
             ->willReturn($uid);
 
-        $format = '/widgets/%s/settings/images/' . $pathPart;
+        $format = '/widgets/%s/settings/images/'.$pathPart;
         $path = sprintf($format, $uid);
 
         if ($pathPart === 'buttonLogo') {
             $this->client->expects($this->once())
-               ->method('uploadFile')
-               ->with($path, $buttonLogo->getForUpload())
-               ->willReturn($responseUploadImage);
+                ->method('uploadFile')
+                ->with($path, $buttonLogo->getForUpload())
+                ->willReturn($responseUploadImage);
         }
 
         if ($pathPart === 'iconLogoSlider') {
             $this->client->expects($this->once())
-               ->method('uploadFile')
-               ->with($path, $iconLogoSlider->getForUpload())
-               ->willReturn($responseUploadImage);
+                ->method('uploadFile')
+                ->with($path, $iconLogoSlider->getForUpload())
+                ->willReturn($responseUploadImage);
         }
 
         if ($pathPart === 'backgroundSlider') {
             $this->client->expects($this->once())
-               ->method('uploadFile')
-               ->with($path, $backgroundSlider->getForUpload())
-               ->willReturn($responseUploadImage);
+                ->method('uploadFile')
+                ->with($path, $backgroundSlider->getForUpload())
+                ->willReturn($responseUploadImage);
         }
 
         $responseUploadImage->expects($this->once())
@@ -279,7 +286,9 @@ class WidgetRepositoryTest extends TestCase
             ->method('setName')
             ->with($responseBody['value']);
 
-        $this->assertSame($resultWidget, $this->widgetRepository->save($this->widget));
+        $this->assertSame(
+            $resultWidget, $this->widgetRepository->save($this->widget)
+        );
     }
 
     public function widgetDataProvider()
@@ -290,43 +299,43 @@ class WidgetRepositoryTest extends TestCase
             [
                 '123f6bcd4621d373cade4e832627b4f6',
                 'buttonLogo',
-                [ $file, null, null ],
-                [ 'name' => 'displayName' ],
+                [$file, null, null],
+                ['name' => 'displayName'],
                 'getButtonLogo',
             ],
             [
                 null,
                 'buttonLogo',
-                [ $file, null, null ],
-                [ 'name' => 'displayName' ],
+                [$file, null, null],
+                ['name' => 'displayName'],
                 'getButtonLogo',
             ],
             [
                 '123f6bcd4621d373cade4e832627b4f6',
                 'iconLogoSlider',
-                [ null, $file, null ],
-                [ 'name' => 'iconLogoSlider' ],
+                [null, $file, null],
+                ['name' => 'iconLogoSlider'],
                 'getIconLogoSlider',
             ],
             [
                 null,
                 'iconLogoSlider',
-                [ null, $file, null ],
-                [ 'name' => 'iconLogoSlider' ],
+                [null, $file, null],
+                ['name' => 'iconLogoSlider'],
                 'getIconLogoSlider',
             ],
             [
                 '123f6bcd4621d373cade4e832627b4f6',
                 'backgroundSlider',
-                [ null, null, $file ],
-                [ 'name' => 'backgroundSlider' ],
+                [null, null, $file],
+                ['name' => 'backgroundSlider'],
                 'getBackgroundSlider',
             ],
             [
                 null,
                 'backgroundSlider',
-                [ null, null, $file ],
-                [ 'name' => 'backgroundSlider' ],
+                [null, null, $file],
+                ['name' => 'backgroundSlider'],
                 'getBackgroundSlider',
             ],
         ];
@@ -349,9 +358,9 @@ class WidgetRepositoryTest extends TestCase
                 ' что список доступных параметров с указанием ограничений '.
                 'по ним можно увидеть в документации по адресу '.
                 'https://developers.callbackhunter.com/#WidgetNotSaved',
-            'invalidParams' =>[
+            'invalidParams' => [
                 [
-                    'name' => 'site',
+                    'name'   => 'site',
                     'reason' => 'Поле "сайт" не может быть пустым.',
                 ],
             ],
@@ -394,7 +403,7 @@ class WidgetRepositoryTest extends TestCase
                 'https://developers.callbackhunter.com/#WidgetNotSaved',
             'invalidParams' => [
                 [
-                    'name' => 'settings.colors.iconBackground',
+                    'name'   => 'settings.colors.iconBackground',
                     'reason' => 'Для изменения цвета кнопки необходимо оплатить аккаунт.',
                 ],
             ],
@@ -480,6 +489,75 @@ class WidgetRepositoryTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::removeNullValues
+     */
+    public function testRemoveNullValues()
+    {
+        $data = [
+            'foo' => 'bar',
+            'baz' => null,
+            'bar' => [
+                'some'    => 'value',
+                'another' => null,
+            ],
+            'cat' => [
+                'unicorn' => null,
+                'another' => null,
+            ],
+        ];
+        $dataWithoutNull = [
+            'foo' => 'bar',
+            'bar' => [
+                'some' => 'value',
+            ],
+        ];
+
+        $this->widget->expects($this->once())
+            ->method('toAPI')
+            ->willReturn($data);
+
+        $this->client->expects($this->once())
+            ->method('requestPost')
+            ->with($this->path, $dataWithoutNull)
+            ->willReturn($this->response);
+
+        $this->response->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(201);
+
+        $this->response->expects($this->once())
+            ->method('getBody')
+            ->willReturn('{"foo":"bar"}');
+
+        $settings = $this->createMock(SettingsInterface::class);
+        $this->widget->expects($this->once())
+            ->method('getSettings')
+            ->willReturn($settings);
+
+        $images = $this->createMock(Images::class);
+        $settings->expects($this->once())
+            ->method('getImages')
+            ->willReturn($images);
+
+        $this->widgetFactory
+            ->expects($this->once())
+            ->method('fromAPI')
+            ->willReturn($this->createMock(WidgetInterface::class));
+
+        foreach (Images::TYPES as $type) {
+            $images
+                ->expects($this->once())
+                ->method('get'.$type)
+                ->willReturn(
+                    $this->createMock(AbstractImage::class)
+                );
+        }
+
+
+        $this->widgetRepository->save($this->widget);
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::getList
      */
     public function testGetList()
@@ -487,10 +565,10 @@ class WidgetRepositoryTest extends TestCase
         $responseData = [
             '_embedded' => [
                 'widgets' => [
-                    [ 'uid' => '123f6bcd4621d373cade4e832627b4f6' ],
-                    [ 'uid' => '456f6bcd4621d373cade4e832627b4f6' ],
+                    ['uid' => '123f6bcd4621d373cade4e832627b4f6'],
+                    ['uid' => '456f6bcd4621d373cade4e832627b4f6'],
                 ],
-            ]
+            ],
         ];
         $widgets = (array)$responseData['_embedded']['widgets'];
 
@@ -532,7 +610,9 @@ class WidgetRepositoryTest extends TestCase
             $expected[] = $widget;
         }
 
-        $this->assertSame($expected, $this->widgetRepository->getList($pagination));
+        $this->assertSame(
+            $expected, $this->widgetRepository->getList($pagination)
+        );
     }
 
     /**
@@ -569,11 +649,11 @@ class WidgetRepositoryTest extends TestCase
     public function testGet()
     {
         $uid = '123f6bcd4621d373cade4e832627b4f6';
-        $responseBody = [ 'foo' => 'bar' ];
+        $responseBody = ['foo' => 'bar'];
 
         $this->client->expects($this->once())
             ->method('requestGet')
-            ->with($this->path . '/' . $uid)
+            ->with($this->path.'/'.$uid)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -609,7 +689,7 @@ class WidgetRepositoryTest extends TestCase
 
         $this->client->expects($this->once())
             ->method('requestGet')
-            ->with($this->path . '/' . $uid)
+            ->with($this->path.'/'.$uid)
             ->willReturn($this->response);
 
         $this->response->expects($this->once())
@@ -630,6 +710,8 @@ class WidgetRepositoryTest extends TestCase
         $this->widgetFactory = $this->createMock(WidgetFactoryInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
         $this->widget = $this->createMock(WidgetInterface::class);
-        $this->widgetRepository = new WidgetRepository($this->client, $this->widgetFactory);
+        $this->widgetRepository = new WidgetRepository(
+            $this->client, $this->widgetFactory
+        );
     }
 }
