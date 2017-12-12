@@ -18,7 +18,8 @@ class WidgetRepository implements WidgetRepositoryInterface
     /** @var WidgetFactoryInterface */
     private $widgetFactory;
 
-    public function __construct(ClientInterface $client,
+    public function __construct(
+        ClientInterface $client,
         WidgetFactoryInterface $widgetFactory
     ) {
         $this->client = $client;
@@ -195,7 +196,8 @@ class WidgetRepository implements WidgetRepositoryInterface
     private function uploadImages(WidgetInterface $widget, array $images)
     {
         $path = sprintf(
-            '/widgets/%s/settings/images/', $widget->getUid()
+            '/widgets/%s/settings/images/',
+            $widget->getUid()
         );
         $imageNames = [];
 
@@ -227,10 +229,10 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @param array           $imageNames
      * @param WidgetInterface $widget
      */
-    private function setResultWidgetImageNames($imageNames,
+    private function setResultWidgetImageNames(
+        $imageNames,
         WidgetInterface $widget
-    )
-    {
+    ) {
         if (isset($imageNames['displayName'])) {
             $widget->getSettings()
                 ->getImages()

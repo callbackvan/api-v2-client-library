@@ -135,7 +135,8 @@ class WidgetRepositoryTest extends TestCase
             ->willReturn($backgroundSlider);
 
         $this->assertSame(
-            $resultWidget, $this->widgetRepository->save($widget)
+            $resultWidget,
+            $this->widgetRepository->save($widget)
         );
     }
 
@@ -157,7 +158,11 @@ class WidgetRepositoryTest extends TestCase
      * @covers       \CallbackHunterAPIv2\Repository\WidgetRepository::save
      * @dataProvider widgetDataProvider
      */
-    public function testSaveWithSetImage($uid, $pathPart, $files, $responseBody,
+    public function testSaveWithSetImage(
+        $uid,
+        $pathPart,
+        $files,
+        $responseBody,
         $method
     ) {
         $widgetToAPI = $this->defaultWidgetToAPI;
@@ -287,7 +292,8 @@ class WidgetRepositoryTest extends TestCase
             ->with($responseBody['value']);
 
         $this->assertSame(
-            $resultWidget, $this->widgetRepository->save($this->widget)
+            $resultWidget,
+            $this->widgetRepository->save($this->widget)
         );
     }
 
@@ -611,7 +617,8 @@ class WidgetRepositoryTest extends TestCase
         }
 
         $this->assertSame(
-            $expected, $this->widgetRepository->getList($pagination)
+            $expected,
+            $this->widgetRepository->getList($pagination)
         );
     }
 
@@ -711,7 +718,8 @@ class WidgetRepositoryTest extends TestCase
         $this->response = $this->createMock(ResponseInterface::class);
         $this->widget = $this->createMock(WidgetInterface::class);
         $this->widgetRepository = new WidgetRepository(
-            $this->client, $this->widgetFactory
+            $this->client,
+            $this->widgetFactory
         );
     }
 }

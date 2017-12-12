@@ -46,10 +46,12 @@ class ImagesTest extends TestCase
     public function testButtonLogo()
     {
         $this->assertSame(
-            $this->buttonLogoImage, $this->images->getButtonLogo()
+            $this->buttonLogoImage,
+            $this->images->getButtonLogo()
         );
         $this->assertInstanceOf(
-            ButtonLogoImage::class, $this->images->getButtonLogo()
+            ButtonLogoImage::class,
+            $this->images->getButtonLogo()
         );
     }
 
@@ -60,10 +62,12 @@ class ImagesTest extends TestCase
     public function testIconLogoSlider()
     {
         $this->assertSame(
-            $this->iconLogoSliderImage, $this->images->getIconLogoSlider()
+            $this->iconLogoSliderImage,
+            $this->images->getIconLogoSlider()
         );
         $this->assertInstanceOf(
-            IconLogoSliderImage::class, $this->images->getIconLogoSlider()
+            IconLogoSliderImage::class,
+            $this->images->getIconLogoSlider()
         );
     }
 
@@ -74,10 +78,12 @@ class ImagesTest extends TestCase
     public function testGetBackgroundSlider()
     {
         $this->assertSame(
-            $this->backgroundSliderImage, $this->images->getBackgroundSlider()
+            $this->backgroundSliderImage,
+            $this->images->getBackgroundSlider()
         );
         $this->assertInstanceOf(
-            BackgroundSliderImage::class, $this->images->getBackgroundSlider()
+            BackgroundSliderImage::class,
+            $this->images->getBackgroundSlider()
         );
     }
 
@@ -102,7 +108,8 @@ class ImagesTest extends TestCase
             ->willReturn($this->expectedToAPIResponse['backgroundSlider']);
 
         $this->assertEquals(
-            $this->expectedToAPIResponse, $this->images->toAPI()
+            $this->expectedToAPIResponse,
+            $this->images->toAPI()
         );
     }
 
