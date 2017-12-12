@@ -48,7 +48,6 @@ class ChannelMobileOnlyTest extends TestCase
         $this->channel->setIsMobileEnabled(false);
 
         $expected = [
-            'isDesktopEnabled' => false,
             'isMobileEnabled' => false,
         ];
 
@@ -63,8 +62,7 @@ class ChannelMobileOnlyTest extends TestCase
         $this->channel->setIsMobileEnabled(true);
 
         $expected = [
-            'isDesktopEnabled' => false,
-            'isMobileEnabled' => true
+            'isMobileEnabled' => true,
         ];
 
         $this->assertSame($expected, $this->channel->toAPI());

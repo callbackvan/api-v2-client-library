@@ -22,4 +22,15 @@ class ChannelMobileOnly extends Channel
     {
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function toAPI()
+    {
+        $data = parent::toAPI();
+        unset($data['isDesktopEnabled']);
+
+        return $data;
+    }
 }
