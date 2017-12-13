@@ -34,7 +34,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
-     * @throws Exception\Exception
+     * @throws Exception\RepositoryException
      * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
      */
@@ -79,7 +79,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @return WidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
-     * @throws Exception\Exception
+     * @throws Exception\RepositoryException
      * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
      */
@@ -116,7 +116,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\ChangeOfPaidPropertiesException
-     * @throws Exception\Exception
+     * @throws Exception\RepositoryException
      * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
      */
@@ -134,7 +134,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @param array|int         $statusCodeOk
      *
      * @throws Exception\ChangeOfPaidPropertiesException
-     * @throws Exception\Exception
+     * @throws Exception\RepositoryException
      * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
      */
@@ -156,6 +156,7 @@ class WidgetRepository implements WidgetRepositoryInterface
             case ($statusCode === 400):
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\WidgetValidateException(
+                    $response,
                     (isset($data['title']) ? $data['title'] : 'Error'),
                     (isset($data['invalidParams'])
                         ? (array)$data['invalidParams'] : [])
@@ -164,6 +165,7 @@ class WidgetRepository implements WidgetRepositoryInterface
             case ($statusCode === 402):
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\ChangeOfPaidPropertiesException(
+                    $response,
                     (isset($data['title']) ? $data['title'] : 'Error'),
                     (isset($data['invalidParams'])
                         ? (array)$data['invalidParams'] : [])
@@ -172,13 +174,15 @@ class WidgetRepository implements WidgetRepositoryInterface
             case ($statusCode === 404):
                 $data = json_decode((string)$response->getBody(), true);
                 throw new Exception\ResourceNotFoundException(
+                    $response,
                     (isset($data['title']) ? $data['title'] : 'Error'),
                     $statusCode
                 );
                 break;
             default:
                 $data = json_decode((string)$response->getBody(), true);
-                throw new Exception\Exception(
+                throw new Exception\RepositoryException(
+                    $response,
                     (isset($data['title']) ? $data['title'] : 'Error'),
                     $statusCode
                 );
@@ -191,7 +195,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      *
      * @return array
      * @throws Exception\ChangeOfPaidPropertiesException
-     * @throws Exception\Exception
+     * @throws Exception\RepositoryException
      * @throws Exception\ResourceNotFoundException
      * @throws Exception\WidgetValidateException
      * @throws \GuzzleHttp\Exception\GuzzleException

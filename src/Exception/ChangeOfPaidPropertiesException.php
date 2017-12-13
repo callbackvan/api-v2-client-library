@@ -2,17 +2,20 @@
 
 namespace CallbackHunterAPIv2\Exception;
 
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * Class ChangeOfPaidPropertiesException
  * @package CallbackHunterAPIv2\Exception
  */
-class ChangeOfPaidPropertiesException extends Exception
+class ChangeOfPaidPropertiesException extends RepositoryException
 {
     private $invalidParams;
 
-    public function __construct($message, array $invalidParams)
-    {
-        parent::__construct($message, 402);
+    public function __construct(ResponseInterface $response, $message,
+        array $invalidParams
+    ) {
+        parent::__construct($response, $message, 402);
 
         $this->invalidParams = $invalidParams;
     }
