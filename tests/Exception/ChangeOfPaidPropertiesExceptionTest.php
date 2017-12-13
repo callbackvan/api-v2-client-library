@@ -22,7 +22,9 @@ class ChangeOfPaidPropertiesExceptionTest extends TestCase
         ];
 
         $ex = new ChangeOfPaidPropertiesException(
-            $response, $msg, $invalidParams
+            $response,
+            $msg,
+            $invalidParams
         );
 
         $this->assertEquals($invalidParams, $ex->getInvalidParams());

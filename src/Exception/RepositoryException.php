@@ -8,7 +8,9 @@ class RepositoryException extends Exception
 {
     private $response;
 
-    public function __construct(ResponseInterface $response, $message = '',
+    public function __construct(
+        ResponseInterface $response,
+        $message = '',
         $code = 0
     ) {
         parent::__construct($message, $code);

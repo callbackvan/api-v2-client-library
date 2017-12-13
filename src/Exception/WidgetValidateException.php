@@ -12,7 +12,9 @@ class WidgetValidateException extends RepositoryException
 {
     private $invalidParams;
 
-    public function __construct(ResponseInterface $response, $message,
+    public function __construct(
+        ResponseInterface $response,
+        $message,
         array $invalidParams
     ) {
         parent::__construct($response, $message, 400);
