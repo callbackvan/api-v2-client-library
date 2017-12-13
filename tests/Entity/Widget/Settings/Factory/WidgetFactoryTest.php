@@ -1,8 +1,9 @@
 <?php
 
-namespace CallbackHunterAPIv2\Entity\Widget\Factory;
+namespace CallbackHunterAPIv2\Tests\Entity\Widget\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget;
+use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use PHPUnit\Framework\TestCase;
