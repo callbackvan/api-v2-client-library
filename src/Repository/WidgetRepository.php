@@ -55,6 +55,12 @@ class WidgetRepository implements WidgetRepositoryInterface
         }
         $this->checkResponse($response, $expectedCode);
         $responseData = json_decode((string)$response->getBody(), true);
+        if ($responseData === null) {
+            throw new Exception\RepositoryException(
+                $response,
+                'Content is not json'
+            );
+        }
 
         $saved = $this->widgetFactory->fromAPI($responseData);
 
@@ -240,11 +246,11 @@ class WidgetRepository implements WidgetRepositoryInterface
         $imageNames,
         WidgetInterface $widget
     ) {
-        if (isset($imageNames['displayName'])) {
+        if (isset($imageNames['buttonLogo'])) {
             $widget->getSettings()
                 ->getImages()
                 ->getButtonLogo()
-                ->setName($imageNames['displayName']);
+                ->setName($imageNames['buttonLogo']);
         }
 
         if (isset($imageNames['iconLogoSlider'])) {

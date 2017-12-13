@@ -306,14 +306,14 @@ class WidgetRepositoryTest extends TestCase
                 '123f6bcd4621d373cade4e832627b4f6',
                 'buttonLogo',
                 [$file, null, null],
-                ['name' => 'displayName'],
+                ['name' => 'buttonLogo'],
                 'getButtonLogo',
             ],
             [
                 null,
                 'buttonLogo',
                 [$file, null, null],
-                ['name' => 'displayName'],
+                ['name' => 'buttonLogo'],
                 'getButtonLogo',
             ],
             [
@@ -387,6 +387,34 @@ class WidgetRepositoryTest extends TestCase
         $this->response->expects($this->once())
             ->method('getBody')
             ->willReturn(json_encode($errorResponseBody));
+
+        $this->widgetRepository->save($this->widget);
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::save
+     * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
+     */
+    public function testSaveThrowRepositoryException()
+    {
+        $dataToAPI = $this->defaultWidgetToAPI;
+        $dataToAPI['site'] = '';
+
+        $this->widget->expects($this->once())
+            ->method('toAPI')
+            ->willReturn($dataToAPI);
+
+        $this->client->expects($this->once())
+            ->method('requestPost')
+            ->with($this->path, $dataToAPI)
+            ->willReturn($this->response);
+
+        $this->response->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(201);
+        $this->response->expects($this->once())
+            ->method('getBody')
+            ->willReturn('not json');
 
         $this->widgetRepository->save($this->widget);
     }
