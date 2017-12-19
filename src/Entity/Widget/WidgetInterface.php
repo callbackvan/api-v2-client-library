@@ -59,6 +59,16 @@ interface WidgetInterface extends BaseEntityInterface
     public function getSettings();
 
     /**
+     * @return string
+     */
+    public function getWidgetDetailedLink();
+
+    /**
+     * @return string
+     */
+    public function getOperatorChatLink();
+
+    /**
      * @return array
      */
     public function toAPI();

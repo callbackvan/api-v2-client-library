@@ -39,6 +39,10 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
             $widget->{$setterMethod}($v);
         }
 
+        if (!empty($data['_links']['operatorChat']['href'])) {
+            $widget->setOperatorChatLink($data['_links']['operatorChat']['href']);
+        }
+
         return $widget;
     }
 }

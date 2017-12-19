@@ -6,7 +6,8 @@ use CallbackHunterAPIv2\Entity\Widget\Settings;
 
 class Widget implements WidgetInterface
 {
-    const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js';
+    const WIDGET_LINK_PREFIX   = '//cdn.callbackhunter.com/cbh.js';
+    const WIDGET_DETAILED_LINK = 'https://callbackhunter.com/cabinet/hunters/edit/';
 
     /**
      * Идентификатор виджета
@@ -36,6 +37,13 @@ class Widget implements WidgetInterface
      * @var bool
      */
     private $isActive;
+
+    /**
+     * Ссылка на операторский интерфейс
+     *
+     * @var string
+     */
+    private $operatorChatLink;
 
     /**
      * @var Settings\Settings
@@ -147,6 +155,37 @@ class Widget implements WidgetInterface
     }
 
     /**
+     * @return string
+     */
+    public function getWidgetDetailedLink()
+    {
+        if (!$this->getUid()) {
+            return null;
+        }
+
+        return self::WIDGET_DETAILED_LINK . $this->getUid();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperatorChatLink()
+    {
+        return $this->operatorChatLink;
+    }
+    /**
+     * @param string $operatorChatLink
+     *
+     * @return $this
+     */
+    public function setOperatorChatLink($operatorChatLink)
+    {
+        $this->operatorChatLink = $operatorChatLink;
+
+        return $this;
+    }
+
+    /**
      * @return Settings\Settings
      */
     public function getSettings()
@@ -160,7 +199,6 @@ class Widget implements WidgetInterface
     public function toAPI()
     {
         return [
-            'uid'      => $this->getUid(),
             'isActive' => $this->isActive(),
             'site'     => $this->getSite(),
             'settings' => $this->settings->toAPI(),
