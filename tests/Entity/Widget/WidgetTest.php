@@ -82,9 +82,9 @@ class WidgetTest extends TestCase
      */
     public function testWidgetDetailedLink()
     {
-        $expected = Widget::WIDGET_DETAILED_LINK . $this->example['uid'];
+        $expected = $this->example['self'];
         $this->assertNull($this->entity->getWidgetDetailedLink());
-        $this->entity->setUid($this->example['uid']);
+        $this->entity->setWidgetDetailedLink($expected);
         $this->assertSame($expected, $this->entity->getWidgetDetailedLink());
     }
 
@@ -135,6 +135,7 @@ class WidgetTest extends TestCase
             'isActive' => true,
             'site'     => 'example.com',
             'code'     => 'd9729xcv74992cc3482b350163a1a010',
+            'self'     => '/api/v2/widgets/1',
             'operatorChat' => 'https://chat.callbackhunter.com/#key=d6a0ed6440',
         ];
 

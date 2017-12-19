@@ -38,6 +38,7 @@ class WidgetFactoryTest extends TestCase
             ->setIsActive($this->widgetDataSample['isActive'])
             ->setSite($this->widgetDataSample['site'])
             ->setCode($this->widgetDataSample['code'])
+            ->setWidgetDetailedLink($this->widgetDataSample['_links']['self']['href'])
             ->setOperatorChatLink($this->widgetDataSample['_links']['operatorChat']['href']);
 
         $widget = $this->widgetFactory->fromAPI($this->widgetDataSample);
