@@ -40,6 +40,7 @@ class PositionTest extends TestCase
     {
         $this->position->setX($this->example['x']);
         $this->position->setY($this->example['y']);
+        $this->position->setFixedButton($this->example['fixedButton']);
 
         $this->assertSame($this->example, $this->position->toAPI());
     }
@@ -50,11 +51,24 @@ class PositionTest extends TestCase
     public function testToAPIPartial()
     {
         $this->position->setY($this->example['y']);
+        $this->position->setFixedButton($this->example['fixedButton']);
 
         $expected = $this->example;
         $expected['x'] = $this->position->getX();
 
         $this->assertSame($expected, $this->position->toAPI());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::isFixedButton()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::setFixedButton()
+     */
+    public function testFixedButton()
+    {
+        $excepted = false;
+        $this->assertNull($this->position->isFixedButton());
+        $this->position->setFixedButton($excepted);
+        $this->assertEquals($excepted, $this->position->isFixedButton());
     }
 
     protected function setUp()
@@ -65,6 +79,7 @@ class PositionTest extends TestCase
         $this->example = [
             'x' => 77,
             'y' => 88,
+            'fixedButton' => false,
         ];
     }
 }

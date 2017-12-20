@@ -8,6 +8,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ColorsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImagesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\PositionFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 
 class MainFactory
@@ -21,7 +22,8 @@ class MainFactory
             new ColorsFactory,
             new PositionFactory,
             new ImagesFactory,
-            new ChannelsFactory
+            new ChannelsFactory,
+            new SizesFactory
         );
 
         return new WidgetFactory($settingsFactory);

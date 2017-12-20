@@ -2,7 +2,7 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 
 class Widget implements WidgetInterface
 {
@@ -58,9 +58,9 @@ class Widget implements WidgetInterface
     private $settings;
 
     /**
-     * @param Settings\SettingsInterface $settings
+     * @param SettingsInterface $settings
      */
-    public function __construct(Settings\SettingsInterface $settings)
+    public function __construct(SettingsInterface $settings)
     {
         $this->settings = $settings;
     }

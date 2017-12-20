@@ -22,6 +22,11 @@ class Colors implements BaseEntityInterface
     private $backgroundSlider;
 
     /**
+     * @var string
+     */
+    private $sliderTextColor;
+
+    /**
      * @return string
      */
     public function getIconBackground()
@@ -62,6 +67,26 @@ class Colors implements BaseEntityInterface
     }
 
     /**
+     * @return string
+     */
+    public function getSliderTextColor()
+    {
+        return $this->sliderTextColor;
+    }
+
+    /**
+     * @param string $sliderTextColor
+     *
+     * @return $this
+     */
+    public function setSliderTextColor($sliderTextColor)
+    {
+        $this->sliderTextColor = $sliderTextColor;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toAPI()
@@ -69,6 +94,7 @@ class Colors implements BaseEntityInterface
         return [
             'iconBackground' => $this->getIconBackground(),
             'backgroundSlider' => $this->getBackgroundSlider(),
+            'sliderTextColor' => $this->getSliderTextColor(),
         ];
     }
 }

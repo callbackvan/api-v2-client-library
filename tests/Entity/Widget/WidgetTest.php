@@ -79,6 +79,7 @@ class WidgetTest extends TestCase
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getWidgetDetailedLink()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setWidgetDetailedLink()
      */
     public function testWidgetDetailedLink()
     {
