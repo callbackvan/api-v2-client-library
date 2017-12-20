@@ -28,16 +28,23 @@ class SettingsFactory
      */
     private $channelsFactory;
 
+    /**
+     * @var SizesFactory
+     */
+    private $sizesFactory;
+
     public function __construct(
         ColorsFactory $colorsFactory,
         PositionFactory $positionFactory,
         ImagesFactory $imagesFactory,
-        ChannelsFactory $channelsFactory
+        ChannelsFactory $channelsFactory,
+        SizesFactory $sizesFactory
     ) {
         $this->colorsFactory = $colorsFactory;
         $this->positionFactory = $positionFactory;
         $this->imagesFactory = $imagesFactory;
         $this->channelsFactory = $channelsFactory;
+        $this->sizesFactory = $sizesFactory;
     }
 
     /**
@@ -60,11 +67,16 @@ class SettingsFactory
             isset($data['channels']) ? $data['channels'] : []
         );
 
+        $sizes = $this->sizesFactory->fromAPI(
+            isset($data['sizes']) ? $data['sizes'] : []
+        );
+
         return new Settings(
             $colors,
             $position,
             $images,
-            $channels
+            $channels,
+            $sizes
         );
     }
 }

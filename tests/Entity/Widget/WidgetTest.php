@@ -78,19 +78,41 @@ class WidgetTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getWidgetDetailedLink()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setWidgetDetailedLink()
+     */
+    public function testWidgetDetailedLink()
+    {
+        $expected = $this->example['self'];
+        $this->assertNull($this->entity->getWidgetDetailedLink());
+        $this->entity->setWidgetDetailedLink($expected);
+        $this->assertSame($expected, $this->entity->getWidgetDetailedLink());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setOperatorChatLink()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getOperatorChatLink()
+     */
+    public function testOperatorChatLink()
+    {
+        $expected = $this->example['operatorChat'];
+        $this->assertNull($this->entity->getOperatorChatLink());
+        $this->entity->setOperatorChatLink($expected);
+        $this->assertSame($expected, $this->entity->getOperatorChatLink());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::toAPI()
      */
     public function testToAPI()
     {
         $expected = [
-            'uid' => $this->example['uid'],
             'isActive' => $this->example['isActive'],
-            'site' => $this->example['site'],
-            'settings' => null
+            'site'     => $this->example['site'],
+            'settings' => null,
         ];
 
         $this->entity->setSite($expected['site']);
-        $this->entity->setUid($expected['uid']);
         $this->entity->setIsActive($expected['isActive']);
         $this->entity->setCode($this->example['code']);
 
@@ -110,10 +132,12 @@ class WidgetTest extends TestCase
     {
         parent::setUp();
         $this->example = [
-            'uid' => '123f6bcd4621d373cade4e832627b4f6',
+            'uid'      => '123f6bcd4621d373cade4e832627b4f6',
             'isActive' => true,
             'site'     => 'example.com',
             'code'     => 'd9729xcv74992cc3482b350163a1a010',
+            'self'     => '/api/v2/widgets/1',
+            'operatorChat' => 'https://chat.callbackhunter.com/#key=d6a0ed6440',
         ];
 
         $this->settings = $this->createMock(Settings::class);

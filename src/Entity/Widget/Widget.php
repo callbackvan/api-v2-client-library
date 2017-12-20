@@ -2,11 +2,12 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 
 class Widget implements WidgetInterface
 {
-    const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js';
+    const WIDGET_LINK_PREFIX   = '//cdn.callbackhunter.com/cbh.js';
+    const WIDGET_DETAILED_LINK = 'https://callbackhunter.com/cabinet/hunters/edit/';
 
     /**
      * Идентификатор виджета
@@ -38,14 +39,28 @@ class Widget implements WidgetInterface
     private $isActive;
 
     /**
+     * Ссылка для получения виджета
+     *
+     * @var string
+     */
+    private $widgetDetailedLink;
+
+    /**
+     * Ссылка на операторский интерфейс
+     *
+     * @var string
+     */
+    private $operatorChatLink;
+
+    /**
      * @var Settings\Settings
      */
     private $settings;
 
     /**
-     * @param Settings\SettingsInterface $settings
+     * @param SettingsInterface $settings
      */
-    public function __construct(Settings\SettingsInterface $settings)
+    public function __construct(SettingsInterface $settings)
     {
         $this->settings = $settings;
     }
@@ -147,6 +162,45 @@ class Widget implements WidgetInterface
     }
 
     /**
+     * @return string
+     */
+    public function getWidgetDetailedLink()
+    {
+        return $this->widgetDetailedLink;
+    }
+
+    /**
+     * @param $widgetDetailedLink
+     *
+     * @return $this
+     */
+    public function setWidgetDetailedLink($widgetDetailedLink)
+    {
+        $this->widgetDetailedLink = $widgetDetailedLink;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperatorChatLink()
+    {
+        return $this->operatorChatLink;
+    }
+    /**
+     * @param string $operatorChatLink
+     *
+     * @return $this
+     */
+    public function setOperatorChatLink($operatorChatLink)
+    {
+        $this->operatorChatLink = $operatorChatLink;
+
+        return $this;
+    }
+
+    /**
      * @return Settings\Settings
      */
     public function getSettings()
@@ -160,7 +214,6 @@ class Widget implements WidgetInterface
     public function toAPI()
     {
         return [
-            'uid'      => $this->getUid(),
             'isActive' => $this->isActive(),
             'site'     => $this->getSite(),
             'settings' => $this->settings->toAPI(),

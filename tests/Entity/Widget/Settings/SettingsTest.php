@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vdvug_000
- * Date: 11.12.2017
- * Time: 11:08
- */
 
 namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings;
 
@@ -13,6 +7,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Colors;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Position;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Sizes;
 
 class SettingsTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,6 +21,8 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     private $images;
     /** @var Channels */
     private $channels;
+    /** @var Sizes */
+    private $sizes;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::__construct
@@ -64,15 +61,35 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::getSizes
+     */
+    public function testGetSizes()
+    {
+        $this->assertSame($this->sizes, $this->entity->getSizes());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::toAPI
      */
     public function testToAPI()
     {
         $expected = [
-            'colors'   => ['color' => '000000'],
-            'position' => ['position' => 90],
-            'images'   => ['images' => '13123123'],
-            'channels' => ['channel' => 'tg'],
+            'colors'   => [
+                'color' => '000000',
+            ],
+            'position' => [
+                'position' => 90,
+            ],
+            'images'   => [
+                'images' => '13123123',
+            ],
+            'channels' => [
+                'channel' => 'tg',
+            ],
+            'sizes'    => [
+                'buttonSize' => 55,
+            ],
         ];
         $this->colors
             ->expects($this->once())
@@ -94,6 +111,11 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             ->method('toAPI')
             ->willReturn($expected['channels']);
 
+        $this->sizes
+            ->expects($this->once())
+            ->method('toAPI')
+            ->willReturn($expected['sizes']);
+
         $this->assertEquals($expected, $this->entity->toAPI());
     }
 
@@ -108,7 +130,8 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             $this->colors = $this->createMock(Colors::class),
             $this->position = $this->createMock(Position::class),
             $this->images = $this->createMock(Images::class),
-            $this->channels = $this->createMock(Channels::class)
+            $this->channels = $this->createMock(Channels::class),
+            $this->sizes = $this->createMock(Sizes::class)
         );
     }
 }

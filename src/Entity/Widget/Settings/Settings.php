@@ -2,8 +2,8 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
-use CallbackHunterAPIv2\Entity\Widget\Settings\Images;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 
 class Settings implements SettingsInterface
 {
@@ -13,28 +13,34 @@ class Settings implements SettingsInterface
     /** @var Position */
     private $position;
 
-    /** @var Images\Images */
+    /** @var Images */
     private $images;
 
-    /** @var Channels\Channels */
+    /** @var Channels */
     private $channels;
+
+    /** @var Sizes */
+    private $sizes;
 
     /**
      * @param Colors $colors
      * @param Position $position
-     * @param Images\Images $images
-     * @param Channels\Channels $channels
+     * @param Images $images
+     * @param Channels $channels
+     * @param Sizes $sizes
      */
     public function __construct(
         Colors $colors,
         Position $position,
-        Images\Images $images,
-        Channels\Channels $channels
+        Images $images,
+        Channels $channels,
+        Sizes $sizes
     ) {
         $this->colors = $colors;
         $this->position = $position;
         $this->images = $images;
         $this->channels = $channels;
+        $this->sizes = $sizes;
     }
 
     /**
@@ -54,7 +60,7 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * @return Images\Images
+     * @return Images
      */
     public function getImages()
     {
@@ -62,11 +68,19 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * @return Channels\Channels
+     * @return Channels
      */
     public function getChannels()
     {
         return $this->channels;
+    }
+
+    /**
+     * @return Sizes
+     */
+    public function getSizes()
+    {
+        return $this->sizes;
     }
 
     /**
@@ -79,6 +93,7 @@ class Settings implements SettingsInterface
             'position' => $this->position->toAPI(),
             'images'   => $this->images->toAPI(),
             'channels' => $this->channels->toAPI(),
+            'sizes'    => $this->sizes->toAPI(),
         ];
     }
 }

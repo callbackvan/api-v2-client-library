@@ -37,7 +37,9 @@ class WidgetFactoryTest extends TestCase
             ->setUid($this->widgetDataSample['uid'])
             ->setIsActive($this->widgetDataSample['isActive'])
             ->setSite($this->widgetDataSample['site'])
-            ->setCode($this->widgetDataSample['code']);
+            ->setCode($this->widgetDataSample['code'])
+            ->setWidgetDetailedLink($this->widgetDataSample['_links']['self']['href'])
+            ->setOperatorChatLink($this->widgetDataSample['_links']['operatorChat']['href']);
 
         $widget = $this->widgetFactory->fromAPI($this->widgetDataSample);
 
@@ -101,6 +103,14 @@ class WidgetFactoryTest extends TestCase
                         'isMobileEnabled'  => true,
                     ],
                 ],
+            ],
+            '_links'   => [
+                'self' => [
+                    'href' => '/widgets/31dbfcf288e7076e0e891fb644552f78b8a0b0af'
+                ],
+                'operatorChat' => [
+                    'href' => 'https://chat.callbackhunter.com/#key=d6a0ed6440b7788'
+                ]
             ],
         ];
 
