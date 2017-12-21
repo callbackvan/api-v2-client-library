@@ -78,14 +78,15 @@ class WidgetTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getWidgetDetailedLink()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getWidgetSettingsLink()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setWidgetSettingsLink()
      */
-    public function testWidgetDetailedLink()
+    public function testWidgetSettingsLink()
     {
         $expected = $this->example['self'];
-        $this->assertNull($this->entity->getWidgetDetailedLink());
-        $this->entity->setWidgetDetailedLink($expected);
-        $this->assertSame($expected, $this->entity->getWidgetDetailedLink());
+        $this->assertNull($this->entity->getWidgetSettingsLink());
+        $this->entity->setWidgetSettingsLink($expected);
+        $this->assertSame($expected, $this->entity->getWidgetSettingsLink());
     }
 
     /**

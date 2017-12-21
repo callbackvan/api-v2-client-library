@@ -61,7 +61,7 @@ interface WidgetInterface extends BaseEntityInterface
     /**
      * @return string
      */
-    public function getWidgetDetailedLink();
+    public function getWidgetSettingsLink();
 
     /**
      * @return string

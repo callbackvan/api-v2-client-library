@@ -39,11 +39,11 @@ class Widget implements WidgetInterface
     private $isActive;
 
     /**
-     * Ссылка для получения виджета
+     * Ссылка на страницу редактирования виджета
      *
      * @var string
      */
-    private $widgetDetailedLink;
+    private $widgetSettingsLink;
 
     /**
      * Ссылка на операторский интерфейс
@@ -164,19 +164,19 @@ class Widget implements WidgetInterface
     /**
      * @return string
      */
-    public function getWidgetDetailedLink()
+    public function getWidgetSettingsLink()
     {
-        return $this->widgetDetailedLink;
+        return $this->widgetSettingsLink;
     }
 
     /**
-     * @param $widgetDetailedLink
+     * @param $widgetSettingsLink
      *
      * @return $this
      */
-    public function setWidgetDetailedLink($widgetDetailedLink)
+    public function setWidgetSettingsLink($widgetSettingsLink)
     {
-        $this->widgetDetailedLink = $widgetDetailedLink;
+        $this->widgetSettingsLink = $widgetSettingsLink;
 
         return $this;
     }

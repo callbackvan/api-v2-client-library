@@ -40,7 +40,7 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
         }
 
         if (!empty($data['_links']['self']['href'])) {
-            $widget->setWidgetDetailedLink($data['_links']['self']['href']);
+            $widget->setWidgetSettingsLink($data['_links']['widgetSettings']['href']);
         }
 
         if (!empty($data['_links']['operatorChat']['href'])) {
