@@ -27,7 +27,7 @@ class Colors implements BaseEntityInterface
     private $sliderTextColor;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIconBackground()
     {
@@ -35,19 +35,19 @@ class Colors implements BaseEntityInterface
     }
 
     /**
-     * @param $color
+     * @param string $color
      *
      * @return $this
      */
     public function setIconBackground($color)
     {
-        $this->iconBackground = $color;
+        $this->iconBackground = (string) $color;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getBackgroundSlider()
     {
@@ -55,19 +55,19 @@ class Colors implements BaseEntityInterface
     }
 
     /**
-     * @param $color
+     * @param string $color
      *
      * @return $this
      */
     public function setBackgroundSlider($color)
     {
-        $this->backgroundSlider = $color;
+        $this->backgroundSlider = (string) $color;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getSliderTextColor()
     {
@@ -81,7 +81,7 @@ class Colors implements BaseEntityInterface
      */
     public function setSliderTextColor($sliderTextColor)
     {
-        $this->sliderTextColor = $sliderTextColor;
+        $this->sliderTextColor = (string) $sliderTextColor;
 
         return $this;
     }

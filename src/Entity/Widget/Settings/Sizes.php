@@ -16,7 +16,7 @@ class Sizes implements SizesInterface, BaseEntityInterface
     /**
      * Получить размер кнопки виджета
      *
-     * @return int
+     * @return int|null
      */
     public function getButtonSize()
     {
@@ -26,13 +26,13 @@ class Sizes implements SizesInterface, BaseEntityInterface
     /**
      * Установить размер кнопки
      *
-     * @param $buttonSize
+     * @param int $buttonSize
      *
      * @return $this
      */
     public function setButtonSize($buttonSize)
     {
-        $this->buttonSize = $buttonSize;
+        $this->buttonSize = (int) $buttonSize;
 
         return $this;
     }

@@ -24,7 +24,7 @@ class Channel implements BaseEntityInterface
     protected $isMobileEnabled;
 
     /**
-     * @return bool
+     * @return bool|null
      */
     public function isMobileEnabled()
     {
@@ -44,7 +44,7 @@ class Channel implements BaseEntityInterface
     }
 
     /**
-     * @return boolean
+     * @return bool|null
      */
     public function isDesktopEnabled()
     {

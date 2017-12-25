@@ -25,7 +25,7 @@ class PositionFactoryTest extends TestCase
         $expected = new Position();
         $expected->setX($this->example['x'])
             ->setY($this->example['y'])
-            ->setFixedButton($this->example['fixedButton']);
+            ->setFixedButton($this->example['isFixedButton']);
 
         $this->assertEquals($expected, $response);
     }
@@ -38,7 +38,7 @@ class PositionFactoryTest extends TestCase
         $this->example = [
             'x' => 77,
             'y' => 88,
-            'fixedButton' => false,
+            'isFixedButton' => false,
         ];
     }
 }

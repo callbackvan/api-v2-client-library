@@ -14,12 +14,12 @@ class SizesFactory implements BaseFactoryInterface
      */
     public function fromAPI(array $data)
     {
-        $colors = new Sizes();
+        $sizes = new Sizes();
 
         if (isset($data['buttonSize'])) {
-            $colors->setButtonSize($data['buttonSize']);
+            $sizes->setButtonSize($data['buttonSize']);
         }
 
-        return $colors;
+        return $sizes;
     }
 }

@@ -25,7 +25,7 @@ class Position implements BaseEntityInterface
     private $fixedButton;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getX()
     {
@@ -39,13 +39,13 @@ class Position implements BaseEntityInterface
      */
     public function setX($x)
     {
-        $this->x = (int)$x;
+        $this->x = (int) $x;
 
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getY()
     {
@@ -59,13 +59,13 @@ class Position implements BaseEntityInterface
      */
     public function setY($y)
     {
-        $this->y = (int)$y;
+        $this->y = (int) $y;
 
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
     public function isFixedButton()
     {
@@ -77,7 +77,7 @@ class Position implements BaseEntityInterface
      */
     public function setFixedButton($fixedButton)
     {
-        $this->fixedButton = $fixedButton;
+        $this->fixedButton = (bool) $fixedButton;
     }
 
     /**

@@ -39,7 +39,7 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
             $widget->{$setterMethod}($v);
         }
 
-        if (!empty($data['_links']['self']['href'])) {
+        if (!empty($data['_links']['widgetSettings']['href'])) {
             $widget->setWidgetSettingsLink($data['_links']['widgetSettings']['href']);
         }
 
