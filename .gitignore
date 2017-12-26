@@ -2,6 +2,7 @@
 /.idea
 # Composer
 /vendor/
+/composer.phar
 # Tests output
 /clover.xml
 /report/
