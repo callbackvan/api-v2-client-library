@@ -39,7 +39,7 @@ class Position implements BaseEntityInterface
      */
     public function setX($x)
     {
-        $this->x = (int) $x;
+        $this->x = (int)$x;
 
         return $this;
     }
@@ -59,7 +59,7 @@ class Position implements BaseEntityInterface
      */
     public function setY($y)
     {
-        $this->y = (int) $y;
+        $this->y = (int)$y;
 
         return $this;
     }

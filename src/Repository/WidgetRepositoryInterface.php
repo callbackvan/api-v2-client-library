@@ -9,12 +9,14 @@ interface WidgetRepositoryInterface
 {
     /**
      * @param WidgetInterface $widget
+     *
      * @return void
      */
     public function save(WidgetInterface $widget);
 
     /**
      * @param PaginationInterface $pagination
+     *
      * @return WidgetInterface[]
      */
     public function getList(PaginationInterface $pagination);

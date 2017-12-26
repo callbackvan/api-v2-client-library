@@ -28,6 +28,7 @@ class Pagination implements PaginationInterface
 
     /**
      * @param integer $offset
+     *
      * @return void
      * @throws Exception\ValidateException
      */
@@ -57,6 +58,7 @@ class Pagination implements PaginationInterface
 
     /**
      * @param integer $limit
+     *
      * @return void
      * @throws Exception\ValidateException
      */
@@ -70,6 +72,7 @@ class Pagination implements PaginationInterface
      * @param integer $number
      * @param integer $min
      * @param integer $max
+     *
      * @throws Exception\ValidateException
      */
     private function checkNumber($number, $min = null, $max = null)
@@ -77,11 +80,15 @@ class Pagination implements PaginationInterface
         $integer = (int)$number;
 
         if (($min !== null) && ($integer < (int)$min)) {
-            throw new Exception\ValidateException(sprintf('"%s" is less min value', $number));
+            throw new Exception\ValidateException(
+                sprintf('"%s" is less min value', $number)
+            );
         }
 
         if (($max !== null) && ($integer > (int)$max)) {
-            throw new Exception\ValidateException(sprintf('"%s" is greater max value', $number));
+            throw new Exception\ValidateException(
+                sprintf('"%s" is greater max value', $number)
+            );
         }
     }
 }

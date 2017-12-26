@@ -8,6 +8,7 @@ interface ImagesFactoryInterface
 {
     /**
      * @param array $data
+     *
      * @return ImagesInterface
      */
     public function fromAPI(array $data);

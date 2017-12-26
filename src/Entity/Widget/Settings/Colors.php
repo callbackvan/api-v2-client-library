@@ -41,7 +41,7 @@ class Colors implements BaseEntityInterface
      */
     public function setIconBackground($color)
     {
-        $this->iconBackground = (string) $color;
+        $this->iconBackground = (string)$color;
 
         return $this;
     }
@@ -61,7 +61,7 @@ class Colors implements BaseEntityInterface
      */
     public function setBackgroundSlider($color)
     {
-        $this->backgroundSlider = (string) $color;
+        $this->backgroundSlider = (string)$color;
 
         return $this;
     }

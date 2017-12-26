@@ -72,7 +72,8 @@ class WidgetTest extends TestCase
      */
     public function testGetLink()
     {
-        $expected = Widget::WIDGET_LINK_PREFIX . '?hunter_code=' . $this->example['code'];
+        $expected = Widget::WIDGET_LINK_PREFIX.'?hunter_code='
+            .$this->example['code'];
         $this->entity->setCode($this->example['code']);
         $this->assertSame($expected, $this->entity->getLink());
     }
@@ -132,11 +133,11 @@ class WidgetTest extends TestCase
     {
         parent::setUp();
         $this->example = [
-            'uid'      => '123f6bcd4621d373cade4e832627b4f6',
-            'isActive' => true,
-            'site'     => 'example.com',
-            'code'     => 'd9729xcv74992cc3482b350163a1a010',
-            'self'     => '/api/v2/widgets/1',
+            'uid'          => '123f6bcd4621d373cade4e832627b4f6',
+            'isActive'     => true,
+            'site'         => 'example.com',
+            'code'         => 'd9729xcv74992cc3482b350163a1a010',
+            'self'         => '/api/v2/widgets/1',
             'operatorChat' => 'https://chat.callbackhunter.com/#key=d6a0ed6440',
         ];
 

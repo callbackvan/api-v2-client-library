@@ -57,7 +57,7 @@ abstract class AbstractImage
 
     public function getForUpload()
     {
-        return $this->imageForUpload?:null;
+        return $this->imageForUpload ?: null;
     }
 
     public function setForUpload(FileForUploadInterface $image)

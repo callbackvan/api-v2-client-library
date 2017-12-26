@@ -70,7 +70,7 @@ class Channel implements BaseEntityInterface
     {
         return [
             'isDesktopEnabled' => $this->isDesktopEnabled(),
-            'isMobileEnabled' => $this->isMobileEnabled(),
+            'isMobileEnabled'  => $this->isMobileEnabled(),
         ];
     }
 }

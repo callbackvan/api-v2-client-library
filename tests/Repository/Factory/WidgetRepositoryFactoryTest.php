@@ -20,7 +20,10 @@ class WidgetRepositoryFactoryTest extends TestCase
         $key = 'testkey';
 
         $widgetFactory = $this->createMock(WidgetFactoryInterface::class);
-        $widgetRepositoryFactory = new WidgetRepositoryFactory(new ClientFactory(), $widgetFactory);
+        $widgetRepositoryFactory = new WidgetRepositoryFactory(
+            new ClientFactory(),
+            $widgetFactory
+        );
 
         $this->assertInstanceOf(
             WidgetRepository::class,

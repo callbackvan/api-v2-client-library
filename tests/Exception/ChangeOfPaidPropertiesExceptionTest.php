@@ -17,7 +17,7 @@ class ChangeOfPaidPropertiesExceptionTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $msg = 'Some error';
         $invalidParams = [
-            'name' => 'test',
+            'name'   => 'test',
             'reason' => 'blablabla',
         ];
 

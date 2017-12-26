@@ -25,7 +25,9 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
      */
     public function fromAPI(array $data)
     {
-        $settings = $this->settingsFactory->fromAPI(isset($data['settings']) ? $data['settings'] : []);
+        $settings = $this->settingsFactory->fromAPI(
+            isset($data['settings']) ? $data['settings'] : []
+        );
 
         $widget = new Widget($settings);
 
@@ -40,11 +42,15 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
         }
 
         if (!empty($data['_links']['widgetSettings']['href'])) {
-            $widget->setWidgetSettingsLink($data['_links']['widgetSettings']['href']);
+            $widget->setWidgetSettingsLink(
+                $data['_links']['widgetSettings']['href']
+            );
         }
 
         if (!empty($data['_links']['operatorChat']['href'])) {
-            $widget->setOperatorChatLink($data['_links']['operatorChat']['href']);
+            $widget->setOperatorChatLink(
+                $data['_links']['operatorChat']['href']
+            );
         }
 
         return $widget;

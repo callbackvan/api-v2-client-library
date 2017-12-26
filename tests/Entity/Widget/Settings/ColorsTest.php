@@ -20,7 +20,10 @@ class ColorsTest extends TestCase
     public function testIconBackground()
     {
         $this->colors->setIconBackground($this->example['iconBackground']);
-        $this->assertSame($this->example['iconBackground'], $this->colors->getIconBackground());
+        $this->assertSame(
+            $this->example['iconBackground'],
+            $this->colors->getIconBackground()
+        );
     }
 
     /**
@@ -30,7 +33,10 @@ class ColorsTest extends TestCase
     public function testBackgroundSlider()
     {
         $this->colors->setBackgroundSlider($this->example['backgroundSlider']);
-        $this->assertSame($this->example['backgroundSlider'], $this->colors->getBackgroundSlider());
+        $this->assertSame(
+            $this->example['backgroundSlider'],
+            $this->colors->getBackgroundSlider()
+        );
     }
 
     /**

@@ -8,6 +8,7 @@ interface ColorsFactoryInterface
 {
     /**
      * @param array $data
+     *
      * @return ColorsInterface
      */
     public function fromAPI(array $data);

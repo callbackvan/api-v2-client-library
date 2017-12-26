@@ -161,13 +161,15 @@ class SettingsFactoryTest extends TestCase
                     'isMobileEnabled'  => true,
                 ],
             ],
-            'sizes' => [
+            'sizes'    => [
                 'button' => 50,
             ],
         ];
 
         $this->colorsFactory = $this->createMock(Factory\ColorsFactory::class);
-        $this->positionFactory = $this->createMock(Factory\PositionFactory::class);
+        $this->positionFactory = $this->createMock(
+            Factory\PositionFactory::class
+        );
         $this->imagesFactory = $this->createMock(Factory\ImagesFactory::class);
         $this->channelsFactory = $this->createMock(ChannelsFactory::class);
         $this->sizesFactory = $this->createMock(SizesFactory::class);

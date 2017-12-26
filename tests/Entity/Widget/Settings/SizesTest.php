@@ -22,7 +22,8 @@ class SizesTest extends TestCase
         $this->assertNull($this->sizes->getButton());
         $this->sizes->setButton($this->example['button']);
         $this->assertEquals(
-            $this->example['button'], $this->sizes->getButton()
+            $this->example['button'],
+            $this->sizes->getButton()
         );
     }
 

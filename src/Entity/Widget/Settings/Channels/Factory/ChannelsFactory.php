@@ -19,7 +19,8 @@ class ChannelsFactory implements BaseFactoryInterface
         $availableChannels = Channels::CHANNELS_LIST;
 
         foreach ($availableChannels as $cName) {
-            $availableChannels[$cName] = ($cName === 'viber') ? new ChannelMobileOnly() : new Channel();
+            $availableChannels[$cName] = ($cName === 'viber')
+                ? new ChannelMobileOnly() : new Channel();
         }
 
         foreach ($availableChannels as $cName => $cObj) {

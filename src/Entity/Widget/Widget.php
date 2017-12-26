@@ -6,7 +6,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 
 class Widget implements WidgetInterface
 {
-    const WIDGET_LINK_PREFIX   = '//cdn.callbackhunter.com/cbh.js';
+    const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js';
 
     /**
      * Идентификатор виджета
@@ -114,7 +114,7 @@ class Widget implements WidgetInterface
         $link = self::WIDGET_LINK_PREFIX;
 
         if (!empty($this->code)) {
-            $link .= '?hunter_code=' . $this->code;
+            $link .= '?hunter_code='.$this->code;
         }
 
         return $link;

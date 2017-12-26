@@ -23,11 +23,11 @@ class Settings implements SettingsInterface
     private $sizes;
 
     /**
-     * @param Colors $colors
+     * @param Colors   $colors
      * @param Position $position
-     * @param Images $images
+     * @param Images   $images
      * @param Channels $channels
-     * @param Sizes $sizes
+     * @param Sizes    $sizes
      */
     public function __construct(
         Colors $colors,
