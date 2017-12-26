@@ -8,12 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 class ChannelsFactoryTest extends TestCase
 {
-    /** @var Factory\ChannelsFactory */
-    private $channelsFactory;
-
     const AVAILABLE_CHANNELS = Channels\Channels::CHANNELS_LIST;
     const AVAILABLE_PROPERTIES = ['isDesktopEnabled', 'isMobileEnabled'];
     const AVAILABLE_ARGS = [true, false];
+    /** @var Factory\ChannelsFactory */
+    private $channelsFactory;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory::fromAPI()
@@ -25,12 +24,27 @@ class ChannelsFactoryTest extends TestCase
         $channels = $this->channelsFactory->fromAPI($sampleData);
 
         $this->assertInstanceOf(Channels\Channel::class, $channels->getSMS());
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getCallback());
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getBuiltIn());
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getFacebook());
+        $this->assertInstanceOf(
+            Channels\Channel::class,
+            $channels->getCallback()
+        );
+        $this->assertInstanceOf(
+            Channels\Channel::class,
+            $channels->getBuiltIn()
+        );
+        $this->assertInstanceOf(
+            Channels\Channel::class,
+            $channels->getFacebook()
+        );
         $this->assertInstanceOf(Channels\Channel::class, $channels->getSkype());
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getTelegram());
-        $this->assertInstanceOf(Channels\ChannelMobileOnly::class, $channels->getViber());
+        $this->assertInstanceOf(
+            Channels\Channel::class,
+            $channels->getTelegram()
+        );
+        $this->assertInstanceOf(
+            Channels\ChannelMobileOnly::class,
+            $channels->getViber()
+        );
         $this->assertInstanceOf(Channels\Channel::class, $channels->getVk());
     }
 
@@ -46,7 +60,10 @@ class ChannelsFactoryTest extends TestCase
         $unknownPropName = 'unknownMethod';
 
         $randomChannelNames = self::AVAILABLE_CHANNELS;
-        $randomPropNames = array_merge(self::AVAILABLE_PROPERTIES, [$unknownPropName]);
+        $randomPropNames = array_merge(
+            self::AVAILABLE_PROPERTIES,
+            [$unknownPropName]
+        );
 
 
         shuffle($randomChannelNames);

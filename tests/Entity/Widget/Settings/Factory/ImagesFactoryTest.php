@@ -49,7 +49,10 @@ class ImagesFactoryTest extends TestCase
     {
         $images = $this->imagesFactory->fromAPI($this->example);
 
-        $this->assertInstanceOf(ButtonLogoImage::class, $images->getButtonLogo());
+        $this->assertInstanceOf(
+            ButtonLogoImage::class,
+            $images->getButtonLogo()
+        );
     }
 
     protected function setUp()

@@ -14,19 +14,22 @@ use CallbackHunterAPIv2\Repository\WidgetRepository;
  */
 class WidgetRepositoryFactory
 {
-    /** @var ClientFactory  */
+    /** @var ClientFactory */
     private $clientFactory;
 
-    /** @var WidgetFactoryInterface  */
+    /** @var WidgetFactoryInterface */
     private $widgetFactory;
 
     /**
      * WidgetRepositoryFactory constructor.
-     * @param ClientFactory $clientFactory
+     *
+     * @param ClientFactory          $clientFactory
      * @param WidgetFactoryInterface $widgetFactory
      */
-    public function __construct(ClientFactory $clientFactory, WidgetFactoryInterface $widgetFactory)
-    {
+    public function __construct(
+        ClientFactory $clientFactory,
+        WidgetFactoryInterface $widgetFactory
+    ) {
         $this->clientFactory = $clientFactory;
         $this->widgetFactory = $widgetFactory;
     }

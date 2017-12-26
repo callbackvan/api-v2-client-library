@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ChangeOfPaidPropertiesException
+ *
  * @package CallbackHunterAPIv2\Exception
  */
 class ChangeOfPaidPropertiesException extends RepositoryException

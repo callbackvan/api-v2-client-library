@@ -7,16 +7,17 @@ use CallbackHunterAPIv2\Exception;
 
 class Channels implements BaseEntityInterface
 {
-    const CHANNELS_LIST = [
-        'callback',
-        'sms',
-        'builtIn',
-        'telegram',
-        'vk',
-        'facebook',
-        'viber',
-        'skype',
-    ];
+    const CHANNELS_LIST
+        = [
+            'callback',
+            'sms',
+            'builtIn',
+            'telegram',
+            'vk',
+            'facebook',
+            'viber',
+            'skype',
+        ];
 
     /** @var Channel */
     private $callback;
@@ -36,14 +37,14 @@ class Channels implements BaseEntityInterface
     private $skype;
 
     /**
-     * @param Channel $callback
-     * @param Channel $sms
-     * @param Channel $builtIn
-     * @param Channel $telegram
-     * @param Channel $vk
-     * @param Channel $facebook
+     * @param Channel           $callback
+     * @param Channel           $sms
+     * @param Channel           $builtIn
+     * @param Channel           $telegram
+     * @param Channel           $vk
+     * @param Channel           $facebook
      * @param ChannelMobileOnly $viber
-     * @param Channel $skype
+     * @param Channel           $skype
      */
     public function __construct(
         Channel $callback,
@@ -130,9 +131,10 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @param string $channel
-     * @param string $key
+     * @param string  $channel
+     * @param string  $key
      * @param boolean $value
+     *
      * @throws Exception\InvalidArgumentException
      */
     public function setActivity($channel, $key, $value)
@@ -147,7 +149,9 @@ class Channels implements BaseEntityInterface
                 $obj->setIsDesktopEnabled($value);
                 break;
             default:
-                throw new Exception\InvalidArgumentException('Invalid key ' . $key);
+                throw new Exception\InvalidArgumentException(
+                    'Invalid key '.$key
+                );
         }
     }
 
@@ -185,7 +189,9 @@ class Channels implements BaseEntityInterface
                 $obj = $this->getSkype();
                 break;
             default:
-                throw new Exception\InvalidArgumentException('Unknown channel ' . $channel);
+                throw new Exception\InvalidArgumentException(
+                    'Unknown channel '.$channel
+                );
         }
 
         return $obj;

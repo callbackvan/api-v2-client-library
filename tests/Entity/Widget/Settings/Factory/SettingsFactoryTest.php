@@ -6,17 +6,23 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Colors;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Position;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Sizes;
 use PHPUnit\Framework\TestCase;
 
 class SettingsFactoryTest extends TestCase
 {
-    /** @var Factory\SettingsFactory */
+    /**
+     * @var Factory\SettingsFactory
+     */
     private $settingsFactory;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $settingsSample = [];
 
     /**
@@ -34,8 +40,15 @@ class SettingsFactoryTest extends TestCase
      */
     private $imagesFactory;
 
-    /** @var ChannelsFactory */
+    /**
+     * @var ChannelsFactory
+     */
     private $channelsFactory;
+
+    /**
+     * @var SizesFactory
+     */
+    private $sizesFactory;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory::__construct
@@ -47,6 +60,7 @@ class SettingsFactoryTest extends TestCase
         $position = $this->createMock(Position::class);
         $images = $this->createMock(Images::class);
         $channels = $this->createMock(Channels::class);
+        $sizes = $this->createMock(Sizes::class);
 
         $this->colorsFactory
             ->expects($this->once())
@@ -72,11 +86,18 @@ class SettingsFactoryTest extends TestCase
             ->with($this->settingsSample['channels'])
             ->willReturn($channels);
 
+        $this->sizesFactory
+            ->expects($this->once())
+            ->method('fromAPI')
+            ->with($this->settingsSample['sizes'])
+            ->willReturn($sizes);
+
         $expected = new Settings(
             $colors,
             $position,
             $images,
-            $channels
+            $channels,
+            $sizes
         );
 
         $settings = $this->settingsFactory->fromAPI($this->settingsSample);
@@ -140,18 +161,25 @@ class SettingsFactoryTest extends TestCase
                     'isMobileEnabled'  => true,
                 ],
             ],
+            'sizes'    => [
+                'button' => 50,
+            ],
         ];
 
         $this->colorsFactory = $this->createMock(Factory\ColorsFactory::class);
-        $this->positionFactory = $this->createMock(Factory\PositionFactory::class);
+        $this->positionFactory = $this->createMock(
+            Factory\PositionFactory::class
+        );
         $this->imagesFactory = $this->createMock(Factory\ImagesFactory::class);
         $this->channelsFactory = $this->createMock(ChannelsFactory::class);
+        $this->sizesFactory = $this->createMock(SizesFactory::class);
 
         $this->settingsFactory = new Factory\SettingsFactory(
             $this->colorsFactory,
             $this->positionFactory,
             $this->imagesFactory,
-            $this->channelsFactory
+            $this->channelsFactory,
+            $this->sizesFactory
         );
     }
 }

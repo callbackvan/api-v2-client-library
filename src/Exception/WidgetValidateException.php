@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class WidgetValidateException
+ *
  * @package CallbackHunterAPIv2\Exception
  */
 class WidgetValidateException extends RepositoryException

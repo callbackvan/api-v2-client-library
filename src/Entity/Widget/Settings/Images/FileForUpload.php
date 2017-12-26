@@ -26,6 +26,18 @@ class FileForUpload implements FileForUploadInterface
     }
 
     /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * @return StreamInterface
      */
     public function getStream()
@@ -41,18 +53,6 @@ class FileForUpload implements FileForUploadInterface
     public function setStream(StreamInterface $stream)
     {
         $this->stream = $stream;
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
 
         return $this;
     }

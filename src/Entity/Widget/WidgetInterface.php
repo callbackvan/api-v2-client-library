@@ -11,6 +11,7 @@ interface WidgetInterface extends BaseEntityInterface
 
     /**
      * @param string $uid
+     *
      * @return void
      */
     public function setUid($uid);
@@ -22,6 +23,7 @@ interface WidgetInterface extends BaseEntityInterface
 
     /**
      * @param string $code
+     *
      * @return void
      */
     public function setCode($code);
@@ -38,6 +40,7 @@ interface WidgetInterface extends BaseEntityInterface
 
     /**
      * @param string $site
+     *
      * @return void
      */
     public function setSite($site);
@@ -49,6 +52,7 @@ interface WidgetInterface extends BaseEntityInterface
 
     /**
      * @param boolean $isActive
+     *
      * @return void
      */
     public function setIsActive($isActive);
@@ -57,6 +61,16 @@ interface WidgetInterface extends BaseEntityInterface
      * @return Settings\SettingsInterface
      */
     public function getSettings();
+
+    /**
+     * @return string
+     */
+    public function getWidgetSettingsLink();
+
+    /**
+     * @return string
+     */
+    public function getOperatorChatLink();
 
     /**
      * @return array

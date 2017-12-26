@@ -24,6 +24,10 @@ class ColorsFactory implements BaseFactoryInterface
             $colors->setBackgroundSlider($data['backgroundSlider']);
         }
 
+        if (isset($data['sliderText'])) {
+            $colors->setSliderText($data['sliderText']);
+        }
+
         return $colors;
     }
 }

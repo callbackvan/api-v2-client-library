@@ -46,7 +46,7 @@ class ChannelTest extends TestCase
 
         $expected = [
             'isDesktopEnabled' => true,
-            'isMobileEnabled' => false,
+            'isMobileEnabled'  => false,
         ];
 
         $this->assertSame($expected, $this->channel->toAPI());
@@ -61,7 +61,7 @@ class ChannelTest extends TestCase
 
         $expected = [
             'isDesktopEnabled' => true,
-            'isMobileEnabled' => null
+            'isMobileEnabled'  => null,
         ];
 
         $this->assertSame($expected, $this->channel->toAPI());

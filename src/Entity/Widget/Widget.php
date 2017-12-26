@@ -2,7 +2,7 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings;
+use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 
 class Widget implements WidgetInterface
 {
@@ -38,20 +38,34 @@ class Widget implements WidgetInterface
     private $isActive;
 
     /**
+     * Ссылка на страницу редактирования виджета
+     *
+     * @var string
+     */
+    private $widgetSettingsLink;
+
+    /**
+     * Ссылка на операторский интерфейс
+     *
+     * @var string
+     */
+    private $operatorChatLink;
+
+    /**
      * @var Settings\Settings
      */
     private $settings;
 
     /**
-     * @param Settings\SettingsInterface $settings
+     * @param SettingsInterface $settings
      */
-    public function __construct(Settings\SettingsInterface $settings)
+    public function __construct(SettingsInterface $settings)
     {
         $this->settings = $settings;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUid()
     {
@@ -71,7 +85,7 @@ class Widget implements WidgetInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCode()
     {
@@ -93,21 +107,21 @@ class Widget implements WidgetInterface
     /**
      * Ссылка на ядро виджета
      *
-     * @return string
+     * @return string|null
      */
     public function getLink()
     {
         $link = self::WIDGET_LINK_PREFIX;
 
         if (!empty($this->code)) {
-            $link .= '?hunter_code=' . $this->code;
+            $link .= '?hunter_code='.$this->code;
         }
 
         return $link;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getSite()
     {
@@ -127,7 +141,7 @@ class Widget implements WidgetInterface
     }
 
     /**
-     * @return boolean
+     * @return boolean|null
      */
     public function isActive()
     {
@@ -147,6 +161,46 @@ class Widget implements WidgetInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getWidgetSettingsLink()
+    {
+        return $this->widgetSettingsLink;
+    }
+
+    /**
+     * @param $widgetSettingsLink
+     *
+     * @return $this
+     */
+    public function setWidgetSettingsLink($widgetSettingsLink)
+    {
+        $this->widgetSettingsLink = $widgetSettingsLink;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOperatorChatLink()
+    {
+        return $this->operatorChatLink;
+    }
+
+    /**
+     * @param string $operatorChatLink
+     *
+     * @return $this
+     */
+    public function setOperatorChatLink($operatorChatLink)
+    {
+        $this->operatorChatLink = $operatorChatLink;
+
+        return $this;
+    }
+
+    /**
      * @return Settings\Settings
      */
     public function getSettings()
@@ -160,7 +214,6 @@ class Widget implements WidgetInterface
     public function toAPI()
     {
         return [
-            'uid'      => $this->getUid(),
             'isActive' => $this->isActive(),
             'site'     => $this->getSite(),
             'settings' => $this->settings->toAPI(),

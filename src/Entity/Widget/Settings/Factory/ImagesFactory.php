@@ -16,7 +16,7 @@ class ImagesFactory implements BaseFactoryInterface
      */
     public function createImageOfType($imageType)
     {
-        $logoClass = self::NAMESPACE_FOR_IMG . '\\' . ucfirst($imageType). 'Image';
+        $logoClass = self::NAMESPACE_FOR_IMG.'\\'.ucfirst($imageType).'Image';
 
         $logoObj = null;
 

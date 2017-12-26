@@ -37,7 +37,13 @@ class WidgetFactoryTest extends TestCase
             ->setUid($this->widgetDataSample['uid'])
             ->setIsActive($this->widgetDataSample['isActive'])
             ->setSite($this->widgetDataSample['site'])
-            ->setCode($this->widgetDataSample['code']);
+            ->setCode($this->widgetDataSample['code'])
+            ->setWidgetSettingsLink(
+                $this->widgetDataSample['_links']['widgetSettings']['href']
+            )
+            ->setOperatorChatLink(
+                $this->widgetDataSample['_links']['operatorChat']['href']
+            );
 
         $widget = $this->widgetFactory->fromAPI($this->widgetDataSample);
 
@@ -102,9 +108,22 @@ class WidgetFactoryTest extends TestCase
                     ],
                 ],
             ],
+            '_links'   => [
+                'self'           => [
+                    'href' => '/widgets/31dbfcf288e7076e0e891fb644552f78b8a0b0af',
+                ],
+                'operatorChat'   => [
+                    'href' => 'https://chat.callbackhunter.com/#key=d6a0ed6440b7788',
+                ],
+                'widgetSettings' => [
+                    'href' => '/cabinet/widgets/31dbfcf288e7076e0e891fb644552f78b8a0b0af',
+                ],
+            ],
         ];
 
-        $this->settingsFactory = $this->createMock(Factory\SettingsFactory::class);
+        $this->settingsFactory = $this->createMock(
+            Factory\SettingsFactory::class
+        );
 
         $this->widgetFactory = new WidgetFactory($this->settingsFactory);
     }

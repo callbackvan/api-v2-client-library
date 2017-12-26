@@ -8,6 +8,7 @@ interface PositionFactoryInterface
 {
     /**
      * @param array $data
+     *
      * @return PositionInterface
      */
     public function fromAPI(array $data);

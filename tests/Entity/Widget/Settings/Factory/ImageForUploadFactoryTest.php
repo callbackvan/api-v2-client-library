@@ -17,7 +17,7 @@ class ImageForUploadFactoryTest extends TestCase
      */
     public function testCreateImageOfTypeAndPath()
     {
-        $file = __DIR__ . '/img/test.png';
+        $file = __DIR__.'/img/test.png';
 
         $this->assertFileExists($file);
         $this->assertFileIsReadable($file);

@@ -8,6 +8,7 @@ interface SettingsFactoryInterface
 {
     /**
      * @param array $data
+     *
      * @return SettingsInterface
      */
     public function fromAPI(array $data);

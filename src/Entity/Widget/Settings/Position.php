@@ -21,8 +21,11 @@ class Position implements BaseEntityInterface
      */
     private $y;
 
+    /** @var bool */
+    private $isFixed;
+
     /**
-     * @return int
+     * @return int|null
      */
     public function getX()
     {
@@ -42,7 +45,7 @@ class Position implements BaseEntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getY()
     {
@@ -62,13 +65,30 @@ class Position implements BaseEntityInterface
     }
 
     /**
+     * @return bool|null
+     */
+    public function isFixed()
+    {
+        return $this->isFixed;
+    }
+
+    /**
+     * @param bool $isFixed
+     */
+    public function setIsFixed($isFixed)
+    {
+        $this->isFixed = (bool)$isFixed;
+    }
+
+    /**
      * @return array
      */
     public function toAPI()
     {
         return [
-            'x' => $this->getX(),
-            'y' => $this->getY(),
+            'x'       => $this->getX(),
+            'y'       => $this->getY(),
+            'isFixed' => $this->isFixed(),
         ];
     }
 }

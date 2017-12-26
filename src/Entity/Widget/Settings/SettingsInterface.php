@@ -26,4 +26,9 @@ interface SettingsInterface extends BaseEntityInterface
      * @return Channels
      */
     public function getChannels();
+
+    /**
+     * @return Sizes
+     */
+    public function getSizes();
 }

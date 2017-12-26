@@ -8,6 +8,7 @@ interface WidgetFactoryInterface
 {
     /**
      * @param array $data
+     *
      * @return WidgetInterface
      */
     public function fromAPI(array $data);

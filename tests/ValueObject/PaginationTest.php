@@ -7,11 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class PaginationTest
+ *
  * @package Tests\ValueObject
  */
 class PaginationTest extends TestCase
 {
-    /** @var Pagination  */
+    /** @var Pagination */
     private $pagination;
 
     /**

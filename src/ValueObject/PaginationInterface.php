@@ -11,6 +11,7 @@ interface PaginationInterface
 
     /**
      * @param integer $offset
+     *
      * @return void
      */
     public function setOffset($offset);
@@ -22,6 +23,7 @@ interface PaginationInterface
 
     /**
      * @param integer $limit
+     *
      * @return void
      */
     public function setLimit($limit);
