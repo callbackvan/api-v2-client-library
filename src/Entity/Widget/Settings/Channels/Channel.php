@@ -14,21 +14,21 @@ class Channel implements BaseEntityInterface
      *
      * @var bool
      */
-    protected $isDesktopEnabled;
+    protected $desktopEnabled;
 
     /**
      * Отображать ли канал связи на мобильных устройствах
      *
      * @var bool
      */
-    protected $isMobileEnabled;
+    protected $mobileEnabled;
 
     /**
      * @return bool|null
      */
     public function isMobileEnabled()
     {
-        return $this->isMobileEnabled;
+        return $this->mobileEnabled;
     }
 
     /**
@@ -36,9 +36,9 @@ class Channel implements BaseEntityInterface
      *
      * @return $this
      */
-    public function setIsMobileEnabled($isEnabled)
+    public function setMobileEnabled($isEnabled)
     {
-        $this->isMobileEnabled = !empty($isEnabled);
+        $this->mobileEnabled = !empty($isEnabled);
 
         return $this;
     }
@@ -48,7 +48,7 @@ class Channel implements BaseEntityInterface
      */
     public function isDesktopEnabled()
     {
-        return $this->isDesktopEnabled;
+        return $this->desktopEnabled;
     }
 
     /**
@@ -56,9 +56,9 @@ class Channel implements BaseEntityInterface
      *
      * @return $this
      */
-    public function setIsDesktopEnabled($isEnabled)
+    public function setDesktopEnabled($isEnabled)
     {
-        $this->isDesktopEnabled = !empty($isEnabled);
+        $this->desktopEnabled = !empty($isEnabled);
 
         return $this;
     }
@@ -69,8 +69,8 @@ class Channel implements BaseEntityInterface
     public function toAPI()
     {
         return [
-            'isDesktopEnabled' => $this->isDesktopEnabled(),
-            'isMobileEnabled'  => $this->isMobileEnabled(),
+            'desktopEnabled' => $this->isDesktopEnabled(),
+            'mobileEnabled'  => $this->isMobileEnabled(),
         ];
     }
 }

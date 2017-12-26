@@ -122,21 +122,21 @@ class ChannelsTest extends TestCase
     public function setActivityProvider()
     {
         return [
-            'callback_isDesktopEnabled' => ['callback', 'isDesktopEnabled'],
-            'callback_isMobileEnabled'  => ['callback', 'isMobileEnabled'],
-            'sms_isDesktopEnabled'      => ['sms', 'isDesktopEnabled'],
-            'sms_isMobileEnabled'       => ['sms', 'isMobileEnabled'],
-            'builtIn_isDesktopEnabled'  => ['builtIn', 'isDesktopEnabled'],
-            'builtIn_isMobileEnabled'   => ['builtIn', 'isMobileEnabled'],
-            'telegram_isDesktopEnabled' => ['telegram', 'isDesktopEnabled'],
-            'telegram_isMobileEnabled'  => ['telegram', 'isMobileEnabled'],
-            'vk_isDesktopEnabled'       => ['vk', 'isDesktopEnabled'],
-            'vk_isMobileEnabled'        => ['vk', 'isMobileEnabled'],
-            'facebook_isDesktopEnabled' => ['facebook', 'isDesktopEnabled'],
-            'facebook_isMobileEnabled'  => ['facebook', 'isMobileEnabled'],
-            'viber_isMobileEnabled'     => ['viber', 'isMobileEnabled'],
-            'skype_isDesktopEnabled'    => ['skype', 'isDesktopEnabled'],
-            'skype_isMobileEnabled'     => ['skype', 'isMobileEnabled'],
+            'callback_isDesktopEnabled' => ['callback', 'desktopEnabled'],
+            'callback_isMobileEnabled'  => ['callback', 'mobileEnabled'],
+            'sms_isDesktopEnabled'      => ['sms', 'desktopEnabled'],
+            'sms_isMobileEnabled'       => ['sms', 'mobileEnabled'],
+            'builtIn_isDesktopEnabled'  => ['builtIn', 'desktopEnabled'],
+            'builtIn_isMobileEnabled'   => ['builtIn', 'mobileEnabled'],
+            'telegram_isDesktopEnabled' => ['telegram', 'desktopEnabled'],
+            'telegram_isMobileEnabled'  => ['telegram', 'mobileEnabled'],
+            'vk_isDesktopEnabled'       => ['vk', 'desktopEnabled'],
+            'vk_isMobileEnabled'        => ['vk', 'mobileEnabled'],
+            'facebook_isDesktopEnabled' => ['facebook', 'desktopEnabled'],
+            'facebook_isMobileEnabled'  => ['facebook', 'mobileEnabled'],
+            'viber_isMobileEnabled'     => ['viber', 'mobileEnabled'],
+            'skype_isDesktopEnabled'    => ['skype', 'desktopEnabled'],
+            'skype_isMobileEnabled'     => ['skype', 'mobileEnabled'],
         ];
     }
 
@@ -147,7 +147,7 @@ class ChannelsTest extends TestCase
      */
     public function testSetActivityThrowsUnknownChannel()
     {
-        $this->entity->setActivity('test', 'isMobileEnabled', false);
+        $this->entity->setActivity('test', 'mobileEnabled', false);
     }
 
     /**
@@ -170,8 +170,8 @@ class ChannelsTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject $channel */
         foreach ($this->channels as $channelName => $channel) {
             $expected[$channelName] = [
-                'isMobileEnabled'  => mt_rand(0, 100) > 50,
-                'isDesktopEnabled' => mt_rand(0, 100) > 50,
+                'mobileEnabled'  => mt_rand(0, 100) > 50,
+                'desktopEnabled' => mt_rand(0, 100) > 50,
             ];
 
             $channel->expects($this->once())

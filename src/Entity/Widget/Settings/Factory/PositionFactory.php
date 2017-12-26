@@ -23,8 +23,8 @@ class PositionFactory
             $position->setY($data['y']);
         }
 
-        if (isset($data['isFixed'])) {
-            $position->setIsFixed($data['isFixed']);
+        if (isset($data['fixed'])) {
+            $position->setFixed($data['fixed']);
         }
 
         return $position;

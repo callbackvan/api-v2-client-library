@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class ChannelsFactoryTest extends TestCase
 {
     const AVAILABLE_CHANNELS = Channels\Channels::CHANNELS_LIST;
-    const AVAILABLE_PROPERTIES = ['isDesktopEnabled', 'isMobileEnabled'];
+    const AVAILABLE_PROPERTIES = ['desktopEnabled', 'mobileEnabled'];
     const AVAILABLE_ARGS = [true, false];
     /** @var Factory\ChannelsFactory */
     private $channelsFactory;

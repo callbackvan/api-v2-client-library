@@ -142,11 +142,11 @@ class Channels implements BaseEntityInterface
         $obj = $this->get($channel);
 
         switch ($key) {
-            case 'isMobileEnabled':
-                $obj->setIsMobileEnabled($value);
+            case 'mobileEnabled':
+                $obj->setMobileEnabled($value);
                 break;
-            case 'isDesktopEnabled':
-                $obj->setIsDesktopEnabled($value);
+            case 'desktopEnabled':
+                $obj->setDesktopEnabled($value);
                 break;
             default:
                 throw new Exception\InvalidArgumentException(
