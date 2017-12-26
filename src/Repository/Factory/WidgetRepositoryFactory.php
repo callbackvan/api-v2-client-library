@@ -42,7 +42,8 @@ class WidgetRepositoryFactory
     {
         $client = $this->clientFactory->makeWithAPICredentials(
             $userId,
-            $key
+            $key,
+            $config
         );
 
         return new WidgetRepository($client, $this->widgetFactory);
