@@ -23,7 +23,7 @@ class SizesFactoryTest extends TestCase
         $this->assertInstanceOf(Sizes::class, $response);
 
         $expected = new Sizes();
-        $expected->setButtonSize($this->example['buttonSize']);
+        $expected->setButton($this->example['button']);
 
         $this->assertEquals($expected, $response);
     }
@@ -34,7 +34,7 @@ class SizesFactoryTest extends TestCase
 
         $this->sizesFactory = new SizesFactory();
         $this->example = [
-            'buttonSize' => false,
+            'button' => false,
         ];
     }
 }

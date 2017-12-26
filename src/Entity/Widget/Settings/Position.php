@@ -22,7 +22,7 @@ class Position implements BaseEntityInterface
     private $y;
 
     /** @var bool */
-    private $fixedButton;
+    private $isFixed;
 
     /**
      * @return int|null
@@ -67,17 +67,17 @@ class Position implements BaseEntityInterface
     /**
      * @return bool|null
      */
-    public function isFixedButton()
+    public function isFixed()
     {
-        return $this->fixedButton;
+        return $this->isFixed;
     }
 
     /**
-     * @param bool $fixedButton
+     * @param bool $isFixed
      */
-    public function setFixedButton($fixedButton)
+    public function setIsFixed($isFixed)
     {
-        $this->fixedButton = (bool) $fixedButton;
+        $this->isFixed = (bool)$isFixed;
     }
 
     /**
@@ -86,9 +86,9 @@ class Position implements BaseEntityInterface
     public function toAPI()
     {
         return [
-            'x' => $this->getX(),
-            'y' => $this->getY(),
-            'fixedButton' => $this->isFixedButton(),
+            'x'       => $this->getX(),
+            'y'       => $this->getY(),
+            'isFixed' => $this->isFixed(),
         ];
     }
 }

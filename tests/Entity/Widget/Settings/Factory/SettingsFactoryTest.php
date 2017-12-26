@@ -162,7 +162,7 @@ class SettingsFactoryTest extends TestCase
                 ],
             ],
             'sizes' => [
-                'buttonSize' => 50,
+                'button' => 50,
             ],
         ];
 

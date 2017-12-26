@@ -16,8 +16,8 @@ class SizesFactory implements BaseFactoryInterface
     {
         $sizes = new Sizes();
 
-        if (isset($data['buttonSize'])) {
-            $sizes->setButtonSize($data['buttonSize']);
+        if (isset($data['button'])) {
+            $sizes->setButton($data['button']);
         }
 
         return $sizes;

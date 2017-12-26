@@ -14,14 +14,16 @@ class SizesTest extends TestCase
     private $example;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Sizes::getButtonSize()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Sizes::setButtonSize()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Sizes::getButton()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Sizes::setButton()
      */
-    public function testButtonSize()
+    public function testButton()
     {
-        $this->assertNull($this->sizes->getButtonSize());
-        $this->sizes->setButtonSize($this->example['buttonSize']);
-        $this->assertEquals($this->example['buttonSize'], $this->sizes->getButtonSize());
+        $this->assertNull($this->sizes->getButton());
+        $this->sizes->setButton($this->example['button']);
+        $this->assertEquals(
+            $this->example['button'], $this->sizes->getButton()
+        );
     }
 
     /**
@@ -29,7 +31,7 @@ class SizesTest extends TestCase
      */
     public function testToAPI()
     {
-        $this->sizes->setButtonSize($this->example['buttonSize']);
+        $this->sizes->setButton($this->example['button']);
 
         $this->assertSame($this->example, $this->sizes->toAPI());
     }
@@ -40,7 +42,7 @@ class SizesTest extends TestCase
 
         $this->sizes = new Sizes();
         $this->example = [
-            'buttonSize' => 55
+            'button' => 55,
         ];
     }
 }

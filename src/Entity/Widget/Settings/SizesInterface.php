@@ -9,5 +9,5 @@ interface SizesInterface
      *
      * @return int
      */
-    public function getButtonSize();
+    public function getButton();
 }

@@ -34,15 +34,15 @@ class ColorsTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::setSliderTextColor()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::getSliderTextColor()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::setSliderText()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::getSliderText()
      */
-    public function testSliderTextColor()
+    public function testSliderText()
     {
         $excepted = '000000';
-        $this->assertNull($this->colors->getSliderTextColor());
-        $this->colors->setSliderTextColor($excepted);
-        $this->assertEquals($excepted, $this->colors->getSliderTextColor());
+        $this->assertNull($this->colors->getSliderText());
+        $this->colors->setSliderText($excepted);
+        $this->assertEquals($excepted, $this->colors->getSliderText());
     }
 
     /**
@@ -52,7 +52,7 @@ class ColorsTest extends TestCase
     {
         $this->colors->setIconBackground($this->example['iconBackground']);
         $this->colors->setBackgroundSlider($this->example['backgroundSlider']);
-        $this->colors->setSliderTextColor($this->example['sliderTextColor']);
+        $this->colors->setSliderText($this->example['sliderText']);
 
         $this->assertSame($this->example, $this->colors->toAPI());
     }
@@ -63,13 +63,13 @@ class ColorsTest extends TestCase
     public function testToAPIPartial()
     {
         $this->colors->setIconBackground($this->example['iconBackground']);
-        $this->colors->setSliderTextColor($this->example['sliderTextColor']);
+        $this->colors->setSliderText($this->example['sliderText']);
         $this->assertNotSame($this->example, $this->colors->toAPI());
 
         $expected = [
-            'iconBackground' => $this->example['iconBackground'],
+            'iconBackground'   => $this->example['iconBackground'],
             'backgroundSlider' => null,
-            'sliderTextColor' => $this->example['sliderTextColor'],
+            'sliderText'       => $this->example['sliderText'],
         ];
 
         $this->assertSame($expected, $this->colors->toAPI());
@@ -81,9 +81,9 @@ class ColorsTest extends TestCase
 
         $this->colors = new Colors();
         $this->example = [
-            'iconBackground' => 'fff',
+            'iconBackground'   => 'fff',
             'backgroundSlider' => 'ccc',
-            'sliderTextColor' => '000',
+            'sliderText'       => '000',
         ];
     }
 }

@@ -88,7 +88,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
                 'channel' => 'tg',
             ],
             'sizes'    => [
-                'buttonSize' => 55,
+                'button' => 55,
             ],
         ];
         $this->colors

@@ -23,8 +23,8 @@ class PositionFactory
             $position->setY($data['y']);
         }
 
-        if (isset($data['isFixedButton'])) {
-            $position->setFixedButton($data['isFixedButton']);
+        if (isset($data['isFixed'])) {
+            $position->setIsFixed($data['isFixed']);
         }
 
         return $position;
