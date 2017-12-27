@@ -40,7 +40,7 @@ class PositionTest extends TestCase
     {
         $this->position->setX($this->example['x']);
         $this->position->setY($this->example['y']);
-        $this->position->setIsFixed($this->example['isFixed']);
+        $this->position->setFixed($this->example['fixed']);
 
         $this->assertSame($this->example, $this->position->toAPI());
     }
@@ -51,7 +51,7 @@ class PositionTest extends TestCase
     public function testToAPIPartial()
     {
         $this->position->setY($this->example['y']);
-        $this->position->setIsFixed($this->example['isFixed']);
+        $this->position->setFixed($this->example['fixed']);
 
         $expected = $this->example;
         $expected['x'] = $this->position->getX();
@@ -61,13 +61,13 @@ class PositionTest extends TestCase
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::isFixed()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::setIsFixed()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Position::setFixed()
      */
     public function testIsFixed()
     {
         $excepted = false;
         $this->assertNull($this->position->isFixed());
-        $this->position->setIsFixed($excepted);
+        $this->position->setFixed($excepted);
         $this->assertEquals($excepted, $this->position->isFixed());
     }
 
@@ -77,9 +77,9 @@ class PositionTest extends TestCase
 
         $this->position = new Position();
         $this->example = [
-            'x'       => 77,
-            'y'       => 88,
-            'isFixed' => false,
+            'x'     => 77,
+            'y'     => 88,
+            'fixed' => false,
         ];
     }
 }

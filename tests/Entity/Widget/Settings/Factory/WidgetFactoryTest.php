@@ -35,7 +35,7 @@ class WidgetFactoryTest extends TestCase
 
         $expected = (new Widget\Widget($settings))
             ->setUid($this->widgetDataSample['uid'])
-            ->setIsActive($this->widgetDataSample['isActive'])
+            ->setActive($this->widgetDataSample['active'])
             ->setSite($this->widgetDataSample['site'])
             ->setCode($this->widgetDataSample['code'])
             ->setWidgetSettingsLink(
@@ -57,7 +57,7 @@ class WidgetFactoryTest extends TestCase
 
         $this->widgetDataSample = [
             'uid'      => '246f6bcd4621d373cade4e832627b4s6',
-            'isActive' => true,
+            'active'   => true,
             'site'     => 'mysite.com',
             'code'     => '96325feb74992cc3482b350163a1a010',
             'settings' => [
@@ -76,35 +76,35 @@ class WidgetFactoryTest extends TestCase
                 ],
                 'channels' => [
                     'callback' => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                     'sms'      => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                     'builtIn'  => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                     'telegram' => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                     'vk'       => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                     'facebook' => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                     'viber'    => [
-                        'isMobileEnabled' => true,
+                        'mobileEnabled' => true,
                     ],
                     'skype'    => [
-                        'isDesktopEnabled' => true,
-                        'isMobileEnabled'  => true,
+                        'desktopEnabled' => true,
+                        'mobileEnabled'  => true,
                     ],
                 ],
             ],

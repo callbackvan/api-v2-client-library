@@ -16,15 +16,15 @@ class WidgetTest extends TestCase
     private $settings;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setIsActive
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setActive
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::isActive
      */
     public function testIsActive()
     {
-        $this->entity->setIsActive(true);
+        $this->entity->setActive(true);
         $this->assertTrue($this->entity->isActive());
 
-        $this->entity->setIsActive(false);
+        $this->entity->setActive(false);
         $this->assertFalse($this->entity->isActive());
     }
 
@@ -108,13 +108,13 @@ class WidgetTest extends TestCase
     public function testToAPI()
     {
         $expected = [
-            'isActive' => $this->example['isActive'],
+            'active'   => $this->example['active'],
             'site'     => $this->example['site'],
             'settings' => null,
         ];
 
         $this->entity->setSite($expected['site']);
-        $this->entity->setIsActive($expected['isActive']);
+        $this->entity->setActive($expected['active']);
         $this->entity->setCode($this->example['code']);
 
         $this->settings
@@ -134,7 +134,7 @@ class WidgetTest extends TestCase
         parent::setUp();
         $this->example = [
             'uid'          => '123f6bcd4621d373cade4e832627b4f6',
-            'isActive'     => true,
+            'active'       => true,
             'site'         => 'example.com',
             'code'         => 'd9729xcv74992cc3482b350163a1a010',
             'self'         => '/api/v2/widgets/1',

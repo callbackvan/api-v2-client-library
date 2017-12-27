@@ -55,7 +55,7 @@ interface WidgetInterface extends BaseEntityInterface
      *
      * @return void
      */
-    public function setIsActive($isActive);
+    public function setActive($isActive);
 
     /**
      * @return Settings\SettingsInterface

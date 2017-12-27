@@ -130,35 +130,35 @@ class SettingsFactoryTest extends TestCase
             ],
             'channels' => [
                 'callback' => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
                 'sms'      => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
                 'builtIn'  => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
                 'telegram' => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
                 'vk'       => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
                 'facebook' => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
                 'viber'    => [
-                    'isMobileEnabled' => true,
+                    'mobileEnabled' => true,
                 ],
                 'skype'    => [
-                    'isDesktopEnabled' => true,
-                    'isMobileEnabled'  => true,
+                    'desktopEnabled' => true,
+                    'mobileEnabled'  => true,
                 ],
             ],
             'sizes'    => [

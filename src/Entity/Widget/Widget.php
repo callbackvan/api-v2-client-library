@@ -35,7 +35,7 @@ class Widget implements WidgetInterface
      *
      * @var bool
      */
-    private $isActive;
+    private $active;
 
     /**
      * Ссылка на страницу редактирования виджета
@@ -145,17 +145,17 @@ class Widget implements WidgetInterface
      */
     public function isActive()
     {
-        return $this->isActive;
+        return $this->active;
     }
 
     /**
-     * @param boolean $isActive
+     * @param boolean $active
      *
      * @return $this
      */
-    public function setIsActive($isActive)
+    public function setActive($active)
     {
-        $this->isActive = (bool)$isActive;
+        $this->active = (bool)$active;
 
         return $this;
     }
@@ -214,7 +214,7 @@ class Widget implements WidgetInterface
     public function toAPI()
     {
         return [
-            'isActive' => $this->isActive(),
+            'active'   => $this->isActive(),
             'site'     => $this->getSite(),
             'settings' => $this->settings->toAPI(),
         ];

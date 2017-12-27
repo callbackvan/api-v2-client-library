@@ -12,27 +12,27 @@ class ChannelTest extends TestCase
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::isMobileEnabled()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setIsMobileEnabled()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setMobileEnabled()
      */
     public function testIsMobileEnabled()
     {
-        $this->channel->setIsMobileEnabled(true);
+        $this->channel->setMobileEnabled(true);
         $this->assertTrue(true, $this->channel->isMobileEnabled());
 
-        $this->channel->setIsMobileEnabled(false);
+        $this->channel->setMobileEnabled(false);
         $this->assertFalse(false, $this->channel->isMobileEnabled());
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::isDesktopEnabled()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setIsDesktopEnabled()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setDesktopEnabled()
      */
     public function testIsDesktopEnabled()
     {
-        $this->channel->setIsDesktopEnabled(true);
+        $this->channel->setDesktopEnabled(true);
         $this->assertTrue(true, $this->channel->isDesktopEnabled());
 
-        $this->channel->setIsDesktopEnabled(false);
+        $this->channel->setDesktopEnabled(false);
         $this->assertFalse(false, $this->channel->isDesktopEnabled());
     }
 
@@ -41,12 +41,12 @@ class ChannelTest extends TestCase
      */
     public function testToAPIAll()
     {
-        $this->channel->setIsDesktopEnabled(true);
-        $this->channel->setIsMobileEnabled(false);
+        $this->channel->setDesktopEnabled(true);
+        $this->channel->setMobileEnabled(false);
 
         $expected = [
-            'isDesktopEnabled' => true,
-            'isMobileEnabled'  => false,
+            'desktopEnabled' => true,
+            'mobileEnabled'  => false,
         ];
 
         $this->assertSame($expected, $this->channel->toAPI());
@@ -57,11 +57,11 @@ class ChannelTest extends TestCase
      */
     public function testToAPISingle()
     {
-        $this->channel->setIsDesktopEnabled(true);
+        $this->channel->setDesktopEnabled(true);
 
         $expected = [
-            'isDesktopEnabled' => true,
-            'isMobileEnabled'  => null,
+            'desktopEnabled' => true,
+            'mobileEnabled'  => null,
         ];
 
         $this->assertSame($expected, $this->channel->toAPI());

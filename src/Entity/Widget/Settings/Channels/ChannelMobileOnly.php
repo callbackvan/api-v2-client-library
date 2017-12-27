@@ -9,8 +9,8 @@ class ChannelMobileOnly extends Channel
      */
     public function __construct()
     {
-        $this->isMobileEnabled = true;
-        $this->isDesktopEnabled = false;
+        $this->mobileEnabled = true;
+        $this->desktopEnabled = false;
     }
 
     /**
@@ -18,7 +18,7 @@ class ChannelMobileOnly extends Channel
      *
      * @return $this
      */
-    public function setIsDesktopEnabled($isEnabled)
+    public function setDesktopEnabled($isEnabled)
     {
         return $this;
     }
@@ -29,7 +29,7 @@ class ChannelMobileOnly extends Channel
     public function toAPI()
     {
         $data = parent::toAPI();
-        unset($data['isDesktopEnabled']);
+        unset($data['desktopEnabled']);
 
         return $data;
     }
