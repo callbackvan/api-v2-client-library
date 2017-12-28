@@ -75,6 +75,8 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     public function testToAPI()
     {
         $expected = [
+            'backgroundTypeForSlider' => 'preset',
+
             'colors'   => [
                 'color' => '000000',
             ],
@@ -91,6 +93,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
                 'button' => 55,
             ],
         ];
+
         $this->colors
             ->expects($this->once())
             ->method('toAPI')
@@ -116,7 +119,56 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             ->method('toAPI')
             ->willReturn($expected['sizes']);
 
+        $this->entity
+            ->setBackgroundTypeForSlider($expected['backgroundTypeForSlider']);
+
         $this->assertEquals($expected, $this->entity->toAPI());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::getBackgroundTypeForSlider
+     */
+    public function testBackgroundTypeForSliderDefault()
+    {
+        $this->assertNull($this->entity->getBackgroundTypeForSlider());
+    }
+
+    /**
+     * @covers       \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::setBackgroundTypeForSlider
+     * @covers       \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::getBackgroundTypeForSlider
+     * @dataProvider validBackgroundTypeProvider
+     *
+     * @param string $type
+     */
+    public function testBackgroundTypeForSlider($type)
+    {
+        $this->entity->setBackgroundTypeForSlider($type);
+        $this->assertSame(
+            strtolower($type),
+            $this->entity->getBackgroundTypeForSlider()
+        );
+    }
+
+    public function validBackgroundTypeProvider()
+    {
+        $result = [];
+
+        foreach (Settings::BACKGROUND_TYPES as $type) {
+            foreach ([$type, strtoupper($type), ucfirst($type)] as $item) {
+                $result[$item] = [$item];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @covers            \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::setBackgroundTypeForSlider
+     * @expectedException \CallbackHunterAPIv2\Exception\InvalidArgumentException
+     */
+    public function testBackgroundTypeForSliderThrowInvalidArgument()
+    {
+        $this->entity->setBackgroundTypeForSlider('test');
     }
 
     /**

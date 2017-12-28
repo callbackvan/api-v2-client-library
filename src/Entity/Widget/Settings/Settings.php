@@ -4,9 +4,13 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
+use CallbackHunterAPIv2\Exception\InvalidArgumentException;
 
 class Settings implements SettingsInterface
 {
+    /** @var string */
+    private $backgroundTypeForSlider;
+
     /** @var Colors */
     private $colors;
 
@@ -89,11 +93,41 @@ class Settings implements SettingsInterface
     public function toAPI()
     {
         return [
-            'colors'   => $this->colors->toAPI(),
-            'position' => $this->position->toAPI(),
-            'images'   => $this->images->toAPI(),
-            'channels' => $this->channels->toAPI(),
-            'sizes'    => $this->sizes->toAPI(),
+            'backgroundTypeForSlider' => $this->backgroundTypeForSlider,
+            'colors'                  => $this->colors->toAPI(),
+            'position'                => $this->position->toAPI(),
+            'images'                  => $this->images->toAPI(),
+            'channels'                => $this->channels->toAPI(),
+            'sizes'                   => $this->sizes->toAPI(),
         ];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBackgroundTypeForSlider()
+    {
+        return $this->backgroundTypeForSlider;
+    }
+
+    /**
+     * @param string $backgroundTypeForSlider
+     *
+     * @throws InvalidArgumentException
+     */
+    public function setBackgroundTypeForSlider($backgroundTypeForSlider)
+    {
+        $tmp = strtolower($backgroundTypeForSlider);
+
+        if (!in_array($tmp, self::BACKGROUND_TYPES, true)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Invalid background type: "%s"',
+                    $backgroundTypeForSlider
+                )
+            );
+        }
+
+        $this->backgroundTypeForSlider = $tmp;
     }
 }

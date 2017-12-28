@@ -7,6 +7,16 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 
 interface SettingsInterface extends BaseEntityInterface
 {
+    const BACKGROUND_TYPE_COLOR = 'color';
+    const BACKGROUND_TYPE_PRESET = 'preset';
+    const BACKGROUND_TYPE_FILE = 'file';
+    const BACKGROUND_TYPES
+        = [
+            self::BACKGROUND_TYPE_COLOR,
+            self::BACKGROUND_TYPE_PRESET,
+            self::BACKGROUND_TYPE_FILE,
+        ];
+
     /**
      * @return Position
      */
