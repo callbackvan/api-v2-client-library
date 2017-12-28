@@ -41,4 +41,9 @@ interface SettingsInterface extends BaseEntityInterface
      * @return Sizes
      */
     public function getSizes();
+
+    /**
+     * @return string|null
+     */
+    public function getBackgroundTypeForSlider();
 }
