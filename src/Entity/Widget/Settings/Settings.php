@@ -22,25 +22,31 @@ class Settings implements SettingsInterface
     /** @var Sizes */
     private $sizes;
 
+    /** @var Texts */
+    private $texts;
+
     /**
      * @param Colors   $colors
      * @param Position $position
      * @param Images   $images
      * @param Channels $channels
      * @param Sizes    $sizes
+     * @param Texts    $texts
      */
     public function __construct(
         Colors $colors,
         Position $position,
         Images $images,
         Channels $channels,
-        Sizes $sizes
+        Sizes $sizes,
+        Texts $texts
     ) {
         $this->colors = $colors;
         $this->position = $position;
         $this->images = $images;
         $this->channels = $channels;
         $this->sizes = $sizes;
+        $this->texts = $texts;
     }
 
     /**
@@ -84,6 +90,14 @@ class Settings implements SettingsInterface
     }
 
     /**
+     * @return Texts
+     */
+    public function getTexts()
+    {
+        return $this->texts;
+    }
+
+    /**
      * @return array
      */
     public function toAPI()
@@ -94,6 +108,7 @@ class Settings implements SettingsInterface
             'images'   => $this->images->toAPI(),
             'channels' => $this->channels->toAPI(),
             'sizes'    => $this->sizes->toAPI(),
+            'texts'    => $this->texts->toAPI(),
         ];
     }
 }
