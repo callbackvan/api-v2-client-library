@@ -99,6 +99,9 @@ class SettingsFactoryTest extends TestCase
             $channels,
             $sizes
         );
+        $expected->setBackgroundTypeForSlider(
+            $this->settingsSample['backgroundTypeForSlider']
+        );
 
         $settings = $this->settingsFactory->fromAPI($this->settingsSample);
 
@@ -115,20 +118,21 @@ class SettingsFactoryTest extends TestCase
         parent::setUp();
 
         $this->settingsSample = [
-            'colors'   => [
+            'backgroundTypeForSlider' => 'preset',
+            'colors'                  => [
                 'iconBackground'   => 'ccc',
                 'backgroundSlider' => 'fff',
             ],
-            'position' => [
+            'position'                => [
                 'x' => 88,
                 'y' => 99,
             ],
-            'images'   => [
+            'images'                  => [
                 'buttonLogo'       => '',
                 'iconLogoSlider'   => '',
                 'backgroundSlider' => '',
             ],
-            'channels' => [
+            'channels'                => [
                 'callback' => [
                     'desktopEnabled' => true,
                     'mobileEnabled'  => true,
@@ -161,7 +165,7 @@ class SettingsFactoryTest extends TestCase
                     'mobileEnabled'  => true,
                 ],
             ],
-            'sizes'    => [
+            'sizes'                   => [
                 'button' => 50,
             ],
         ];
