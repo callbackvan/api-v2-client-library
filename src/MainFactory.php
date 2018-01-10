@@ -9,6 +9,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImagesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\PositionFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\TextsFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 
 class MainFactory
@@ -23,7 +24,8 @@ class MainFactory
             new PositionFactory,
             new ImagesFactory,
             new ChannelsFactory,
-            new SizesFactory
+            new SizesFactory,
+            new TextsFactory
         );
 
         return new WidgetFactory($settingsFactory);

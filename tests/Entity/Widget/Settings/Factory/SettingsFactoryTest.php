@@ -7,10 +7,12 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Colors;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\TextsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Position;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Sizes;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Texts;
 use PHPUnit\Framework\TestCase;
 
 class SettingsFactoryTest extends TestCase
@@ -51,6 +53,11 @@ class SettingsFactoryTest extends TestCase
     private $sizesFactory;
 
     /**
+     * @var TextsFactory
+     */
+    private $textsFactory;
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory::fromAPI
      */
@@ -61,6 +68,7 @@ class SettingsFactoryTest extends TestCase
         $images = $this->createMock(Images::class);
         $channels = $this->createMock(Channels::class);
         $sizes = $this->createMock(Sizes::class);
+        $texts = $this->createMock(Texts::class);
 
         $this->colorsFactory
             ->expects($this->once())
@@ -92,12 +100,19 @@ class SettingsFactoryTest extends TestCase
             ->with($this->settingsSample['sizes'])
             ->willReturn($sizes);
 
+        $this->textsFactory
+            ->expects($this->once())
+            ->method('fromAPI')
+            ->with($this->settingsSample['texts'])
+            ->willReturn($texts);
+
         $expected = new Settings(
             $colors,
             $position,
             $images,
             $channels,
-            $sizes
+            $sizes,
+            $texts
         );
         $expected->setBackgroundTypeForSlider(
             $this->settingsSample['backgroundTypeForSlider']
@@ -168,6 +183,10 @@ class SettingsFactoryTest extends TestCase
             'sizes'                   => [
                 'button' => 50,
             ],
+            'texts'    => [
+                'sliderCallbackButton' => 'Очень жду!',
+                'sliderTitle' => 'Привет!',
+            ],
         ];
 
         $this->colorsFactory = $this->createMock(Factory\ColorsFactory::class);
@@ -177,13 +196,15 @@ class SettingsFactoryTest extends TestCase
         $this->imagesFactory = $this->createMock(Factory\ImagesFactory::class);
         $this->channelsFactory = $this->createMock(ChannelsFactory::class);
         $this->sizesFactory = $this->createMock(SizesFactory::class);
+        $this->textsFactory = $this->createMock(TextsFactory::class);
 
         $this->settingsFactory = new Factory\SettingsFactory(
             $this->colorsFactory,
             $this->positionFactory,
             $this->imagesFactory,
             $this->channelsFactory,
-            $this->sizesFactory
+            $this->sizesFactory,
+            $this->textsFactory
         );
     }
 }

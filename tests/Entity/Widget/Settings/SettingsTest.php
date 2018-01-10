@@ -8,6 +8,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Position;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Sizes;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Texts;
 
 class SettingsTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,6 +24,8 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     private $channels;
     /** @var Sizes */
     private $sizes;
+    /** @var Texts */
+    private $texts;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::__construct
@@ -70,6 +73,15 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::getTexts
+     */
+    public function testGetTexts()
+    {
+        $this->assertSame($this->texts, $this->entity->getTexts());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::toAPI
      */
     public function testToAPI()
@@ -91,6 +103,10 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             ],
             'sizes'    => [
                 'button' => 55,
+            ],
+            'texts'    => [
+                'sliderCallbackButton' => 'Жду!',
+                'sliderTitle' => 'Привет!',
             ],
         ];
 
@@ -118,6 +134,11 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('toAPI')
             ->willReturn($expected['sizes']);
+
+        $this->texts
+            ->expects($this->once())
+            ->method('toAPI')
+            ->willReturn($expected['texts']);
 
         $this->entity
             ->setBackgroundTypeForSlider($expected['backgroundTypeForSlider']);
@@ -183,7 +204,8 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             $this->position = $this->createMock(Position::class),
             $this->images = $this->createMock(Images::class),
             $this->channels = $this->createMock(Channels::class),
-            $this->sizes = $this->createMock(Sizes::class)
+            $this->sizes = $this->createMock(Sizes::class),
+            $this->texts = $this->createMock(Texts::class)
         );
     }
 }
