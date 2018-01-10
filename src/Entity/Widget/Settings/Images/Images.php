@@ -64,6 +64,14 @@ class Images implements BaseEntityInterface
     }
 
     /**
+     * @param BackgroundSliderImage $backgroundSlider
+     */
+    public function setBackgroundSlider(BackgroundSliderImage $backgroundSlider)
+    {
+        $this->backgroundSlider = $backgroundSlider;
+    }
+
+    /**
      * @return array
      */
     public function toAPI()

@@ -88,6 +88,18 @@ class ImagesTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::setBackgroundSlider()
+     */
+    public function testSetBackgroundSlider()
+    {
+        $image = $this->createMock(BackgroundSliderImage::class);
+
+        $this->images->setBackgroundSlider($image);
+
+        $this->assertSame($image, $this->images->getBackgroundSlider());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::toAPI()
      */
     public function testToAPIAll()
