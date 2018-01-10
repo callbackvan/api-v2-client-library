@@ -58,6 +58,7 @@ class SettingsFactory
      * @param array $data
      *
      * @return SettingsInterface
+     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
      */
     public function fromAPI(array $data)
     {
@@ -73,16 +74,14 @@ class SettingsFactory
         $channels = $this->channelsFactory->fromAPI(
             isset($data['channels']) ? $data['channels'] : []
         );
-
         $sizes = $this->sizesFactory->fromAPI(
             isset($data['sizes']) ? $data['sizes'] : []
         );
-
         $texts = $this->textsFactory->fromAPI(
             isset($data['texts']) ? $data['texts'] : []
         );
 
-        return new Settings(
+        $settings = new Settings(
             $colors,
             $position,
             $images,
@@ -90,5 +89,13 @@ class SettingsFactory
             $sizes,
             $texts
         );
+
+        if (isset($data['backgroundTypeForSlider'])) {
+            $settings->setBackgroundTypeForSlider(
+                $data['backgroundTypeForSlider']
+            );
+        }
+
+        return $settings;
     }
 }

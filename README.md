@@ -21,10 +21,10 @@ composer require callbackhunter/apiv2library
 Примеры использования
 
 ```php
+use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImageForUploadFactory;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Images\ButtonLogoImage;
 use CallbackHunterAPIv2\MainFactory;
 use CallbackHunterAPIv2\ValueObject\Pagination;
-use CallbackHunterAPIv2\Entity\Widget\Settings\Images\ButtonLogoImage;
-use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImageForUploadFactory;
 
 $userId = 123;
 $key = md5('test');
@@ -48,17 +48,21 @@ try {
     $buttonLogo->setForUpload($image);
 
     $widget = $repository->get('my widget uid');
-    $widget->getSettings()->getImages()->setButtonLogo($buttonLogo);
+    $widget->getSettings()->getImages()->getButtonLogo()->setForUpload(
+        $buttonLogo->getForUpload()
+    );
     $repository->save($widget);
 } catch (\CallbackHunterAPIv2\Exception\ChangeOfPaidPropertiesException $e) {
-    echo 'You must pay for change: ', implode(array_keys($e->getInvalidParams()));
+    echo 'You must pay for change: ', implode(
+        array_keys($e->getInvalidParams())
+    );
 } catch (\CallbackHunterAPIv2\Exception\ResourceNotFoundException $e) {
     echo 'Widget not found';
 } catch (\CallbackHunterAPIv2\Exception\WidgetValidateException $e) {
     echo 'You trying to upload not an image';
 } catch (\CallbackHunterAPIv2\Exception\Exception $e) {
-    echo 'API Error: ' . $e->getMessage();
+    echo 'API Error: '.$e->getMessage();
 } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-    echo 'HTTP Exception: ' . $e->getMessage();
+    echo 'HTTP Exception: '.$e->getMessage();
 }
 ```

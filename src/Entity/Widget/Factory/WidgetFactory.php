@@ -22,6 +22,7 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
      * @param array $data
      *
      * @return WidgetInterface
+     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
      */
     public function fromAPI(array $data)
     {
