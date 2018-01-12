@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "callbackhunter/apiv2client",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/callbackvan/api-v2-client-php.git",
-                "reference": "0e6a75db2abc809277f4f696b949ec968c834cae"
+                "reference": "35c720812271eb30918c55efbebf7593f2070c28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/callbackvan/api-v2-client-php/zipball/0e6a75db2abc809277f4f696b949ec968c834cae",
-                "reference": "0e6a75db2abc809277f4f696b949ec968c834cae",
+                "url": "https://api.github.com/repos/callbackvan/api-v2-client-php/zipball/35c720812271eb30918c55efbebf7593f2070c28",
+                "reference": "35c720812271eb30918c55efbebf7593f2070c28",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
             ],
             "description": "Official client for APIv2 of CallbackHunter",
             "homepage": "https://callbackhunter.com/",
-            "time": "2018-01-12T11:50:07+00:00"
+            "time": "2018-01-12T12:53:08+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
