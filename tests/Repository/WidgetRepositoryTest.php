@@ -707,6 +707,33 @@ class WidgetRepositoryTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::getDefault
+     */
+    public function testGetDefault()
+    {
+        $responseBody = ['foo' => 'bar'];
+
+        $this->client->expects($this->once())
+            ->method('requestGet')
+            ->with($this->path.'/default')
+            ->willReturn($this->response);
+
+        $this->response->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(200);
+        $this->response->expects($this->once())
+            ->method('getBody')
+            ->willReturn(json_encode($responseBody));
+
+        $this->widgetFactory->expects($this->once())
+            ->method('fromAPI')
+            ->with($responseBody)
+            ->willReturn($this->widget);
+
+        $this->assertSame($this->widget, $this->widgetRepository->getDefault());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::get
      * @expectedException \CallbackHunterAPIv2\Exception\ResourceNotFoundException
      */

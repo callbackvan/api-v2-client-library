@@ -136,6 +136,25 @@ class WidgetRepository implements WidgetRepositoryInterface
     }
 
     /**
+     * Получение виджета с настройками по-умолчанию
+     *
+     * @return WidgetInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws Exception\ChangeOfPaidPropertiesException
+     * @throws Exception\RepositoryException
+     * @throws Exception\WidgetValidateException
+     * @throws Exception\ResourceNotFoundException
+     */
+    public function getDefault()
+    {
+        $response = $this->client->requestGet('widgets/default');
+        $this->checkResponse($response, 200);
+        $responseData = json_decode((string)$response->getBody(), true);
+
+        return $this->widgetFactory->fromAPI($responseData);
+    }
+
+    /**
      * @param ResponseInterface $response
      * @param array|int         $statusCodeOk
      *
