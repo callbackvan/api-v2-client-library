@@ -2,15 +2,26 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels;
 
-class ChannelMobileOnly extends Channel
+use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+
+/**
+ * Class Channel
+ */
+class ChannelMobileOnly implements BaseEntityInterface
 {
     /**
-     * ChannelMobileOnly constructor.
+     * Отображать ли канал связи на мобильных устройствах
+     *
+     * @var bool
      */
-    public function __construct()
+    protected $mobileEnabled;
+
+    /**
+     * @return bool|null
+     */
+    public function isMobileEnabled()
     {
-        $this->mobileEnabled = true;
-        $this->desktopEnabled = false;
+        return $this->mobileEnabled;
     }
 
     /**
@@ -18,8 +29,10 @@ class ChannelMobileOnly extends Channel
      *
      * @return $this
      */
-    public function setDesktopEnabled($isEnabled)
+    public function setMobileEnabled($isEnabled)
     {
+        $this->mobileEnabled = !empty($isEnabled);
+
         return $this;
     }
 
@@ -28,9 +41,8 @@ class ChannelMobileOnly extends Channel
      */
     public function toAPI()
     {
-        $data = parent::toAPI();
-        unset($data['desktopEnabled']);
-
-        return $data;
+        return [
+            'mobileEnabled'  => $this->isMobileEnabled(),
+        ];
     }
 }

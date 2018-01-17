@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 class ChannelsFactoryTest extends TestCase
 {
     const AVAILABLE_CHANNELS = Channels\Channels::CHANNELS_LIST;
-    const AVAILABLE_PROPERTIES = ['desktopEnabled', 'mobileEnabled'];
-    const AVAILABLE_ARGS = [true, false];
+    const AVAILABLE_PROPERTIES = ['desktopEnabled', 'mobileEnabled','isConnected'];
+    const AVAILABLE_ARGS = [true, false, true];
     /** @var Factory\ChannelsFactory */
     private $channelsFactory;
 
@@ -23,7 +23,10 @@ class ChannelsFactoryTest extends TestCase
 
         $channels = $this->channelsFactory->fromAPI($sampleData);
 
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getSMS());
+        $this->assertInstanceOf(
+            Channels\Channel::class,
+            $channels->getSMS()
+        );
         $this->assertInstanceOf(
             Channels\Channel::class,
             $channels->getCallback()
@@ -33,10 +36,13 @@ class ChannelsFactoryTest extends TestCase
             $channels->getBuiltIn()
         );
         $this->assertInstanceOf(
-            Channels\Channel::class,
+            Channels\ChannelBotClient::class,
             $channels->getFacebook()
         );
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getSkype());
+        $this->assertInstanceOf(
+            Channels\ChannelBotClient::class,
+            $channels->getSkype()
+        );
         $this->assertInstanceOf(
             Channels\Channel::class,
             $channels->getTelegram()
@@ -45,7 +51,10 @@ class ChannelsFactoryTest extends TestCase
             Channels\ChannelMobileOnly::class,
             $channels->getViber()
         );
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getVk());
+        $this->assertInstanceOf(
+            Channels\ChannelBotClient::class,
+            $channels->getVk()
+        );
     }
 
     /**

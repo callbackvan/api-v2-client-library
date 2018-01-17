@@ -27,34 +27,34 @@ class Channels implements BaseEntityInterface
     private $builtIn;
     /** @var Channel */
     private $telegram;
-    /** @var Channel */
+    /** @var ChannelBotClient */
     private $vk;
-    /** @var Channel */
+    /** @var ChannelBotClient */
     private $facebook;
     /** @var ChannelMobileOnly */
     private $viber;
-    /** @var Channel */
+    /** @var ChannelBotClient */
     private $skype;
 
     /**
-     * @param Channel           $callback
-     * @param Channel           $sms
-     * @param Channel           $builtIn
-     * @param Channel           $telegram
-     * @param Channel           $vk
-     * @param Channel           $facebook
-     * @param ChannelMobileOnly $viber
-     * @param Channel           $skype
+     * @param Channel                   $callback
+     * @param Channel                   $sms
+     * @param Channel                   $builtIn
+     * @param Channel                   $telegram
+     * @param ChannelBotClient          $vk
+     * @param ChannelBotClient          $facebook
+     * @param ChannelMobileOnly         $viber
+     * @param ChannelBotClient          $skype
      */
     public function __construct(
         Channel $callback,
         Channel $sms,
         Channel $builtIn,
         Channel $telegram,
-        Channel $vk,
-        Channel $facebook,
+        ChannelBotClient $vk,
+        ChannelBotClient $facebook,
         ChannelMobileOnly $viber,
-        Channel $skype
+        ChannelBotClient $skype
     ) {
         $this->callback = $callback;
         $this->sms = $sms;
@@ -99,7 +99,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelBotClient
      */
     public function getVk()
     {
@@ -107,7 +107,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelBotClient
      */
     public function getFacebook()
     {
@@ -123,7 +123,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelBotClient
      */
     public function getSkype()
     {
@@ -158,7 +158,7 @@ class Channels implements BaseEntityInterface
     /**
      * @param string $channel
      *
-     * @return Channel|ChannelMobileOnly
+     * @return Channel|ChannelMobileOnly|ChannelBotClient
      * @throws Exception\InvalidArgumentException
      */
     public function get($channel)
