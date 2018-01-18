@@ -5,6 +5,7 @@ namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelWithConnection;
 use PHPUnit\Framework\TestCase;
 
 class ChannelsTest extends TestCase
@@ -191,16 +192,30 @@ class ChannelsTest extends TestCase
     {
         parent::setUp();
         $this->entity = new Channels(
-            $this->channels['callback'] = $this->createMock(Channel::class),
-            $this->channels['sms'] = $this->createMock(Channel::class),
-            $this->channels['builtIn'] = $this->createMock(Channel::class),
-            $this->channels['telegram'] = $this->createMock(Channel::class),
-            $this->channels['vk'] = $this->createMock(Channel::class),
-            $this->channels['facebook'] = $this->createMock(Channel::class),
+            $this->channels['callback'] = $this->createMock(
+                Channel::class
+            ),
+            $this->channels['sms'] = $this->createMock(
+                Channel::class
+            ),
+            $this->channels['builtIn'] = $this->createMock(
+                Channel::class
+            ),
+            $this->channels['telegram'] = $this->createMock(
+                Channel::class
+            ),
+            $this->channels['vk'] = $this->createMock(
+                ChannelWithConnection::class
+            ),
+            $this->channels['facebook'] = $this->createMock(
+                ChannelWithConnection::class
+            ),
             $this->channels['viber'] = $this->createMock(
                 ChannelMobileOnly::class
             ),
-            $this->channels['skype'] = $this->createMock(Channel::class)
+            $this->channels['skype'] = $this->createMock(
+                ChannelWithConnection::class
+            )
         );
     }
 }

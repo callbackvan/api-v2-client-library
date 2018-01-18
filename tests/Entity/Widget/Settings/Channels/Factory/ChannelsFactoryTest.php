@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 class ChannelsFactoryTest extends TestCase
 {
     const AVAILABLE_CHANNELS = Channels\Channels::CHANNELS_LIST;
-    const AVAILABLE_PROPERTIES = ['desktopEnabled', 'mobileEnabled'];
+    const AVAILABLE_PROPERTIES
+        = ['desktopEnabled', 'mobileEnabled', 'connected'];
     const AVAILABLE_ARGS = [true, false];
     /** @var Factory\ChannelsFactory */
     private $channelsFactory;
@@ -23,29 +24,38 @@ class ChannelsFactoryTest extends TestCase
 
         $channels = $this->channelsFactory->fromAPI($sampleData);
 
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getSMS());
-        $this->assertInstanceOf(
-            Channels\Channel::class,
-            $channels->getCallback()
+        $this->checkChannel(
+            $channels->getSMS(),
+            $sampleData['sms']
         );
-        $this->assertInstanceOf(
-            Channels\Channel::class,
-            $channels->getBuiltIn()
+        $this->checkChannel(
+            $channels->getCallback(),
+            $sampleData['callback']
         );
-        $this->assertInstanceOf(
-            Channels\Channel::class,
-            $channels->getFacebook()
+        $this->checkChannel(
+            $channels->getBuiltIn(),
+            $sampleData['builtIn']
         );
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getSkype());
-        $this->assertInstanceOf(
-            Channels\Channel::class,
-            $channels->getTelegram()
+        $this->checkChannelWithConnection(
+            $channels->getFacebook(),
+            $sampleData['facebook']
         );
-        $this->assertInstanceOf(
-            Channels\ChannelMobileOnly::class,
-            $channels->getViber()
+        $this->checkChannelWithConnection(
+            $channels->getSkype(),
+            $sampleData['skype']
         );
-        $this->assertInstanceOf(Channels\Channel::class, $channels->getVk());
+        $this->checkChannel(
+            $channels->getTelegram(),
+            $sampleData['telegram']
+        );
+        $this->checkChannelMobile(
+            $channels->getViber(),
+            $sampleData['viber']
+        );
+        $this->checkChannelWithConnection(
+            $channels->getVk(),
+            $sampleData['vk']
+        );
     }
 
     /**
@@ -53,7 +63,7 @@ class ChannelsFactoryTest extends TestCase
      *
      * @return array
      */
-    protected function generateFromAPISample()
+    private function generateFromAPISample()
     {
         $fromAPI = [];
 
@@ -65,20 +75,19 @@ class ChannelsFactoryTest extends TestCase
             [$unknownPropName]
         );
 
+        foreach ($randomChannelNames as $cName) {
+            $fromAPI[$cName] = [];
 
-        shuffle($randomChannelNames);
-        $cName = array_shift($randomChannelNames);
-        $fromAPI[$cName] = [];
+            $localRandomPropNames = $randomPropNames;
+            $max = count(self::AVAILABLE_PROPERTIES);
 
-        $localRandomPropNames = $randomPropNames;
-        $max = count(self::AVAILABLE_PROPERTIES);
-
-        for ($j = 0; $j < $max; $j++) {
-            shuffle($localRandomPropNames);
-            $prop = array_shift($localRandomPropNames);
-            if ($prop !== $unknownPropName) {
-                $index = mt_rand(0, count(self::AVAILABLE_ARGS) - 1);
-                $fromAPI[$cName][$prop] = self::AVAILABLE_ARGS[$index];
+            for ($j = 0; $j < $max; $j++) {
+                shuffle($localRandomPropNames);
+                $prop = array_shift($localRandomPropNames);
+                if ($prop !== $unknownPropName) {
+                    $index = mt_rand(0, count(self::AVAILABLE_ARGS) - 1);
+                    $fromAPI[$cName][$prop] = self::AVAILABLE_ARGS[$index];
+                }
             }
         }
 
@@ -90,5 +99,72 @@ class ChannelsFactoryTest extends TestCase
         parent::setUp();
 
         $this->channelsFactory = new Factory\ChannelsFactory();
+    }
+
+    /**
+     * @param Channels\Channel $channel
+     * @param array            $props
+     */
+    private function checkChannel($channel, array $props)
+    {
+        $this->assertInstanceOf(
+            Channels\Channel::class,
+            $channel
+        );
+
+        if (isset($props['desktopEnabled'])) {
+            $this->assertSame(
+                $channel->isDesktopEnabled(), $props['desktopEnabled']
+            );
+        }
+        if (isset($props['mobileEnabled'])) {
+            $this->assertSame(
+                $channel->isMobileEnabled(), $props['mobileEnabled']
+            );
+        }
+    }
+
+    /**
+     * @param Channels\ChannelMobileOnly $channel
+     * @param array                      $props
+     */
+    private function checkChannelMobile($channel, array $props)
+    {
+        $this->assertInstanceOf(
+            Channels\ChannelMobileOnly::class,
+            $channel
+        );
+
+        if (isset($props['mobileEnabled'])) {
+            $this->assertSame(
+                $channel->isMobileEnabled(), $props['mobileEnabled']
+            );
+        }
+    }
+
+    /**
+     * @param Channels\ChannelWithConnection $channel
+     * @param array                          $props
+     */
+    private function checkChannelWithConnection($channel, array $props)
+    {
+        $this->assertInstanceOf(
+            Channels\ChannelWithConnection::class,
+            $channel
+        );
+
+        if (isset($props['desktopEnabled'])) {
+            $this->assertSame(
+                $channel->isDesktopEnabled(), $props['desktopEnabled']
+            );
+        }
+        if (isset($props['mobileEnabled'])) {
+            $this->assertSame(
+                $channel->isMobileEnabled(), $props['mobileEnabled']
+            );
+        }
+        if (isset($props['connected'])) {
+            $this->assertSame($channel->isConnected(), $props['connected']);
+        }
     }
 }
