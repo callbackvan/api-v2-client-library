@@ -93,11 +93,13 @@ class WidgetFactoryTest extends TestCase
                     ],
                     'vk'       => [
                         'desktopEnabled' => true,
-                        'mobileEnabled'  => true,
+                        'mobileEnabled'  => false,
+                        'connected'      => true,
                     ],
                     'facebook' => [
-                        'desktopEnabled' => true,
-                        'mobileEnabled'  => true,
+                        'desktopEnabled' => false,
+                        'mobileEnabled'  => false,
+                        'connected'      => false,
                     ],
                     'viber'    => [
                         'mobileEnabled' => true,
@@ -105,6 +107,7 @@ class WidgetFactoryTest extends TestCase
                     'skype'    => [
                         'desktopEnabled' => true,
                         'mobileEnabled'  => true,
+                        'connected'      => true,
                     ],
                 ],
             ],

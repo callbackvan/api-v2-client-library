@@ -37,24 +37,24 @@ class Channels implements BaseEntityInterface
     private $skype;
 
     /**
-     * @param Channel           $callback
-     * @param Channel           $sms
-     * @param Channel           $builtIn
-     * @param Channel           $telegram
-     * @param Channel           $vk
-     * @param Channel           $facebook
-     * @param ChannelMobileOnly $viber
-     * @param Channel           $skype
+     * @param Channel               $callback
+     * @param Channel               $sms
+     * @param Channel               $builtIn
+     * @param Channel               $telegram
+     * @param ChannelWithConnection $vk
+     * @param ChannelWithConnection $facebook
+     * @param ChannelMobileOnly     $viber
+     * @param ChannelWithConnection $skype
      */
     public function __construct(
         Channel $callback,
         Channel $sms,
         Channel $builtIn,
         Channel $telegram,
-        Channel $vk,
-        Channel $facebook,
+        ChannelWithConnection $vk,
+        ChannelWithConnection $facebook,
         ChannelMobileOnly $viber,
-        Channel $skype
+        ChannelWithConnection $skype
     ) {
         $this->callback = $callback;
         $this->sms = $sms;
@@ -99,7 +99,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelWithConnection
      */
     public function getVk()
     {
@@ -107,7 +107,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelWithConnection
      */
     public function getFacebook()
     {
@@ -123,7 +123,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelWithConnection
      */
     public function getSkype()
     {
@@ -158,7 +158,7 @@ class Channels implements BaseEntityInterface
     /**
      * @param string $channel
      *
-     * @return Channel|ChannelMobileOnly
+     * @return Channel|ChannelMobileOnly|ChannelWithConnection
      * @throws Exception\InvalidArgumentException
      */
     public function get($channel)
