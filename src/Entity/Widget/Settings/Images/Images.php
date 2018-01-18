@@ -3,8 +3,10 @@
 namespace CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 
 use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
+use SplSubject;
 
-class Images implements BaseEntityInterface
+class Images implements BaseEntityInterface, \SplObserver
 {
     const TYPES
         = [
@@ -81,5 +83,24 @@ class Images implements BaseEntityInterface
             'iconLogoSlider'   => $this->getIconLogoSlider()->getName(),
             'backgroundSlider' => $this->getBackgroundSlider()->getName(),
         ];
+    }
+
+    public function update(SplSubject $subject)
+    {
+        if ($subject instanceof Settings) {
+            $backgroundSlider = $this->getBackgroundSlider();
+            switch ($subject->getBackgroundTypeForSlider()) {
+                case Settings::BACKGROUND_TYPE_PRESET:
+                    $backgroundSlider->setBaseUrl(
+                        BackgroundSliderImage::PRESET_URL
+                    );
+                    break;
+                case Settings::BACKGROUND_TYPE_FILE:
+                    $backgroundSlider->setBaseUrl(
+                        BackgroundSliderImage::BASE_URL
+                    );
+                    break;
+            }
+        }
     }
 }

@@ -6,6 +6,8 @@ use CallbackHunterAPIv2\Type\FileForUploadInterface;
 
 abstract class AbstractImage
 {
+    const BASE_IMAGES_URL = 'https://cdn.callbackhunter.com/uploads/';
+
     /**
      * @var string
      */
@@ -37,6 +39,14 @@ abstract class AbstractImage
     public function getURL()
     {
         return $this->name ? $this->baseUrl.$this->name : '';
+    }
+
+    /**
+     * @param string $baseUrl
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
     }
 
     /**

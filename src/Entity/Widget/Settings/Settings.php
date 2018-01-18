@@ -5,9 +5,13 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Exception\InvalidArgumentException;
+use SplObserver;
 
-class Settings implements SettingsInterface
+class Settings implements SettingsInterface, \SplSubject
 {
+    /** @var \SplObjectStorage */
+    private $observers;
+
     /** @var string */
     private $backgroundTypeForSlider;
 
@@ -45,12 +49,14 @@ class Settings implements SettingsInterface
         Sizes $sizes,
         Texts $texts
     ) {
+        $this->observers = new \SplObjectStorage;
         $this->colors = $colors;
         $this->position = $position;
         $this->images = $images;
         $this->channels = $channels;
         $this->sizes = $sizes;
         $this->texts = $texts;
+        $this->attach($images);
     }
 
     /**
@@ -144,5 +150,24 @@ class Settings implements SettingsInterface
         }
 
         $this->backgroundTypeForSlider = $tmp;
+        $this->notify();
+    }
+
+    public function attach(SplObserver $observer)
+    {
+        $this->observers->attach($observer);
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        $this->observers->detach($observer);
+    }
+
+    public function notify()
+    {
+        /** @var SplObserver $observer */
+        foreach ($this->observers as $observer) {
+            $observer->update($this);
+        }
     }
 }
