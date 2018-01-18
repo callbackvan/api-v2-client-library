@@ -24,11 +24,27 @@ class AbstractImageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetURL()
     {
-
         $name = 'test';
         $this->entity->setName($name);
         $this->assertSame(
             $this->baseUrl.$name,
+            $this->entity->getURL()
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage::setBaseUrl
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage::getUrl
+     */
+    public function testBaseUrl()
+    {
+        $name = 'test';
+        $baseUrl = 'https://google.com/';
+
+        $this->entity->setName($name);
+        $this->entity->setBaseUrl($baseUrl);
+        $this->assertSame(
+            $baseUrl.$name,
             $this->entity->getURL()
         );
     }

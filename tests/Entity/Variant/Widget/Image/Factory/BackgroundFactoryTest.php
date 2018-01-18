@@ -22,42 +22,40 @@ class BackgroundFactoryTest extends TestCase
     private $backgroundFactory;
 
     /**
-     * Установка окружения
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->backgroundFactory = new BackgroundFactory();
-    }
-
-    /**
-     * @covers \CallbackHunterAPIv2\Entity\Variant\Widget\Image\Factory\BackgroundFactory::fromAPI()
+     * @covers \CallbackHunterAPIv2\Entity\Variant\Widget\Image\Factory\BackgroundFactory::fromAPI
      */
     public function testFromAPI()
     {
-        $this->assertInstanceOf(Background::class, $this->backgroundFactory->fromAPI([]));
-        $this->assertEquals([], $this->backgroundFactory->fromAPI([])->getBackgroundSlider());
+        $this->assertInstanceOf(
+            Background::class,
+            $this->backgroundFactory->fromAPI([])
+        );
+        $this->assertEquals(
+            [],
+            $this->backgroundFactory->fromAPI([])->getBackgroundSlider()
+        );
 
         $data = [
             'backgroundSlider' => [
                 [
                     '_links' => [
                         'self' => [
-                            'self' => 'https://callbackhunter.com/uploads/slide_image/preset/slider_1.png'
-                        ]
+                            'href' => BackgroundSliderImage::PRESET_URL
+                                .'slider_1.png',
+                        ],
                     ],
-                    'value' => 'slider_1.png'
+                    'value'  => 'slider_1.png',
                 ],
                 [
                     '_links' => [
                         'self' => [
-                            'self' => 'https://callbackhunter.com/uploads/slide_image/preset/slider_2.png'
-                        ]
+                            'href' => BackgroundSliderImage::PRESET_URL
+                                .'slider_2.png',
+                        ],
                     ],
-                    'value' => 'slider_2.png'
-                ]
-            ]
+                    'value'  => 'slider_2.png',
+                ],
+            ],
         ];
 
         $background = $this->backgroundFactory->fromAPI($data);
@@ -66,9 +64,14 @@ class BackgroundFactoryTest extends TestCase
             /* @var BackgroundSliderImage $backgroundSlider */
 
             $imageValue = $data['backgroundSlider'][$key]['value'];
+            $link = $data['backgroundSlider'][$key]['_links']['self']['href'];
 
+            $this->assertInstanceOf(
+                BackgroundSliderImage::class,
+                $backgroundSlider
+            );
             $this->assertEquals($imageValue, $backgroundSlider->getName());
-            $this->assertInstanceOf(BackgroundSliderImage::class, $backgroundSlider);
+            $this->assertEquals($link, $backgroundSlider->getURL());
         }
     }
 
@@ -78,12 +81,25 @@ class BackgroundFactoryTest extends TestCase
     public function testInvalidMethodName()
     {
         $data = [
-            'someMethod' => []
+            'someMethod' => [],
         ];
 
         $background = $this->backgroundFactory->fromAPI($data);
 
-        $this->assertInstanceOf(Background::class, $this->backgroundFactory->fromAPI([]));
+        $this->assertInstanceOf(
+            Background::class,
+            $this->backgroundFactory->fromAPI([])
+        );
         $this->assertEquals([], $background->getBackgroundSlider());
+    }
+
+    /**
+     * Установка окружения
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->backgroundFactory = new BackgroundFactory();
     }
 }

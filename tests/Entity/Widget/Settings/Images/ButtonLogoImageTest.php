@@ -12,8 +12,9 @@ class ButtonLogoImageTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $entity = new ButtonLogoImage;
-        $entity->setName('test');
-        $expected = 'https://cdn.callbackhunter.com/uploads/brand_logo/test';
+        $imageName = 'test';
+        $entity->setName($imageName);
+        $expected = ButtonLogoImage::BASE_URL.$imageName;
         $this->assertSame($expected, $entity->getURL());
     }
 }

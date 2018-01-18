@@ -4,13 +4,15 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 
 class IconLogoSliderImage extends AbstractImage
 {
+    const BASE_URL = self::BASE_IMAGES_URL.'brand_large_logo/';
+
     /**
      * IconLogoSliderImage constructor.
      */
     public function __construct()
     {
         parent::__construct(
-            'https://cdn.callbackhunter.com/uploads/brand_large_logo/'
+            self::BASE_URL
         );
     }
 }

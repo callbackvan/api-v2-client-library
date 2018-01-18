@@ -6,6 +6,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Images\BackgroundSliderImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\ButtonLogoImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\IconLogoSliderImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use PHPUnit\Framework\TestCase;
 
 class ImagesTest extends TestCase
@@ -123,6 +124,38 @@ class ImagesTest extends TestCase
             $this->expectedToAPIResponse,
             $this->images->toAPI()
         );
+    }
+
+    /**
+     * @covers       \CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images::update
+     * @dataProvider backgroundTypeForSliderProvider
+     *
+     * @param string $backgroundTypeForSlider
+     * @param string $baseUrl
+     */
+    public function testUpdate($backgroundTypeForSlider, $baseUrl)
+    {
+        $settings = $this->createMock(Settings::class);
+        $settings
+            ->expects($this->once())
+            ->method('getBackgroundTypeForSlider')
+            ->willReturn($backgroundTypeForSlider);
+
+        $this->backgroundSliderImage
+            ->expects($this->once())
+            ->method('setBaseUrl')
+            ->with($baseUrl);
+
+        $this->images->update($settings);
+    }
+
+    public function backgroundTypeForSliderProvider()
+    {
+        return [
+            [Settings::BACKGROUND_TYPE_PRESET,
+             BackgroundSliderImage::PRESET_URL],
+            [Settings::BACKGROUND_TYPE_FILE, BackgroundSliderImage::BASE_URL],
+        ];
     }
 
     protected function setUp()

@@ -106,7 +106,7 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             ],
             'texts'    => [
                 'sliderCallbackButton' => 'Жду!',
-                'sliderTitle' => 'Привет!',
+                'sliderTitle'          => 'Привет!',
             ],
         ];
 
@@ -193,6 +193,47 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::attach
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::notify
+     */
+    public function testImagesAttached()
+    {
+        $observer = $this->images;
+        $this->expectSplObserverUpdate($observer);
+
+        $this->entity->notify();
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::attach
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::notify
+     */
+    public function testAttachAndNotify()
+    {
+        $observer = $this->createMock(\SplObserver::class);
+        $this->expectSplObserverUpdate($observer);
+
+        $this->entity->attach($observer);
+        $this->entity->notify();
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::detach
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Settings::notify
+     */
+    public function testDetachAndNotify()
+    {
+        $observer = $this->images;
+        $observer
+            ->expects($this->never())
+            ->method('update');
+
+        $this->entity->detach($observer);
+        $this->entity->notify();
+    }
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
@@ -207,5 +248,16 @@ class SettingsTest extends \PHPUnit_Framework_TestCase
             $this->sizes = $this->createMock(Sizes::class),
             $this->texts = $this->createMock(Texts::class)
         );
+    }
+
+    /**
+     * @param \PHPUnit_Framework_MockObject_MockObject $observer
+     */
+    private function expectSplObserverUpdate($observer)
+    {
+        $observer
+            ->expects($this->once())
+            ->method('update')
+            ->with($this->entity);
     }
 }

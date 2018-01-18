@@ -12,9 +12,9 @@ class IconLogoSliderImageTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $entity = new IconLogoSliderImage;
-        $entity->setName('test');
-        $expected
-            = 'https://cdn.callbackhunter.com/uploads/brand_large_logo/test';
+        $imageName = 'test';
+        $entity->setName($imageName);
+        $expected = IconLogoSliderImage::BASE_URL.$imageName;
         $this->assertSame($expected, $entity->getURL());
     }
 }

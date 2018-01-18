@@ -4,13 +4,15 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Images;
 
 class ButtonLogoImage extends AbstractImage
 {
+    const BASE_URL = self::BASE_IMAGES_URL.'brand_logo/';
+
     /**
      * ButtonLogoImage constructor.
      */
     public function __construct()
     {
         parent::__construct(
-            'https://cdn.callbackhunter.com/uploads/brand_logo/'
+            self::BASE_URL
         );
     }
 }

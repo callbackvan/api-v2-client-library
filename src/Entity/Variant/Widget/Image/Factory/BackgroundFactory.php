@@ -11,14 +11,11 @@ class BackgroundFactory implements BackgroundFactoryInterface
     /**
      * @param array $data
      *
-     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
-     *
      * @return BackgroundInterface
      */
     public function fromAPI(array $data)
     {
-        $background = new Background();
-
+        $background = new Background;
         foreach ($data as $k => $variants) {
             $setterMethod = 'set'.ucfirst($k);
             if (!method_exists($background, $setterMethod)) {
@@ -26,10 +23,11 @@ class BackgroundFactory implements BackgroundFactoryInterface
             }
 
             $images = [];
-            foreach ($variants as $variant) {
+            foreach ((array)$variants as $variant) {
                 if (isset($variant['value']) && $value = $variant['value']) {
-                    $image = new BackgroundSliderImage();
+                    $image = new BackgroundSliderImage;
                     $image->setName($value);
+                    $image->setBaseUrl(BackgroundSliderImage::PRESET_URL);
                     $images[] = $image;
                 }
             }

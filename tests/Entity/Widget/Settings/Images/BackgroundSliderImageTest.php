@@ -13,7 +13,8 @@ class BackgroundSliderImageTest extends \PHPUnit_Framework_TestCase
     {
         $entity = new BackgroundSliderImage;
         $entity->setName('test');
-        $expected = 'https://cdn.callbackhunter.com/uploads/slide_image/test';
+        $imageName = 'test';
+        $expected = BackgroundSliderImage::BASE_URL.$imageName;
         $this->assertSame($expected, $entity->getURL());
     }
 }
