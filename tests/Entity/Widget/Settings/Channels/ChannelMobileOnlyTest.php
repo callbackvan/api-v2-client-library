@@ -12,7 +12,6 @@ class ChannelMobileOnlyTest extends TestCase
     private $channel;
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::isMobileEnabled()
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::setMobileEnabled()
      */
@@ -26,25 +25,10 @@ class ChannelMobileOnlyTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::__construct
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::isDesktopEnabled()
-     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::setDesktopEnabled()
-     */
-    public function testIsDesktopEnabled()
-    {
-        $this->channel->setDesktopEnabled(true);
-        $this->assertFalse($this->channel->isDesktopEnabled());
-
-        $this->channel->setDesktopEnabled(false);
-        $this->assertFalse($this->channel->isDesktopEnabled());
-    }
-
-    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::toAPI()
      */
     public function testToAPIAll()
     {
-        $this->channel->setDesktopEnabled(true);
         $this->channel->setMobileEnabled(false);
 
         $expected = [

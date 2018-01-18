@@ -5,6 +5,7 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\BaseFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelBotClient;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 
 class ChannelsFactory implements BaseFactoryInterface
@@ -19,8 +20,13 @@ class ChannelsFactory implements BaseFactoryInterface
         $availableChannels = Channels::CHANNELS_LIST;
 
         foreach ($availableChannels as $cName) {
-            $availableChannels[$cName] = ($cName === 'viber')
-                ? new ChannelMobileOnly() : new Channel();
+            if ($cName === 'viber') {
+                $availableChannels[$cName] = new ChannelMobileOnly();
+            } elseif (in_array($cName, ChannelBotClient::CHANNELS_BOT_CLIENT, true)) {
+                $availableChannels[$cName] = new ChannelBotClient();
+            } else {
+                $availableChannels[$cName] = new Channel();
+            }
         }
 
         foreach ($availableChannels as $cName => $cObj) {
@@ -29,6 +35,7 @@ class ChannelsFactory implements BaseFactoryInterface
             }
 
             /** @var $data bool[][][] */
+            //var_export($data[$cName]); die;
             foreach ($data[$cName] as $k => $v) {
                 $method = 'set'.ucfirst($k);
                 if (is_callable([$cObj, $method])) {
