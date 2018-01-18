@@ -114,12 +114,14 @@ class ChannelsFactoryTest extends TestCase
 
         if (isset($props['desktopEnabled'])) {
             $this->assertSame(
-                $channel->isDesktopEnabled(), $props['desktopEnabled']
+                $channel->isDesktopEnabled(),
+                $props['desktopEnabled']
             );
         }
         if (isset($props['mobileEnabled'])) {
             $this->assertSame(
-                $channel->isMobileEnabled(), $props['mobileEnabled']
+                $channel->isMobileEnabled(),
+                $props['mobileEnabled']
             );
         }
     }
@@ -137,7 +139,8 @@ class ChannelsFactoryTest extends TestCase
 
         if (isset($props['mobileEnabled'])) {
             $this->assertSame(
-                $channel->isMobileEnabled(), $props['mobileEnabled']
+                $channel->isMobileEnabled(),
+                $props['mobileEnabled']
             );
         }
     }
@@ -155,12 +158,14 @@ class ChannelsFactoryTest extends TestCase
 
         if (isset($props['desktopEnabled'])) {
             $this->assertSame(
-                $channel->isDesktopEnabled(), $props['desktopEnabled']
+                $channel->isDesktopEnabled(),
+                $props['desktopEnabled']
             );
         }
         if (isset($props['mobileEnabled'])) {
             $this->assertSame(
-                $channel->isMobileEnabled(), $props['mobileEnabled']
+                $channel->isMobileEnabled(),
+                $props['mobileEnabled']
             );
         }
         if (isset($props['connected'])) {
