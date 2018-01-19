@@ -52,6 +52,18 @@ class ColorsTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::setSliderIcons
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::getSliderIcons
+     */
+    public function testSliderIcons()
+    {
+        $excepted = '000000';
+        $this->assertNull($this->colors->getSliderIcons());
+        $this->colors->setSliderIcons($excepted);
+        $this->assertEquals($excepted, $this->colors->getSliderIcons());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Colors::toAPI()
      */
     public function testToAPIAll()
@@ -59,6 +71,7 @@ class ColorsTest extends TestCase
         $this->colors->setIconBackground($this->example['iconBackground']);
         $this->colors->setBackgroundSlider($this->example['backgroundSlider']);
         $this->colors->setSliderText($this->example['sliderText']);
+        $this->colors->setSliderIcons($this->example['sliderIcons']);
 
         $this->assertSame($this->example, $this->colors->toAPI());
     }
@@ -76,6 +89,7 @@ class ColorsTest extends TestCase
             'iconBackground'   => $this->example['iconBackground'],
             'backgroundSlider' => null,
             'sliderText'       => $this->example['sliderText'],
+            'sliderIcons'      => null,
         ];
 
         $this->assertSame($expected, $this->colors->toAPI());
@@ -90,6 +104,7 @@ class ColorsTest extends TestCase
             'iconBackground'   => 'fff',
             'backgroundSlider' => 'ccc',
             'sliderText'       => '000',
+            'sliderIcons'      => '000',
         ];
     }
 }
