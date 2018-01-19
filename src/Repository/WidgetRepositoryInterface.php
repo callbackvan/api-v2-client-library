@@ -16,8 +16,9 @@ interface WidgetRepositoryInterface
 
     /**
      * @param PaginationInterface $pagination
+     * @param string $requestURI
      *
      * @return WidgetInterface[]
      */
-    public function getList(PaginationInterface $pagination);
+    public function getList(PaginationInterface $pagination, $requestURI);
 }

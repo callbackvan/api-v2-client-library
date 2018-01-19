@@ -8,6 +8,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
+use CallbackHunterAPIv2\Entity\Widget\DeprecatedWidgetInterface;
 use CallbackHunterAPIv2\Repository\WidgetRepository;
 use CallbackHunterAPIv2\Type\FileForUploadInterface;
 use CallbackHunterAPIv2\ValueObject\Pagination;
@@ -28,6 +29,9 @@ class WidgetRepositoryTest extends TestCase
 
     /** @var WidgetInterface */
     private $widget;
+
+    /** @var DeprecatedWidgetInterface */
+    private $deprecatedWidget;
 
     /** @var WidgetFactoryInterface */
     private $widgetFactory;
@@ -643,10 +647,11 @@ class WidgetRepositoryTest extends TestCase
             }
             $expected[] = $widget;
         }
+        $requestURI = 'widgets';
 
         $this->assertSame(
             $expected,
-            $this->widgetRepository->getList($pagination)
+            $this->widgetRepository->getList($pagination, $requestURI)
         );
     }
 
@@ -674,8 +679,9 @@ class WidgetRepositoryTest extends TestCase
         $this->response->expects($this->once())
             ->method('getBody')
             ->willReturn('{}');
+        $requestURI = 'widgets';
 
-        $this->assertSame([], $this->widgetRepository->getList($pagination));
+        $this->assertSame([], $this->widgetRepository->getList($pagination, $requestURI));
     }
 
     /**
@@ -772,6 +778,7 @@ class WidgetRepositoryTest extends TestCase
         $this->widgetFactory = $this->createMock(WidgetFactoryInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
         $this->widget = $this->createMock(WidgetInterface::class);
+        $this->deprecatedWidget = $this->createMock(DeprecatedWidgetInterface::class);
         $this->widgetRepository = new WidgetRepository(
             $this->client,
             $this->widgetFactory
