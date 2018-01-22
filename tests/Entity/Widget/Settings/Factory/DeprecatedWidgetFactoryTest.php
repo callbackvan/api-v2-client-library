@@ -2,8 +2,8 @@
 
 namespace CallbackHunterAPIv2\Tests\Entity\Widget\Factory;
 
+use CallbackHunterAPIv2\Entity\Widget\DeprecatedWidgetInterface;
 use CallbackHunterAPIv2\Entity\Widget\Factory\DeprecatedWidgetFactory;
-use CallbackHunterAPIv2\Entity\Widget\DeprecatedWidget;
 use PHPUnit\Framework\TestCase;
 
 class DeprecatedWidgetFactoryTest extends TestCase
@@ -19,17 +19,14 @@ class DeprecatedWidgetFactoryTest extends TestCase
      */
     public function testFromAPI()
     {
-
-        $expected = (new DeprecatedWidget())
-            ->setUid($this->widgetDataSample['uid'])
-            ->setSite($this->widgetDataSample['site'])
-            ->setWidgetSettingsLink(
-                $this->widgetDataSample['_links']['widgetSettings']['href']
-            );
-
         $widget = $this->widgetFactory->fromAPI($this->widgetDataSample);
-
-        $this->assertEquals($expected, $widget);
+        $this->assertInstanceOf(DeprecatedWidgetInterface::class, $widget);
+        $this->assertEquals($this->widgetDataSample['uid'], $widget->getUid());
+        $this->assertEquals($this->widgetDataSample['site'], $widget->getSite());
+        $this->assertEquals(
+            $this->widgetDataSample['_links']['widgetSettings']['href'],
+            $widget->getWidgetSettingsLink()
+        );
     }
 
     protected function setUp()
