@@ -25,7 +25,8 @@ class ColorsFactoryTest extends TestCase
         $expected = (new Colors())
             ->setIconBackground($this->example['iconBackground'])
             ->setBackgroundSlider($this->example['backgroundSlider'])
-            ->setSliderText($this->example['sliderText']);
+            ->setSliderText($this->example['sliderText'])
+            ->setSliderIcons($this->example['sliderIcons']);
 
         $this->assertEquals($expected, $response);
     }
@@ -39,6 +40,7 @@ class ColorsFactoryTest extends TestCase
             'iconBackground'   => 'ccc',
             'backgroundSlider' => 'fff',
             'sliderText'       => '000',
+            'sliderIcons'      => 'ddd',
         ];
     }
 }
