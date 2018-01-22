@@ -2,7 +2,6 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-
 class DeprecatedWidget implements DeprecatedWidgetInterface
 {
     const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js';
