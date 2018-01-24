@@ -647,11 +647,10 @@ class WidgetRepositoryTest extends TestCase
             }
             $expected[] = $widget;
         }
-        $requestURI = 'widgets';
 
         $this->assertSame(
             $expected,
-            $this->widgetRepository->getList($pagination, $requestURI)
+            $this->widgetRepository->getList($pagination)
         );
     }
 
@@ -679,9 +678,8 @@ class WidgetRepositoryTest extends TestCase
         $this->response->expects($this->once())
             ->method('getBody')
             ->willReturn('{}');
-        $requestURI = 'widgets';
 
-        $this->assertSame([], $this->widgetRepository->getList($pagination, $requestURI));
+        $this->assertSame([], $this->widgetRepository->getList($pagination));
     }
 
     /**

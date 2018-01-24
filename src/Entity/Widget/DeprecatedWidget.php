@@ -4,8 +4,6 @@ namespace CallbackHunterAPIv2\Entity\Widget;
 
 class DeprecatedWidget implements DeprecatedWidgetInterface
 {
-    const WIDGET_LINK_PREFIX = '//cdn.callbackhunter.com/cbh.js';
-
     /**
      * Идентификатор виджета
      *
@@ -85,13 +83,5 @@ class DeprecatedWidget implements DeprecatedWidgetInterface
         $this->widgetSettingsLink = $widgetSettingsLink;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function toAPI()
-    {
-        return false;
     }
 }

@@ -46,14 +46,6 @@ class DeprecatedWidgetTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Widget\DeprecatedWidget::toAPI()
-     */
-    public function testToAPI()
-    {
-        $this->assertFalse($this->entity->toAPI());
-    }
-
-    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */

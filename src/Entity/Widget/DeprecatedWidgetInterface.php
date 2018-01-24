@@ -2,7 +2,7 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
-interface DeprecatedWidgetInterface extends BaseEntityInterface
+interface DeprecatedWidgetInterface
 {
     /**
      * @return string
@@ -38,9 +38,4 @@ interface DeprecatedWidgetInterface extends BaseEntityInterface
      * @return mixed
      */
     public function setWidgetSettingsLink($widgetSettingsLink);
-
-    /**
-     * @return mixed
-     */
-    public function toAPI();
 }

@@ -6,7 +6,6 @@ use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
-use CallbackHunterAPIv2\Entity\Widget\DeprecatedWidgetInterface;
 use CallbackHunterAPIv2\Exception;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -82,7 +81,6 @@ class WidgetRepository implements WidgetRepositoryInterface
      * Получение списка виджетов
      *
      * @param PaginationInterface $pagination
-     * @param string $requestURI ("widgets"||"deprecated_widgets")
      *
      * @return WidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -91,14 +89,14 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @throws Exception\WidgetValidateException
      * @throws Exception\ResourceNotFoundException
      */
-    public function getList(PaginationInterface $pagination, $requestURI)
+    public function getList(PaginationInterface $pagination)
     {
         $query = [
             'limit'  => $pagination->getLimit(),
             'offset' => $pagination->getOffset(),
         ];
 
-        $response = $this->client->requestGet($requestURI, $query);
+        $response = $this->client->requestGet('widgets', $query);
         $this->checkResponse($response, [200, 204]);
         $responseData = json_decode((string)$response->getBody(), true);
 
