@@ -14,8 +14,8 @@ class DeprecatedWidgetRepositoryFactoryTest extends TestCase
     private $clientFactory;
     /** @var  $deprecatedWidgetFactory */
     private $deprecatedWidgetFactory;
-    /** @var  $deprecatedWidgetRepositoryFactory */
-    private $deprecatedWidgetRepositoryFactory;
+    /** @var  $factory */
+    private $factory;
 
     /**
      * @covers \CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory::__construct
@@ -28,7 +28,7 @@ class DeprecatedWidgetRepositoryFactoryTest extends TestCase
 
         $this->assertInstanceOf(
             DeprecatedWidgetRepository::class,
-            $this->deprecatedWidgetRepositoryFactory->make($userId, $key)
+            $this->factory->make($userId, $key)
         );
     }
 
@@ -36,8 +36,7 @@ class DeprecatedWidgetRepositoryFactoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->deprecatedWidgetRepositoryFactory
-            = new DeprecatedWidgetRepositoryFactory(
+        $this->factory = new DeprecatedWidgetRepositoryFactory(
             $this->clientFactory = new ClientFactory(),
             $this->deprecatedWidgetFactory = $this->createMock(
                 DeprecatedWidgetFactory::class
