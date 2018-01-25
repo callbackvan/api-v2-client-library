@@ -9,22 +9,13 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @package CallbackHunterAPIv2\Exception
  */
-class ChangeOfPaidPropertiesException extends RepositoryException
+class ChangeOfPaidPropertiesException extends DataValidateException
 {
-    private $invalidParams;
-
     public function __construct(
         ResponseInterface $response,
         $message,
         array $invalidParams
     ) {
-        parent::__construct($response, $message, 402);
-
-        $this->invalidParams = $invalidParams;
-    }
-
-    public function getInvalidParams()
-    {
-        return $this->invalidParams;
+        parent::__construct($response, $message, $invalidParams, 402);
     }
 }

@@ -16,9 +16,10 @@ class DataValidateException extends RepositoryException
     public function __construct(
         ResponseInterface $response,
         $message,
-        array $invalidParams
+        array $invalidParams,
+        $code = 400
     ) {
-        parent::__construct($response, $message, 400);
+        parent::__construct($response, $message, $code);
 
         $this->invalidParams = $invalidParams;
     }
