@@ -4,7 +4,7 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings;
 
-class PositionFactory
+class PositionFactory implements PositionFactoryInterface
 {
     /**
      * @param array $data
