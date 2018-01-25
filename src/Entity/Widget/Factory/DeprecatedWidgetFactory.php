@@ -11,7 +11,6 @@ class DeprecatedWidgetFactory implements BaseFactoryInterface, WidgetFactoryInte
      * @param array $data
      *
      * @return DeprecatedWidgetInterface
-     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
      */
     public function fromAPI(array $data)
     {

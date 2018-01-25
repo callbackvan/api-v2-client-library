@@ -4,7 +4,7 @@ namespace CallbackHunterAPIv2\Repository\Factory;
 
 use CallbackHunterAPIv2\ClientFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
-use CallbackHunterAPIv2\Repository\WidgetRepository;
+use CallbackHunterAPIv2\Repository\DeprecatedWidgetRepository;
 
 /**
  * Class WidgetRepositoryFactory
@@ -12,7 +12,7 @@ use CallbackHunterAPIv2\Repository\WidgetRepository;
  *
  * @package CallbackHunterAPIv2\Repository\Factory
  */
-class WidgetRepositoryFactory
+class DeprecatedWidgetRepositoryFactory
 {
     /** @var ClientFactory */
     private $clientFactory;
@@ -39,7 +39,7 @@ class WidgetRepositoryFactory
      * @param string  $key
      * @param array   $config
      *
-     * @return WidgetRepository
+     * @return DeprecatedWidgetRepository
      */
     public function make($userId, $key, array $config = [])
     {
@@ -49,6 +49,6 @@ class WidgetRepositoryFactory
             $config
         );
 
-        return new WidgetRepository($client, $this->widgetFactory);
+        return new DeprecatedWidgetRepository($client, $this->widgetFactory);
     }
 }

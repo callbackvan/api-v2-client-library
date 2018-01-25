@@ -3,8 +3,8 @@
 namespace CallbackHunterAPIv2\Repository;
 
 use CallbackHunterAPIv2\ClientInterface;
-use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\DeprecatedWidgetInterface;
+use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Exception;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -32,10 +32,7 @@ class DeprecatedWidgetRepository implements DeprecatedWidgetRepositoryInterface
      *
      * @return DeprecatedWidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      */
     public function getList(PaginationInterface $pagination)
     {
@@ -66,10 +63,7 @@ class DeprecatedWidgetRepository implements DeprecatedWidgetRepositoryInterface
      * @param ResponseInterface $response
      * @param array|int $statusCodeOk
      *
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      *
      * @return true
      */
