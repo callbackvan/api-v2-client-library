@@ -31,7 +31,7 @@ class Background implements BackgroundInterface
     /**
      * Установить варианты слайдера
      *
-     * @param BackgroundSliderImage $backgroundSlider
+     * @param BackgroundSliderImage[] $backgroundSlider
      */
     public function setBackgroundSlider($backgroundSlider)
     {

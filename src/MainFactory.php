@@ -3,6 +3,7 @@
 namespace CallbackHunterAPIv2;
 
 use CallbackHunterAPIv2\Entity\Variant\Widget\Image\Factory\BackgroundFactory;
+use CallbackHunterAPIv2\Entity\Widget\Factory\DeprecatedWidgetFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory\ChannelsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ColorsFactory;
@@ -11,6 +12,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\PositionFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\TextsFactory;
+use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory;
 
@@ -41,6 +43,17 @@ class MainFactory
         return new WidgetRepositoryFactory(
             new ClientFactory(),
             self::makeWidgetFactory()
+        );
+    }
+
+    /**
+     * @return DeprecatedWidgetRepositoryFactory
+     */
+    public static function makeDeprecatedWidgetRepositoryFactory()
+    {
+        return new DeprecatedWidgetRepositoryFactory(
+            new ClientFactory(),
+            new DeprecatedWidgetFactory
         );
     }
 

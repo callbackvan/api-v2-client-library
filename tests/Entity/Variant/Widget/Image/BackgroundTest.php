@@ -31,8 +31,8 @@ class BackgroundTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Entity\Variant\Widget\Image\Background::getBackgroundSlider()
-     * @covers \CallbackHunterAPIv2\Entity\Variant\Widget\Image\Background::setBackgroundSlider()
+     * @covers \CallbackHunterAPIv2\Entity\Variant\Widget\Image\Background::getBackgroundSlider
+     * @covers \CallbackHunterAPIv2\Entity\Variant\Widget\Image\Background::setBackgroundSlider
      */
     public function testBackgroundSlider()
     {
