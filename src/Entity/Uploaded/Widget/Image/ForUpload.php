@@ -12,18 +12,24 @@ class ForUpload implements ForUploadInterface
     /** @var PositionInterface */
     private $position;
 
+    /** @var SizesInterface */
+    private $sizes;
+
     /**
      * ForUpload constructor.
      *
      * @param FileForUploadInterface $image
      * @param PositionInterface      $position
+     * @param SizesInterface         $sizes
      */
     public function __construct(
         FileForUploadInterface $image,
-        PositionInterface $position
+        PositionInterface $position,
+        SizesInterface $sizes
     ) {
         $this->image = $image;
         $this->position = $position;
+        $this->sizes = $sizes;
     }
 
     /**
@@ -40,5 +46,13 @@ class ForUpload implements ForUploadInterface
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * @return SizesInterface
+     */
+    public function getSizes()
+    {
+        return $this->sizes;
     }
 }

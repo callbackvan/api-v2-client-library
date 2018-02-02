@@ -8,17 +8,21 @@ class Uploaded implements UploadedInterface
     private $url;
     /** @var PositionInterface */
     private $position;
+    /** @var SizesInterface */
+    private $sizes;
 
     /**
      * Uploaded constructor.
      *
      * @param string            $url
      * @param PositionInterface $position
+     * @param SizesInterface    $sizes
      */
-    public function __construct($url, $position)
+    public function __construct($url, $position, $sizes)
     {
         $this->url = $url;
         $this->position = $position;
+        $this->sizes = $sizes;
     }
 
     /**
@@ -35,5 +39,13 @@ class Uploaded implements UploadedInterface
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * @return SizesInterface
+     */
+    public function getSizes()
+    {
+        return $this->sizes;
     }
 }

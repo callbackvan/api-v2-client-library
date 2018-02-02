@@ -3,6 +3,7 @@
 namespace CallbackHunterAPIv2;
 
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\PositionFactory as UploadedPositionFactory;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\SizesFactory as UploadedSizesFactory;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedCollectionFactory;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedFactory;
 use CallbackHunterAPIv2\Entity\Variant\Widget\Image\Factory\BackgroundFactory;
@@ -77,7 +78,10 @@ class MainFactory
      */
     public static function makeUploadedRepositoryFactory()
     {
-        $uploadedFactory = new UploadedFactory(new UploadedPositionFactory());
+        $uploadedFactory = new UploadedFactory(
+            new UploadedPositionFactory(),
+            new UploadedSizesFactory()
+        );
 
         return new UploadedRepositoryFactory(
             new ClientFactory(),
