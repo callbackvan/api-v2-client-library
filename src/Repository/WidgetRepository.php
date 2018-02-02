@@ -7,6 +7,7 @@ use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 use CallbackHunterAPIv2\Exception;
+use CallbackHunterAPIv2\Helper\ResponseHelper;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,10 +34,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      *
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      */
     public function save(WidgetInterface $widget)
     {
@@ -54,8 +52,8 @@ class WidgetRepository implements WidgetRepositoryInterface
             $response = $this->client->requestPost('widgets', $data);
         }
         $this->checkResponse($response, $expectedCode);
-        $responseData = json_decode((string)$response->getBody(), true);
-        if ($responseData === null) {
+        $responseData = ResponseHelper::getBodyAsArray($response);
+        if (!$responseData) {
             throw new Exception\RepositoryException(
                 $response,
                 'Content is not json'
@@ -84,10 +82,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      *
      * @return WidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      */
     public function getList(PaginationInterface $pagination)
     {
@@ -98,7 +93,7 @@ class WidgetRepository implements WidgetRepositoryInterface
 
         $response = $this->client->requestGet('widgets', $query);
         $this->checkResponse($response, [200, 204]);
-        $responseData = json_decode((string)$response->getBody(), true);
+        $responseData = ResponseHelper::getBodyAsArray($response);
 
         if (!isset($responseData['_embedded']['widgets'])) {
             return [];
@@ -121,16 +116,13 @@ class WidgetRepository implements WidgetRepositoryInterface
      *
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      */
     public function get($uid)
     {
         $response = $this->client->requestGet('widgets/'.$uid);
         $this->checkResponse($response, 200);
-        $responseData = json_decode((string)$response->getBody(), true);
+        $responseData = ResponseHelper::getBodyAsArray($response);
 
         return $this->widgetFactory->fromAPI($responseData);
     }
@@ -140,16 +132,13 @@ class WidgetRepository implements WidgetRepositoryInterface
      *
      * @return WidgetInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      */
     public function getDefault()
     {
         $response = $this->client->requestGet('widgets/default');
         $this->checkResponse($response, 200);
-        $responseData = json_decode((string)$response->getBody(), true);
+        $responseData = ResponseHelper::getBodyAsArray($response);
 
         return $this->widgetFactory->fromAPI($responseData);
     }
@@ -158,60 +147,32 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @param ResponseInterface $response
      * @param array|int         $statusCodeOk
      *
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\WidgetValidateException
-     * @throws Exception\ResourceNotFoundException
      */
     private function checkResponse(ResponseInterface $response, $statusCodeOk)
     {
-        $codes = [];
-
-        if (is_array($statusCodeOk)) {
-            $codes = $statusCodeOk;
-        } else {
-            $codes[] = $statusCodeOk;
+        $exception = ResponseHelper::extractException(
+            $response,
+            (array)$statusCodeOk
+        );
+        if ($exception === null) {
+            return;
         }
 
-        $statusCode = $response->getStatusCode();
+        if ($exception instanceof Exception\DataValidateException) {
+            $isPayment = $exception instanceof
+                Exception\ChangeOfPaidPropertiesException;
 
-        switch (true) {
-            case (in_array($statusCode, $codes, true)):
-                break;
-            case ($statusCode === 400):
-                $data = json_decode((string)$response->getBody(), true);
-                throw new Exception\WidgetValidateException(
-                    $response,
-                    (isset($data['title']) ? $data['title'] : 'Error'),
-                    (isset($data['invalidParams'])
-                        ? (array)$data['invalidParams'] : [])
+            if (!$isPayment) {
+                $exception = new Exception\WidgetValidateException(
+                    $exception->getResponse(),
+                    $exception->getMessage(),
+                    $exception->getInvalidParams()
                 );
-                break;
-            case ($statusCode === 402):
-                $data = json_decode((string)$response->getBody(), true);
-                throw new Exception\ChangeOfPaidPropertiesException(
-                    $response,
-                    (isset($data['title']) ? $data['title'] : 'Error'),
-                    (isset($data['invalidParams'])
-                        ? (array)$data['invalidParams'] : [])
-                );
-                break;
-            case ($statusCode === 404):
-                $data = json_decode((string)$response->getBody(), true);
-                throw new Exception\ResourceNotFoundException(
-                    $response,
-                    (isset($data['title']) ? $data['title'] : 'Error'),
-                    $statusCode
-                );
-                break;
-            default:
-                $data = json_decode((string)$response->getBody(), true);
-                throw new Exception\RepositoryException(
-                    $response,
-                    (isset($data['title']) ? $data['title'] : 'Error'),
-                    $statusCode
-                );
+            }
         }
+
+        throw $exception;
     }
 
     /**
@@ -219,10 +180,7 @@ class WidgetRepository implements WidgetRepositoryInterface
      * @param array           $images
      *
      * @return array
-     * @throws Exception\ChangeOfPaidPropertiesException
      * @throws Exception\RepositoryException
-     * @throws Exception\ResourceNotFoundException
-     * @throws Exception\WidgetValidateException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function uploadImages(WidgetInterface $widget, array $images)
@@ -247,7 +205,7 @@ class WidgetRepository implements WidgetRepositoryInterface
             $response = $this->client->uploadFile($path.$pathPart, $data);
             $this->checkResponse($response, 201);
 
-            $responseData = json_decode((string)$response->getBody(), true);
+            $responseData = ResponseHelper::getBodyAsArray($response);
 
             if (isset($responseData['name'], $responseData['value'])) {
                 $imageNames[$responseData['name']] = $responseData['value'];

@@ -9,22 +9,13 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @package CallbackHunterAPIv2\Exception
  */
-class WidgetValidateException extends RepositoryException
+class WidgetValidateException extends DataValidateException
 {
-    private $invalidParams;
-
     public function __construct(
         ResponseInterface $response,
         $message,
         array $invalidParams
     ) {
-        parent::__construct($response, $message, 400);
-
-        $this->invalidParams = $invalidParams;
-    }
-
-    public function getInvalidParams()
-    {
-        return $this->invalidParams;
+        parent::__construct($response, $message, $invalidParams);
     }
 }

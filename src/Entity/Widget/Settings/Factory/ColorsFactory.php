@@ -5,7 +5,7 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\BaseFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings;
 
-class ColorsFactory implements BaseFactoryInterface
+class ColorsFactory implements BaseFactoryInterface, ColorsFactoryInterface
 {
     /**
      * @param array $data

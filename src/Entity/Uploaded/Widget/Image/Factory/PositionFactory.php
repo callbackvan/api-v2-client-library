@@ -1,19 +1,19 @@
 <?php
 
-namespace CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
+namespace CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory;
 
-use CallbackHunterAPIv2\Entity\Widget\Settings;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Position;
 
 class PositionFactory implements PositionFactoryInterface
 {
     /**
      * @param array $data
      *
-     * @return Settings\Position
+     * @return Position
      */
     public function fromAPI(array $data)
     {
-        $position = new Settings\Position();
+        $position = new Position();
 
         if (isset($data['x'])) {
             $position->setX($data['x']);
@@ -21,10 +21,6 @@ class PositionFactory implements PositionFactoryInterface
 
         if (isset($data['y'])) {
             $position->setY($data['y']);
-        }
-
-        if (isset($data['fixed'])) {
-            $position->setFixed($data['fixed']);
         }
 
         return $position;

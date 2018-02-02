@@ -2,6 +2,9 @@
 
 namespace CallbackHunterAPIv2;
 
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\PositionFactory as UploadedPositionFactory;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedCollectionFactory;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedFactory;
 use CallbackHunterAPIv2\Entity\Variant\Widget\Image\Factory\BackgroundFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\DeprecatedWidgetFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
@@ -14,6 +17,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\TextsFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
+use CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory;
 
 class MainFactory
@@ -65,6 +69,20 @@ class MainFactory
         return new BackgroundRepositoryFactory(
             new ClientFactory(),
             new BackgroundFactory()
+        );
+    }
+
+    /**
+     * @return UploadedRepositoryFactory
+     */
+    public static function makeUploadedRepositoryFactory()
+    {
+        $uploadedFactory = new UploadedFactory(new UploadedPositionFactory());
+
+        return new UploadedRepositoryFactory(
+            new ClientFactory(),
+            new UploadedCollectionFactory($uploadedFactory),
+            $uploadedFactory
         );
     }
 }

@@ -6,6 +6,7 @@ use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
 use CallbackHunterAPIv2\MainFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
+use CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory;
 
 class MainFactoryTest extends \PHPUnit_Framework_TestCase
@@ -51,6 +52,17 @@ class MainFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             BackgroundRepositoryFactory::class,
             MainFactory::makeImagesBackgroundSliderRepositoryFactory()
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\MainFactory::makeUploadedRepositoryFactory
+     */
+    public function testMakeUploadedRepositoryFactory()
+    {
+        $this->assertInstanceOf(
+            UploadedRepositoryFactory::class,
+            MainFactory::makeUploadedRepositoryFactory()
         );
     }
 }
