@@ -130,7 +130,7 @@ class UploadedRepositoryTest extends TestCase
         $file = $this->createMock(ForUploadInterface::class);
         $image = $this->createMock(FileForUploadInterface::class);
         $position = $this->createMock(PositionInterface::class);
-        $positionValue = ['my position'];
+        $positionValue = ['my position' => 'is array'];
 
         $file
             ->expects($this->once())
