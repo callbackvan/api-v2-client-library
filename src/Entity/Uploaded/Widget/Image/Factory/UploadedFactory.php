@@ -22,8 +22,7 @@ class UploadedFactory implements UploadedFactoryInterface
     public function __construct(
         PositionFactoryInterface $positionFactory,
         SizesFactoryInterface $sizesFactory
-    )
-    {
+    ) {
         $this->positionFactory = $positionFactory;
         $this->sizesFactory = $sizesFactory;
     }
