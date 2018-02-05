@@ -3,8 +3,10 @@
 namespace CallbackHunterAPIv2\Tests\Entity\Uploaded\Widget\Image\Factory;
 
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\PositionFactoryInterface;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\SizesFactoryInterface;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedFactory;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\PositionInterface;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\SizesInterface;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\UploadedInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +17,9 @@ class UploadedFactoryTest extends TestCase
 
     /** @var PositionFactoryInterface */
     private $positionFactory;
+
+    /** @var SizesFactoryInterface */
+    private $sizesFactory;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedFactory::__construct
@@ -35,6 +40,10 @@ class UploadedFactoryTest extends TestCase
                 'x' => '12',
                 'y' => '65',
             ],
+            'sizes'    => [
+                'width'  => '98',
+                'height' => '1005',
+            ],
         ];
 
         $position = $this->createMock(PositionInterface::class);
@@ -43,6 +52,13 @@ class UploadedFactoryTest extends TestCase
             ->method('fromAPI')
             ->with($example['position'])
             ->willReturn($position);
+
+        $sizes = $this->createMock(SizesInterface::class);
+        $this->sizesFactory
+            ->expects($this->once())
+            ->method('fromAPI')
+            ->with($example['sizes'])
+            ->willReturn($sizes);
 
         $uploaded = $this->factory->fromAPI($example);
 
@@ -56,6 +72,11 @@ class UploadedFactoryTest extends TestCase
         $this->assertSame(
             $position,
             $uploaded->getPosition()
+        );
+
+        $this->assertSame(
+            $sizes,
+            $uploaded->getSizes()
         );
     }
 
@@ -127,6 +148,9 @@ class UploadedFactoryTest extends TestCase
         $this->factory = new UploadedFactory(
             $this->positionFactory = $this->createMock(
                 PositionFactoryInterface::class
+            ),
+            $this->sizesFactory = $this->createMock(
+                SizesFactoryInterface::class
             )
         );
     }

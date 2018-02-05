@@ -4,6 +4,7 @@ namespace CallbackHunterAPIv2\Tests\Entity\Uploaded\Widget\Image;
 
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\ForUpload;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\PositionInterface;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\SizesInterface;
 use CallbackHunterAPIv2\Type\FileForUploadInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,8 @@ class ForUploadTest extends TestCase
     private $fileForUpload;
     /** @var PositionInterface */
     private $position;
+    /** @var SizesInterface */
+    private $sizes;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\ForUpload::__construct
@@ -34,6 +37,15 @@ class ForUploadTest extends TestCase
         $this->assertSame($this->position, $this->entity->getPosition());
     }
 
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\ForUpload::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\ForUpload::getSizes
+     */
+    public function testGetSizes()
+    {
+        $this->assertSame($this->sizes, $this->entity->getSizes());
+    }
+
     protected function setUp()
     {
         parent::setUp();
@@ -41,7 +53,8 @@ class ForUploadTest extends TestCase
             $this->fileForUpload = $this->createMock(
                 FileForUploadInterface::class
             ),
-            $this->position = $this->createMock(PositionInterface::class)
+            $this->position = $this->createMock(PositionInterface::class),
+            $this->sizes = $this->createMock(SizesInterface::class)
         );
     }
 }

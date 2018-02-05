@@ -15,4 +15,9 @@ interface ForUploadInterface
      * @return PositionInterface
      */
     public function getPosition();
+
+    /**
+     * @return SizesInterface
+     */
+    public function getSizes();
 }

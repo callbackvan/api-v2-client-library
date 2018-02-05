@@ -10,15 +10,21 @@ class UploadedFactory implements UploadedFactoryInterface
 {
     /** @var PositionFactoryInterface */
     private $positionFactory;
+    /** @var SizesFactoryInterface */
+    private $sizesFactory;
 
     /**
      * UploadedFactory constructor.
      *
      * @param PositionFactoryInterface $positionFactory
+     * @param SizesFactoryInterface    $sizesFactory
      */
-    public function __construct(PositionFactoryInterface $positionFactory)
-    {
+    public function __construct(
+        PositionFactoryInterface $positionFactory,
+        SizesFactoryInterface $sizesFactory
+    ) {
         $this->positionFactory = $positionFactory;
+        $this->sizesFactory = $sizesFactory;
     }
 
     /**
@@ -32,7 +38,9 @@ class UploadedFactory implements UploadedFactoryInterface
         $isValidData = isset(
             $data['_links']['self']['href'],
             $data['position']['x'],
-            $data['position']['y']
+            $data['position']['y'],
+            $data['sizes']['width'],
+            $data['sizes']['height']
         );
 
         if (!$isValidData) {
@@ -43,7 +51,8 @@ class UploadedFactory implements UploadedFactoryInterface
 
         return new Uploaded(
             $url,
-            $this->positionFactory->fromAPI($data['position'])
+            $this->positionFactory->fromAPI($data['position']),
+            $this->sizesFactory->fromAPI($data['sizes'])
         );
     }
 }

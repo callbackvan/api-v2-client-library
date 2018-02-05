@@ -8,6 +8,7 @@ use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedCollectionF
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedFactoryInterface;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\ForUploadInterface;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\PositionInterface;
+use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\SizesInterface;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\UploadedInterface;
 use CallbackHunterAPIv2\Exception;
 use CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\UploadedRepository;
@@ -131,21 +132,31 @@ class UploadedRepositoryTest extends TestCase
         $image = $this->createMock(FileForUploadInterface::class);
         $position = $this->createMock(PositionInterface::class);
         $positionValue = ['my position' => 'is array'];
+        $sizes = $this->createMock(SizesInterface::class);
+        $sizesValue = ['my sizes' => 'is array'];
 
         $file
             ->expects($this->once())
             ->method('getImage')
             ->willReturn($image);
 
-        $file
-            ->expects($this->once())
-            ->method('getPosition')
-            ->willReturn($position);
+        $dataMethods = ['getPosition' => $position, 'getSizes' => $sizes];
+        foreach ($dataMethods as $method => $result) {
+            $file
+                ->expects($this->once())
+                ->method($method)
+                ->willReturn($result);
+        }
 
         $position
             ->expects($this->once())
             ->method('toAPI')
             ->willReturn($positionValue);
+
+        $sizes
+            ->expects($this->once())
+            ->method('toAPI')
+            ->willReturn($sizesValue);
 
         $response = $this->createMock(ResponseInterface::class);
         $this->client
@@ -158,7 +169,7 @@ class UploadedRepositoryTest extends TestCase
                     $type
                 ),
                 $image,
-                ['position' => $positionValue]
+                ['position' => $positionValue, 'sizes' => $sizesValue]
             )
             ->willReturn($response);
 
@@ -211,16 +222,20 @@ class UploadedRepositoryTest extends TestCase
     ) {
         $file = $this->createMock(ForUploadInterface::class);
         $position = $this->createMock(PositionInterface::class);
+        $sizes = $this->createMock(SizesInterface::class);
 
         $file
             ->expects($this->once())
             ->method('getImage')
             ->willReturn($this->createMock(FileForUploadInterface::class));
 
-        $file
-            ->expects($this->once())
-            ->method('getPosition')
-            ->willReturn($position);
+        $dataMethods = ['getPosition' => $position, 'getSizes' => $sizes];
+        foreach ($dataMethods as $method => $result) {
+            $file
+                ->expects($this->once())
+                ->method($method)
+                ->willReturn($result);
+        }
 
         $response = $this->createMock(ResponseInterface::class);
         $this->client

@@ -86,7 +86,10 @@ class UploadedRepository
                 $type
             ),
             $file->getImage(),
-            ['position' => $file->getPosition()->toAPI()]
+            [
+                'position' => $file->getPosition()->toAPI(),
+                'sizes'    => $file->getSizes()->toAPI(),
+            ]
         );
 
         if ($exception = ResponseHelper::extractException($response, [201])) {
