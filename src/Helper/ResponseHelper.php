@@ -15,7 +15,7 @@ class ResponseHelper
      */
     public static function extractException(
         ResponseInterface $response,
-        array $validStatuses = [200, 201]
+        array $validStatuses
     ) {
         $statusCode = $response->getStatusCode();
         if (in_array($statusCode, $validStatuses, true)) {

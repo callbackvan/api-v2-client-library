@@ -8,7 +8,7 @@ use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedCollectionF
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\Factory\UploadedFactoryInterface;
 use CallbackHunterAPIv2\Entity\Uploaded\Widget\Image\ForUploadInterface;
 use CallbackHunterAPIv2\Exception;
-use CallbackHunterAPIv2\Helper\ResponseHelper;
+use CallbackHunterAPIv2\Helper\ResponseHelper as RHelper;
 
 class UploadedRepository
 {
@@ -51,13 +51,13 @@ class UploadedRepository
             sprintf('/uploaded/widgets/%s/images', $widgetUid)
         );
 
-        if ($exception = ResponseHelper::extractException($response)) {
+        if ($exception = RHelper::extractException($response, [200, 204])) {
             throw $exception;
         }
 
 
         return $this->uploadedCollectionFactory->fromAPI(
-            ResponseHelper::getBodyAsArray($response)
+            RHelper::getBodyAsArray($response)
         );
     }
 
@@ -92,12 +92,12 @@ class UploadedRepository
             ]
         );
 
-        if ($exception = ResponseHelper::extractException($response, [201])) {
+        if ($exception = RHelper::extractException($response, [201])) {
             throw $exception;
         }
 
         return $this->uploadedFactory->fromAPI(
-            ResponseHelper::getBodyAsArray($response)
+            RHelper::getBodyAsArray($response)
         );
     }
 }

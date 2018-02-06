@@ -22,18 +22,22 @@ class ResponseHelperTest extends TestCase
      */
     public function testExtractException($status, $body, $expected)
     {
+        $validStatuses = [200, 201];
         $this->response
             ->expects($this->once())
             ->method('getStatusCode')
             ->willReturn($status);
 
-        $isValidStatus = in_array($status, [200, 201], true);
+        $isValidStatus = in_array($status, $validStatuses, true);
         $this->response
             ->expects($isValidStatus ? $this->never() : $this->once())
             ->method('getBody')
             ->willReturn($body);
 
-        $result = ResponseHelper::extractException($this->response);
+        $result = ResponseHelper::extractException(
+            $this->response,
+            $validStatuses
+        );
         if ($expected !== null) {
             $this->assertNotNull($result);
             $this->assertEquals($expected['message'], $result->getMessage());

@@ -77,7 +77,7 @@ class UploadedRepositoryTest extends TestCase
     {
         return [
             [200, ['test' => 'data']],
-            [201, []],
+            [204, []],
         ];
     }
 
