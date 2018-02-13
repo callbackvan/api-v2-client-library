@@ -206,7 +206,13 @@ class Channels implements BaseEntityInterface
 
         foreach (self::CHANNELS_LIST as $cName) {
             try {
-                $result[$cName] = $this->get($cName)->toAPI();
+                $toApi = $this->get($cName)->toAPI();
+
+                if ($cName !== 'facebook') {
+                    unset($toApi['channelId']);
+                }
+
+                $result[$cName] = $toApi;
             } catch (\Exception $e) {
             }
         }

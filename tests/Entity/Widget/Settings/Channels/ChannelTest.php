@@ -11,6 +11,18 @@ class ChannelTest extends TestCase
     private $channel;
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::getChannelId()
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setChannelId()
+     */
+    public function testChannelId()
+    {
+        $channelId = 'test123';
+
+        $this->channel->setChannelId($channelId);
+        $this->assertEquals($channelId, $this->channel->getChannelId());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::isMobileEnabled()
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setMobileEnabled()
      */
@@ -45,6 +57,7 @@ class ChannelTest extends TestCase
         $this->channel->setMobileEnabled(false);
 
         $expected = [
+            'channelId' => '',
             'desktopEnabled' => true,
             'mobileEnabled'  => false,
         ];
@@ -60,6 +73,7 @@ class ChannelTest extends TestCase
         $this->channel->setDesktopEnabled(true);
 
         $expected = [
+            'channelId' => '',
             'desktopEnabled' => true,
             'mobileEnabled'  => null,
         ];

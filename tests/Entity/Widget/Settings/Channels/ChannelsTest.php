@@ -175,6 +175,10 @@ class ChannelsTest extends TestCase
                 'desktopEnabled' => mt_rand(0, 100) > 50,
             ];
 
+            if ($channelName === 'facebook') {
+                $expected[$channelName]['channelId'] = 'test123';
+            }
+
             $channel->expects($this->once())
                 ->method('toAPI')
                 ->willReturn($expected[$channelName]);

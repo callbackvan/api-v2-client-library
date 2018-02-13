@@ -48,6 +48,7 @@ class ChannelMobileOnlyTest extends TestCase
         $this->channel->setMobileEnabled(false);
 
         $expected = [
+            'channelId' => '',
             'mobileEnabled' => false,
         ];
 
@@ -62,6 +63,7 @@ class ChannelMobileOnlyTest extends TestCase
         $this->channel->setMobileEnabled(true);
 
         $expected = [
+            'channelId' => '',
             'mobileEnabled' => true,
         ];
 
