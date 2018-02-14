@@ -19,6 +19,12 @@ class Channels implements BaseEntityInterface
             'skype',
         ];
 
+    const AMO_CHANNELS_LIST
+        = [
+            'vk',
+            'facebook',
+        ];
+
     /** @var Channel */
     private $callback;
     /** @var Channel */
@@ -208,7 +214,7 @@ class Channels implements BaseEntityInterface
             try {
                 $toApi = $this->get($cName)->toAPI();
 
-                if ($cName !== 'facebook') {
+                if (!in_array($cName, self::AMO_CHANNELS_LIST, true)) {
                     unset($toApi['channelId']);
                 }
 
