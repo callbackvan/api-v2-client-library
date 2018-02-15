@@ -23,6 +23,8 @@ class Channels implements BaseEntityInterface
         = [
             'vk',
             'facebook',
+            'telegram',
+            'viber',
         ];
 
     /** @var Channel */
