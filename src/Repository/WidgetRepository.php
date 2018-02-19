@@ -121,6 +121,7 @@ class WidgetRepository implements WidgetRepositoryInterface
     public function get($uid)
     {
         $response = $this->client->requestGet('widgets/'.$uid);
+
         $this->checkResponse($response, 200);
         $responseData = ResponseHelper::getBodyAsArray($response);
 

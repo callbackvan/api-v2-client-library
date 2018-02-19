@@ -40,20 +40,20 @@ class Channels implements BaseEntityInterface
      * @param Channel               $callback
      * @param Channel               $sms
      * @param Channel               $builtIn
-     * @param Channel               $telegram
+     * @param ChannelWithConnection $telegram
      * @param ChannelWithConnection $vk
      * @param ChannelWithConnection $facebook
-     * @param ChannelMobileOnly     $viber
+     * @param ChannelMobileOnlyWithConnection $viber
      * @param ChannelWithConnection $skype
      */
     public function __construct(
         Channel $callback,
         Channel $sms,
         Channel $builtIn,
-        Channel $telegram,
+        ChannelWithConnection $telegram,
         ChannelWithConnection $vk,
         ChannelWithConnection $facebook,
-        ChannelMobileOnly $viber,
+        ChannelMobileOnlyWithConnection $viber,
         ChannelWithConnection $skype
     ) {
         $this->callback = $callback;
@@ -91,7 +91,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return Channel
+     * @return ChannelWithConnection
      */
     public function getTelegram()
     {
@@ -115,7 +115,7 @@ class Channels implements BaseEntityInterface
     }
 
     /**
-     * @return ChannelMobileOnly
+     * @return ChannelMobileOnlyWithConnection
      */
     public function getViber()
     {

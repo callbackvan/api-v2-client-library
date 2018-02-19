@@ -4,6 +4,7 @@ namespace CallbackHunterAPIv2\Tests\Entity\Widget\Settings\Channels;
 
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnlyWithConnection;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelWithConnection;
 use PHPUnit\Framework\TestCase;
@@ -202,7 +203,7 @@ class ChannelsTest extends TestCase
                 Channel::class
             ),
             $this->channels['telegram'] = $this->createMock(
-                Channel::class
+                ChannelWithConnection::class
             ),
             $this->channels['vk'] = $this->createMock(
                 ChannelWithConnection::class
@@ -211,7 +212,7 @@ class ChannelsTest extends TestCase
                 ChannelWithConnection::class
             ),
             $this->channels['viber'] = $this->createMock(
-                ChannelMobileOnly::class
+                ChannelMobileOnlyWithConnection::class
             ),
             $this->channels['skype'] = $this->createMock(
                 ChannelWithConnection::class

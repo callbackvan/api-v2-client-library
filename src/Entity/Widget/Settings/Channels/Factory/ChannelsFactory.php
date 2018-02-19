@@ -4,7 +4,7 @@ namespace CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Factory;
 
 use CallbackHunterAPIv2\Entity\Widget\Factory\BaseFactoryInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel;
-use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly;
+use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnlyWithConnection;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelWithConnection;
 
@@ -22,11 +22,12 @@ class ChannelsFactory implements BaseFactoryInterface
         foreach ($availableChannels as $cName) {
             switch ($cName) {
                 case 'viber':
-                    $availableChannels[$cName] = new ChannelMobileOnly;
+                    $availableChannels[$cName] = new ChannelMobileOnlyWithConnection;
                     break;
                 case 'vk':
                 case 'facebook':
                 case 'skype':
+                case 'telegram':
                     $availableChannels[$cName] = new ChannelWithConnection;
                     break;
                 default:
