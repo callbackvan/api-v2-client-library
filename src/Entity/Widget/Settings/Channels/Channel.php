@@ -10,6 +10,11 @@ use CallbackHunterAPIv2\Entity\Widget\BaseEntityInterface;
 class Channel implements BaseEntityInterface
 {
     /**
+     * @var string
+     */
+    protected $channelId = '';
+
+    /**
      * Отображать ли канал связи на десктопе
      *
      * @var bool
@@ -22,6 +27,22 @@ class Channel implements BaseEntityInterface
      * @var bool
      */
     protected $mobileEnabled;
+
+    /**
+     * @return string
+     */
+    public function getChannelId()
+    {
+        return $this->channelId;
+    }
+
+    /**
+     * @param string $channelId
+     */
+    public function setChannelId($channelId)
+    {
+        $this->channelId = $channelId;
+    }
 
     /**
      * @return bool|null
@@ -69,6 +90,7 @@ class Channel implements BaseEntityInterface
     public function toAPI()
     {
         return [
+            'channelId' => $this->getChannelId(),
             'desktopEnabled' => $this->isDesktopEnabled(),
             'mobileEnabled'  => $this->isMobileEnabled(),
         ];

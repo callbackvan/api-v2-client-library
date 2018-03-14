@@ -19,6 +19,14 @@ class Channels implements BaseEntityInterface
             'skype',
         ];
 
+    const AMO_CHANNELS_LIST
+        = [
+            'vk',
+            'facebook',
+            'telegram',
+            'viber',
+        ];
+
     /** @var Channel */
     private $callback;
     /** @var Channel */
@@ -206,7 +214,13 @@ class Channels implements BaseEntityInterface
 
         foreach (self::CHANNELS_LIST as $cName) {
             try {
-                $result[$cName] = $this->get($cName)->toAPI();
+                $toApi = $this->get($cName)->toAPI();
+
+                if (!in_array($cName, self::AMO_CHANNELS_LIST, true)) {
+                    unset($toApi['channelId']);
+                }
+
+                $result[$cName] = $toApi;
             } catch (\Exception $e) {
             }
         }
