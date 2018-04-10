@@ -51,4 +51,20 @@ class DeprecatedWidgetRepositoryFactory
 
         return new DeprecatedWidgetRepository($client, $this->widgetFactory);
     }
+
+    /**
+     * @param string $token
+     * @param array  $config
+     *
+     * @return DeprecatedWidgetRepository
+     */
+    public function makeSAP($token, array $config = [])
+    {
+        $client = $this->clientFactory->makeWithSAPCredentials(
+            $token,
+            $config
+        );
+
+        return new DeprecatedWidgetRepository($client, $this->widgetFactory);
+    }
 }

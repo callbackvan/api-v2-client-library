@@ -35,7 +35,6 @@ class UploadedRepositoryFactory
         $this->uploadedFactory = $uploadedFactory;
     }
 
-
     /**
      * @param integer $userId
      * @param string  $key
@@ -47,6 +46,26 @@ class UploadedRepositoryFactory
     {
         $client = $this->clientFactory->makeWithAPICredentials(
             $userId,
+            $key,
+            $config
+        );
+
+        return new UploadedRepository(
+            $client,
+            $this->uploadedCollectionFactory,
+            $this->uploadedFactory
+        );
+    }
+
+    /**
+     * @param string $key
+     * @param array  $config
+     *
+     * @return UploadedRepository
+     */
+    public function makeSAP($key, array $config = [])
+    {
+        $client = $this->clientFactory->makeWithSAPCredentials(
             $key,
             $config
         );

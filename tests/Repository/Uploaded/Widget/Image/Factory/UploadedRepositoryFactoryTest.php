@@ -67,6 +67,32 @@ class UploadedRepositoryFactoryTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory::__construct
+     * @covers \CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory::makeSAP
+     */
+    public function testMakeSAP()
+    {
+        $token = 'some token';
+        $config = [
+            'some configs',
+        ];
+
+        $client = $this->createMock(ClientInterface::class);
+
+        $this->clientFactory->expects($this->once())
+            ->method('makeWithSAPCredentials')
+            ->with($token, $config)
+            ->willReturn($client);
+
+        $response = $this->uploadedRepositoryFactory->makeSAP(
+            $token,
+            $config
+        );
+
+        $this->assertInstanceOf(UploadedRepository::class, $response);
+    }
+
+    /**
      * Установка окружения
      */
     protected function setUp()
