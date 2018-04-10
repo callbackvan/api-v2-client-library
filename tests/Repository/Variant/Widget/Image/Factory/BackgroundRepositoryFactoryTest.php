@@ -38,6 +38,57 @@ class BackgroundRepositoryFactoryTest extends TestCase
     private $backgroundRepositoryFactory;
 
     /**
+     * @covers \CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory::__construct
+     * @covers \CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory::make
+     */
+    public function testMake()
+    {
+        $userId = 'some id';
+        $key = 'some key';
+        $config = [
+            'some configs',
+        ];
+
+        $this->clientFactory
+            ->expects($this->once())
+            ->method('makeWithAPICredentials')
+            ->with($userId, $key, $config)
+            ->willReturn(
+                $client = $this->createMock(ClientInterface::class)
+            );
+
+        $this->assertInstanceOf(
+            BackgroundRepository::class,
+            $this->backgroundRepositoryFactory->make($userId, $key, $config)
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory::__construct
+     * @covers \CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory::makeSAP
+     */
+    public function testMakeSAP()
+    {
+        $token = 'some token';
+        $config = [
+            'some configs',
+        ];
+
+        $this->clientFactory
+            ->expects($this->once())
+            ->method('makeWithSAPCredentials')
+            ->with($token, $config)
+            ->willReturn(
+                $client = $this->createMock(ClientInterface::class)
+            );
+
+        $this->assertInstanceOf(
+            BackgroundRepository::class,
+            $this->backgroundRepositoryFactory->makeSAP($token, $config)
+        );
+    }
+
+    /**
      * Установка окружения
      */
     protected function setUp()
@@ -45,35 +96,13 @@ class BackgroundRepositoryFactoryTest extends TestCase
         parent::setUp();
 
         $this->clientFactory = $this->createMock(ClientFactory::class);
-        $this->backgroundFactory = $this->createMock(BackgroundFactoryInterface::class);
+        $this->backgroundFactory = $this->createMock(
+            BackgroundFactoryInterface::class
+        );
 
         $this->backgroundRepositoryFactory = new BackgroundRepositoryFactory(
             $this->clientFactory,
             $this->backgroundFactory
         );
-    }
-
-    /**
-     * @covers \CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory::__construct()
-     * @covers \CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory::make()
-     */
-    public function testMake()
-    {
-        $userId = 'some id';
-        $key    = 'some key';
-        $config = [
-            'some configs'
-        ];
-
-        $client = $this->createMock(ClientInterface::class);
-
-        $this->clientFactory->expects($this->once())
-            ->method('makeWithAPICredentials')
-            ->with($userId, $key, $config)
-            ->willReturn($client);
-
-        $response = $this->backgroundRepositoryFactory->make($userId, $key, $config);
-
-        $this->assertInstanceOf(BackgroundRepository::class, $response);
     }
 }

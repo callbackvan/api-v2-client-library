@@ -28,7 +28,6 @@ class BackgroundRepositoryFactory
         $this->backgroundFactory = $backgroundFactory;
     }
 
-
     /**
      * @param integer $userId
      * @param string  $key
@@ -41,6 +40,22 @@ class BackgroundRepositoryFactory
         $client = $this->clientFactory->makeWithAPICredentials(
             $userId,
             $key,
+            $config
+        );
+
+        return new BackgroundRepository($client, $this->backgroundFactory);
+    }
+
+    /**
+     * @param string $token
+     * @param array  $config
+     *
+     * @return BackgroundRepository
+     */
+    public function makeSAP($token, array $config = [])
+    {
+        $client = $this->clientFactory->makeWithSAPCredentials(
+            $token,
             $config
         );
 
