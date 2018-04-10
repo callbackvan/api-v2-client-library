@@ -2,6 +2,7 @@
 
 namespace CallbackHunterAPIv2\Tests\Repository\Factory;
 
+use CallbackHunterAPIv2\Client;
 use CallbackHunterAPIv2\ClientFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\DeprecatedWidgetFactory;
 use CallbackHunterAPIv2\Repository\DeprecatedWidgetRepository;
@@ -25,10 +26,38 @@ class DeprecatedWidgetRepositoryFactoryTest extends TestCase
     {
         $userId = 111;
         $key = 'testkey';
+        $config = ['some' => 'config'];
+
+        $this->clientFactory
+            ->expects($this->once())
+            ->method('makeWithAPICredentials')
+            ->with($userId, $key, $config)
+            ->willReturn($client = $this->createMock(Client::class));
 
         $this->assertInstanceOf(
             DeprecatedWidgetRepository::class,
-            $this->factory->make($userId, $key)
+            $this->factory->make($userId, $key, $config)
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory::__construct
+     * @covers \CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory::makeSAP
+     */
+    public function testMakeSAP()
+    {
+        $token = 'testkey';
+        $config = ['some' => 'config'];
+
+        $this->clientFactory
+            ->expects($this->once())
+            ->method('makeWithSAPCredentials')
+            ->with($token, $config)
+            ->willReturn($client = $this->createMock(Client::class));
+
+        $this->assertInstanceOf(
+            DeprecatedWidgetRepository::class,
+            $this->factory->makeSAP($token, $config)
         );
     }
 
@@ -37,7 +66,9 @@ class DeprecatedWidgetRepositoryFactoryTest extends TestCase
         parent::setUp();
 
         $this->factory = new DeprecatedWidgetRepositoryFactory(
-            $this->clientFactory = new ClientFactory(),
+            $this->clientFactory = $this->createMock(
+                ClientFactory::class
+            ),
             $this->deprecatedWidgetFactory = $this->createMock(
                 DeprecatedWidgetFactory::class
             )

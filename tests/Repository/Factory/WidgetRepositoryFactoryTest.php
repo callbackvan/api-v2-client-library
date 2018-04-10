@@ -2,6 +2,7 @@
 
 namespace CallbackHunterAPIv2\Tests\Repository\Factory;
 
+use CallbackHunterAPIv2\Client;
 use CallbackHunterAPIv2\ClientFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
@@ -25,10 +26,38 @@ class WidgetRepositoryFactoryTest extends TestCase
     {
         $userId = 111;
         $key = 'testkey';
+        $config = ['some' => 'config'];
+
+        $this->clientFactory
+            ->expects($this->once())
+            ->method('makeWithAPICredentials')
+            ->with($userId, $key, $config)
+            ->willReturn($client = $this->createMock(Client::class));
 
         $this->assertInstanceOf(
             WidgetRepository::class,
-            $this->widgetRepositoryFactory->make($userId, $key)
+            $this->widgetRepositoryFactory->make($userId, $key, $config)
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory::__construct
+     * @covers \CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory::makeSAP
+     */
+    public function testMakeSAP()
+    {
+        $token = 'testkey';
+        $config = ['some' => 'config'];
+
+        $this->clientFactory
+            ->expects($this->once())
+            ->method('makeWithSAPCredentials')
+            ->with($token, $config)
+            ->willReturn($client = $this->createMock(Client::class));
+
+        $this->assertInstanceOf(
+            WidgetRepository::class,
+            $this->widgetRepositoryFactory->makeSAP($token, $config)
         );
     }
 
@@ -36,7 +65,7 @@ class WidgetRepositoryFactoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->clientFactory = new ClientFactory();
+        $this->clientFactory = $this->createMock(ClientFactory::class);
         $this->widgetFactory = $this->createMock(WidgetFactoryInterface::class);
         $this->widgetRepositoryFactory = new WidgetRepositoryFactory(
             $this->clientFactory,
