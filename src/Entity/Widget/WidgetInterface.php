@@ -19,6 +19,18 @@ interface WidgetInterface extends BaseEntityInterface
     /**
      * @return string
      */
+    public function getAccountUID();
+
+    /**
+     * @param string $accountUID
+     *
+     * @return void
+     */
+    public function setAccountUID($accountUID);
+
+    /**
+     * @return string
+     */
     public function getCode();
 
     /**
