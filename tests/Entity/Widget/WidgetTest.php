@@ -49,6 +49,19 @@ class WidgetTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setAccountUID
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getAccountUID
+     */
+    public function testAccountUID()
+    {
+        $this->entity->setAccountUID($this->example['accountUID']);
+        $this->assertSame(
+            $this->example['accountUID'],
+            $this->entity->getAccountUID()
+        );
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getSite()
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setSite()
      */
@@ -108,14 +121,16 @@ class WidgetTest extends TestCase
     public function testToAPI()
     {
         $expected = [
-            'active'   => $this->example['active'],
-            'site'     => $this->example['site'],
-            'settings' => null,
+            'active'     => $this->example['active'],
+            'accountUID' => $this->example['accountUID'],
+            'site'       => $this->example['site'],
+            'settings'   => null,
         ];
 
         $this->entity->setSite($expected['site']);
         $this->entity->setActive($expected['active']);
         $this->entity->setCode($this->example['code']);
+        $this->entity->setAccountUID($this->example['accountUID']);
 
         $this->settings
             ->expects($this->once())
@@ -134,6 +149,7 @@ class WidgetTest extends TestCase
         parent::setUp();
         $this->example = [
             'uid'          => '123f6bcd4621d373cade4e832627b4f6',
+            'accountUID'   => 'dsgf43754gdr57g548u567u5893hhj93',
             'active'       => true,
             'site'         => 'example.com',
             'code'         => 'd9729xcv74992cc3482b350163a1a010',

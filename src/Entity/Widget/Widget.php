@@ -16,6 +16,13 @@ class Widget implements WidgetInterface
     private $uid;
 
     /**
+     * Идентификатор аккаунта
+     *
+     * @var string
+     */
+    private $accountUID;
+
+    /**
      * Hash виджета
      * для использования в script[src]
      *
@@ -82,6 +89,22 @@ class Widget implements WidgetInterface
         $this->uid = (string)$uid;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountUID()
+    {
+        return $this->accountUID;
+    }
+
+    /**
+     * @param string $accountUID
+     */
+    public function setAccountUID($accountUID)
+    {
+        $this->accountUID = $accountUID;
     }
 
     /**
@@ -213,10 +236,13 @@ class Widget implements WidgetInterface
      */
     public function toAPI()
     {
-        return [
-            'active'   => $this->isActive(),
-            'site'     => $this->getSite(),
-            'settings' => $this->settings->toAPI(),
+        $result = [
+            'active'     => $this->isActive(),
+            'accountUID' => $this->getAccountUID(),
+            'site'       => $this->getSite(),
+            'settings'   => $this->settings->toAPI(),
         ];
+
+        return $result;
     }
 }
