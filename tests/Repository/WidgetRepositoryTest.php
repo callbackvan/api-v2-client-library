@@ -12,6 +12,7 @@ use CallbackHunterAPIv2\Repository\WidgetRepository;
 use CallbackHunterAPIv2\Type\FileForUploadInterface;
 use CallbackHunterAPIv2\ValueObject\Pagination;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
+use CallbackHunterAPIv2\ValueObject\WidgetsFilterInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -606,13 +607,7 @@ class WidgetRepositoryTest extends TestCase
         ];
         $widgets = (array)$responseData['_embedded']['widgets'];
 
-        $pagination = $this->createMock(PaginationInterface::class);
-        $pagination->expects($this->once())
-            ->method('getLimit')
-            ->willReturn(Pagination::DEFAULT_LIMIT);
-        $pagination->expects($this->once())
-            ->method('getOffset')
-            ->willReturn(Pagination::DEFAULT_OFFSET);
+        $pagination = $this->setUpDefaultPagination();
 
         $this->client->expects($this->once())
             ->method('requestGet')
@@ -655,13 +650,7 @@ class WidgetRepositoryTest extends TestCase
      */
     public function testGetListReturnedEmptyResults()
     {
-        $pagination = $this->createMock(PaginationInterface::class);
-        $pagination->expects($this->once())
-            ->method('getLimit')
-            ->willReturn(Pagination::DEFAULT_LIMIT);
-        $pagination->expects($this->once())
-            ->method('getOffset')
-            ->willReturn(Pagination::DEFAULT_OFFSET);
+        $pagination = $this->setUpDefaultPagination();
 
         $this->client->expects($this->once())
             ->method('requestGet')
@@ -676,6 +665,36 @@ class WidgetRepositoryTest extends TestCase
             ->willReturn('{}');
 
         $this->assertSame([], $this->widgetRepository->getList($pagination));
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Repository\WidgetRepository::getList
+     */
+    public function testGetListWithFilter()
+    {
+        $pagination = $this->setUpDefaultPagination();
+        $filter = $this->createMock(WidgetsFilterInterface::class);
+        $filter
+            ->expects($this->once())
+            ->method('toArray')
+            ->willReturn($filterArray = ['foo' => 'bar']);
+
+        $this->client->expects($this->once())
+            ->method('requestGet')
+            ->with(
+                $this->path,
+                $this->defaultQuery + ['filter' => $filterArray]
+            )
+            ->willReturn($this->response);
+
+        $this->response->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(204);
+        $this->response->expects($this->once())
+            ->method('getBody')
+            ->willReturn('{}');
+
+        $this->widgetRepository->getList($pagination, $filter);
     }
 
     /**
@@ -776,5 +795,23 @@ class WidgetRepositoryTest extends TestCase
             $this->client,
             $this->widgetFactory
         );
+    }
+
+    /**
+     * @return PaginationInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function setUpDefaultPagination()
+    {
+        $pagination = $this->createMock(PaginationInterface::class);
+        $pagination
+            ->expects($this->once())
+            ->method('getLimit')
+            ->willReturn(Pagination::DEFAULT_LIMIT);
+        $pagination
+            ->expects($this->once())
+            ->method('getOffset')
+            ->willReturn(Pagination::DEFAULT_OFFSET);
+
+        return $pagination;
     }
 }

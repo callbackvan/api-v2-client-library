@@ -9,6 +9,7 @@ use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 use CallbackHunterAPIv2\Exception;
 use CallbackHunterAPIv2\Helper\ResponseHelper;
 use CallbackHunterAPIv2\ValueObject\PaginationInterface;
+use CallbackHunterAPIv2\ValueObject\WidgetsFilterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class WidgetRepository implements WidgetRepositoryInterface
@@ -78,18 +79,25 @@ class WidgetRepository implements WidgetRepositoryInterface
     /**
      * Получение списка виджетов
      *
-     * @param PaginationInterface $pagination
+     * @param PaginationInterface    $pagination
+     * @param WidgetsFilterInterface $filter
      *
      * @return WidgetInterface[]
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws Exception\RepositoryException
      */
-    public function getList(PaginationInterface $pagination)
-    {
+    public function getList(
+        PaginationInterface $pagination,
+        $filter = null
+    ) {
         $query = [
             'limit'  => $pagination->getLimit(),
             'offset' => $pagination->getOffset(),
         ];
+
+        if ($filter instanceof WidgetsFilterInterface) {
+            $query['filter'] = $filter->toArray();
+        }
 
         $response = $this->client->requestGet('widgets', $query);
         $this->checkResponse($response, [200, 204]);
