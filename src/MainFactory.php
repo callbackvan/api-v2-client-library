@@ -17,6 +17,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\TextsFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
+use CallbackHunterAPIv2\Repository\Factory\TariffStatusRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory;
@@ -87,6 +88,16 @@ class MainFactory
             new ClientFactory(),
             new UploadedCollectionFactory($uploadedFactory),
             $uploadedFactory
+        );
+    }
+
+    /**
+    * @return TariffStatusRepositoryFactory
+    */
+    public static function makeTariffStatusRepositoryFactory()
+    {
+        return new TariffStatusRepositoryFactory(
+            new ClientFactory()
         );
     }
 }

@@ -66,3 +66,25 @@ try {
     echo 'HTTP Exception: '.$e->getMessage();
 }
 ```
+
+Получение информации о тарификации аккаунта
+
+```php
+$userId = 123456;
+$accountId = 465789;
+$key = 'fdkjhdfkjhdfkjdfhkjhfdkjhfkj';
+
+try {
+    $tariffStatusRepository = MainFactory::makeTariffStatusRepositoryFactory()->make($userId, $key);
+    $result = $tariffStatusRepository->get($accountId);
+    var_dump($result);
+} catch (\CallbackHunterAPIv2\Exception\ResourceNotFoundException $e) {
+    echo 'Tariff status for account not found';
+} catch (\CallbackHunterAPIv2\Exception\Exception $e) {
+    echo 'API Error: ' . $e->getMessage();
+} catch (\GuzzleHttp\Exception\GuzzleException $e) {
+    echo 'HTTP Exception: '. $e->getMessage();
+} catch (\Exception $e) {
+    echo 'Exception: '. $e->getMessage();
+}
+```
