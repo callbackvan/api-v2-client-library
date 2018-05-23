@@ -54,7 +54,7 @@ class TrialTest extends TestCase
         $value = 'foo-bar-baz';
 
         $this->trial[$offset] = $value;
-        unset( $this->trial[$offset]);
+        unset($this->trial[$offset]);
         $this->assertNull($this->trial[$offset]);
     }
 
