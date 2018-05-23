@@ -42,7 +42,7 @@ class TariffStatusRepositoryTest extends TestCase
             'expire_date'     => '2020-10-10 10:10',
         ];
 
-        $path = preg_replace('/{mixedId}/', $this->accountId,TariffStatusRepository::PATH);
+        $path = preg_replace('/{mixedId}/', $this->accountId, TariffStatusRepository::PATH);
 
         $this->client->expects($this->once())
                      ->method('requestGet')
@@ -89,7 +89,7 @@ class TariffStatusRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->path = preg_replace('/{mixedId}/', $this->accountId,TariffStatusRepository::PATH);
+        $this->path = preg_replace('/{mixedId}/', $this->accountId, TariffStatusRepository::PATH);
 
         $this->client = $this->createMock(ClientInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
