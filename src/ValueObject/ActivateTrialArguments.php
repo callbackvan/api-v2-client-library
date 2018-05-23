@@ -27,7 +27,7 @@ class ActivateTrialArguments implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->container[$offset]);
+        return isset($this->arguments[$offset]);
     }
 
     /**

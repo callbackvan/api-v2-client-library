@@ -42,7 +42,7 @@ class ActivateTrialArgumentsTest extends TestCase
         $value = 'foo-bar-baz';
 
         $this->trial[$offset] = $value;
-        $this->assertNotEmpty($this->trial[$offset]);
+        $this->assertEquals(true, isset($this->trial[$offset]));
     }
 
     /**
@@ -67,7 +67,7 @@ class ActivateTrialArgumentsTest extends TestCase
         $value = 'foo-bar-baz';
 
         $this->trial[$offset] = $value;
-        $this->assertEquals($value, $this->trial[$offset]);
+        $this->assertNotEmpty($this->trial[$offset]);
     }
 
     protected function setUp()
