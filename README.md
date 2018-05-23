@@ -20,6 +20,7 @@ composer require callbackhunter/apiv2library
 ## Usage
 Примеры использования
 
+Получение и изменени виджетов
 ```php
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\ImageForUploadFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\ButtonLogoImage;
@@ -65,4 +66,52 @@ try {
 } catch (\GuzzleHttp\Exception\GuzzleException $e) {
     echo 'HTTP Exception: '.$e->getMessage();
 }
+```
+
+Получение информации о тарификации аккаунта
+
+```php
+$userId = 123456;
+$accountId = 465789;
+$key = 'fdkjhdfkjhdfkjdfhkjhfdkjhfkj';
+
+try {
+    $tariffStatusRepository = MainFactory::makeTariffStatusRepositoryFactory()->make($userId, $key);
+    $result = $tariffStatusRepository->get($accountId);
+    var_dump($result);
+} catch (\CallbackHunterAPIv2\Exception\ResourceNotFoundException $e) {
+    echo 'Tariff status for account not found';
+} catch (\CallbackHunterAPIv2\Exception\Exception $e) {
+    echo 'API Error: ' . $e->getMessage();
+} catch (\GuzzleHttp\Exception\GuzzleException $e) {
+    echo 'HTTP Exception: '. $e->getMessage();
+} catch (\Exception $e) {
+    echo 'Exception: '. $e->getMessage();
+}
+```
+
+Получение информации из профиля текущего пользователя
+
+```php
+use CallbackHunterAPIv2\ValueObject\Credentials as CBHCredentials;
+use CallbackHunterAPIv2\Client as CBHClient;
+use CallbackHunterAPIv2\MainFactory;
+
+$userId = 123456;
+$key = 'fdkjhdfkjhdfkjdfhkjhfdkjhfkj';
+try {
+    $profileRepository = MainFactory::makeCurrentProfileRepositoryFactory()->make($userId, $key);
+    $result = $profileRepository->get();
+
+    print_r($result);    
+} catch (\CallbackHunterAPIv2\Exception\ResourceNotFoundException $e) {
+    echo 'Current user profile not found';
+} catch (\CallbackHunterAPIv2\Exception\Exception $e) {
+    echo 'API Error: ' . $e->getMessage();
+} catch (\GuzzleHttp\Exception\GuzzleException $e) {
+    echo 'HTTP Exception: '. $e->getMessage();
+} catch (\Exception $e) {
+    echo 'Exception: '. $e->getMessage();
+}
+
 ```
