@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * Class CurrentProfileRepositoryTest
  *
  * @package Tests\Repository
- * @covers  \CallbackHunterAPIv2\Repository\CurrentProfileRepositoryTest
+ * @covers  \CallbackHunterAPIv2\Repository\CurrentProfileRepository
  */
 class CurrentProfileRepositoryTest extends TestCase
 {
@@ -28,8 +28,8 @@ class CurrentProfileRepositoryTest extends TestCase
     private $path;
 
     /**
-     * @covers \CallbackHunterAPIv2\Repository\CurrentProfileRepository::get()
-     * @covers \CallbackHunterAPIv2\Repository\CurrentProfileRepository::checkResponse()
+     * @covers \CallbackHunterAPIv2\Repository\CurrentProfileRepository::get
+     * @covers \CallbackHunterAPIv2\Repository\CurrentProfileRepository::checkResponse
      *
      * @throws \CallbackHunterAPIv2\Exception\RepositoryException
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -65,7 +65,7 @@ class CurrentProfileRepositoryTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Repository\CurrentProfileRepository::get()
+     * @covers \CallbackHunterAPIv2\Repository\CurrentProfileRepository::get
      * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
      */
     public function testGetWithException()
