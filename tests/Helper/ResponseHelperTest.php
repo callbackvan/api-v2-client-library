@@ -108,6 +108,15 @@ class ResponseHelperTest extends TestCase
                 ],
             ],
             [
+                403,
+                '{"title": "bar", "invalidParams": [{"foo":"baz"}]}',
+                [
+                    'message'       => 'bar',
+                    'code'          => 403,
+                    'invalidParams' => [['foo' => 'baz']],
+                ],
+            ],
+            [
                 404,
                 '{"title": "bar"}',
                 [

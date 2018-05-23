@@ -44,6 +44,13 @@ class ResponseHelper
                     $invalidParams
                 );
                 break;
+            case 403:
+                $exception = new Exception\ActivateTrialNotAvailable(
+                    $response,
+                    $title,
+                    $invalidParams
+                );
+                break;
             case 404:
                 $exception = new Exception\ResourceNotFoundException(
                     $response,
