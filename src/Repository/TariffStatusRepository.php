@@ -14,7 +14,8 @@ class TariffStatusRepository implements TariffStatusRepositoryInterface
 
     const PATH = '/account/{mixedId}/tariff/status/';
 
-    public function __construct(ClientInterface $client) {
+    public function __construct(ClientInterface $client)
+    {
         $this->client = $client;
     }
 
@@ -30,7 +31,7 @@ class TariffStatusRepository implements TariffStatusRepositoryInterface
      */
     public function get($accountId)
     {
-        $path = preg_replace('/{mixedId}/', $accountId,self::PATH);
+        $path = preg_replace('/{mixedId}/', $accountId, self::PATH);
 
         $response = $this->client->requestGet($path);
         $this->checkResponse($response, 200);
@@ -58,4 +59,3 @@ class TariffStatusRepository implements TariffStatusRepositoryInterface
         throw $exception;
     }
 }
-

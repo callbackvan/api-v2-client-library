@@ -2,7 +2,6 @@
 
 namespace CallbackHunterAPIv2\Repository;
 
-
 interface TariffStatusRepositoryInterface
 {
     /**
