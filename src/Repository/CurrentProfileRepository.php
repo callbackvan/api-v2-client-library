@@ -14,7 +14,8 @@ class CurrentProfileRepository implements CurrentProfileRepositoryInterface
 
     const PATH = 'user/current/profile';
 
-    public function __construct(ClientInterface $client) {
+    public function __construct(ClientInterface $client)
+    {
         $this->client = $client;
     }
 
@@ -53,5 +54,4 @@ class CurrentProfileRepository implements CurrentProfileRepositoryInterface
 
         throw $exception;
     }
-
 }

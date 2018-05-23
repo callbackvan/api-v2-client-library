@@ -19,7 +19,8 @@ class CurrentProfileRepositoryFactory
     /**
      * @param ClientFactory $clientFactory
      */
-    public function __construct(ClientFactory $clientFactory) {
+    public function __construct(ClientFactory $clientFactory)
+    {
         $this->clientFactory = $clientFactory;
     }
 
