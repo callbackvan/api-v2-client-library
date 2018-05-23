@@ -5,6 +5,7 @@ namespace CallbackHunterAPIv2\Repository;
 use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Exception\RepositoryException;
 use CallbackHunterAPIv2\Helper\ResponseHelper;
+use CallbackHunterAPIv2\ValueObject\ActivateTrialArguments;
 
 class TrialRepository
 {
@@ -22,7 +23,7 @@ class TrialRepository
 
     /**
      * @param int|string $accountUID
-     * @param array $arguments
+     * @param ActivateTrialArguments $arguments
      *
      * @return array
      * @throws RepositoryException

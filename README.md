@@ -115,3 +115,26 @@ try {
 }
 
 ```
+
+Активация тестового периода у аккаунта
+
+```php
+use CallbackHunterAPIv2\ValueObject\ActivateTrialArguments;
+use CallbackHunterAPIv2\MainFactory;
+
+$userId = 123;
+$key = 'test';
+$accountUID = 12345;
+
+try {
+    $arguments = new ActivateTrialArguments();
+    $arguments['test'] = '12345';
+    $repository = MainFactory::makeTrialRepositoryFactory()->make($userId, $key);
+    $result = $repository->activateTrial($accountUID, $arguments);
+    var_dump($result);
+} catch (RepositoryException $ex) {
+    echo $ex->getMessage();
+} catch (GuzzleException $ex) {
+    echo $ex->getMessage();
+}
+```
