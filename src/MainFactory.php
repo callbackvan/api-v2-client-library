@@ -16,6 +16,7 @@ use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\PositionFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SizesFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\TextsFactory;
+use CallbackHunterAPIv2\Repository\Factory\CurrentProfileRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\TariffStatusRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
@@ -49,6 +50,16 @@ class MainFactory
         return new WidgetRepositoryFactory(
             new ClientFactory(),
             self::makeWidgetFactory()
+        );
+    }
+
+    /**
+     * @return CurrentProfileRepositoryFactory
+     */
+    public static function makeCurrentProfileRepositoryFactory()
+    {
+        return new CurrentProfileRepositoryFactory(
+            new ClientFactory()
         );
     }
 

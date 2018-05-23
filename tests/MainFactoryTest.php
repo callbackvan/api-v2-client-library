@@ -4,6 +4,7 @@ namespace CallbackHunterAPIv2\Tests;
 
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
 use CallbackHunterAPIv2\MainFactory;
+use CallbackHunterAPIv2\Repository\Factory\CurrentProfileRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\TariffStatusRepositoryFactory;
@@ -12,6 +13,17 @@ use CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundReposi
 
 class MainFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \CallbackHunterAPIv2\MainFactory::makeCurrentProfileRepositoryFactory
+     */
+    public function testMakeCurrentProfileRepositoryFactory()
+    {
+        $this->assertInstanceOf(
+            CurrentProfileRepositoryFactory::class,
+            MainFactory::makeCurrentProfileRepositoryFactory()
+        );
+    }
+
     /**
      * @covers \CallbackHunterAPIv2\MainFactory::makeWidgetFactory
      */
