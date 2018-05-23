@@ -47,8 +47,7 @@ class ResponseHelper
             case 403:
                 $exception = new Exception\ActivateTrialNotAvailable(
                     $response,
-                    $title,
-                    $invalidParams
+                    $title
                 );
                 break;
             case 404:

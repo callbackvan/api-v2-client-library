@@ -113,7 +113,6 @@ class ResponseHelperTest extends TestCase
                 [
                     'message'       => 'bar',
                     'code'          => 403,
-                    'invalidParams' => [['foo' => 'baz']],
                 ],
             ],
             [
