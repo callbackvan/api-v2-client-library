@@ -52,5 +52,4 @@ class TrialRepositoryFactory
 
         return new TrialRepository($client);
     }
-
 }
