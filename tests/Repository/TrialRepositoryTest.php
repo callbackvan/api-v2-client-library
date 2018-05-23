@@ -32,32 +32,47 @@ class TrialRepositoryTest extends TestCase
     /**
      * @covers \CallbackHunterAPIv2\Repository\TrialRepository::__construct
      * @covers \CallbackHunterAPIv2\Repository\TrialRepository::activateTrial
+     *
+     * @dataProvider activateTrialDataProvider
+     *
+     * @param $accountUID
+     * @param $arguments
+     *
+     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function testActivateTrial()
+    public function testActivateTrial($accountUID, $arguments)
     {
-        $accountUID = 'foo-bar-baz';
-        $path = 'account/' . $accountUID . '/activate_trial';
-        $arguments = ['phone' => '123'];
-
         $this->client
             ->expects($this->once())
             ->method('requestPost')
-            ->with($path, $arguments)
+            ->with(
+                'account/' . $accountUID . '/activate_trial',
+                $arguments
+            )
             ->willReturn($this->response);
-
-        $this->response
-            ->expects($this->once())
-            ->method('getBody')
-            ->willReturn(json_encode($this->responseData));
 
         $this->response
             ->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-
+        $this->response
+            ->expects($this->once())
+            ->method('getBody')
+            ->willReturn(json_encode($this->responseData));
 
         $this->assertEquals($this->responseData, $this->trialRepository->activateTrial($accountUID, $arguments));
+    }
+
+    public function activateTrialDataProvider()
+    {
+        return [
+            [
+                'foo-bar-baz',
+                ['phone' => '123'],
+            ],
+        ];
     }
 
     /**
@@ -107,6 +122,40 @@ class TrialRepositoryTest extends TestCase
             ->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(403);
+
+        $this->trialRepository->activateTrial($accountUID, $arguments);
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Repository\TrialRepository::__construct
+     * @covers \CallbackHunterAPIv2\Repository\TrialRepository::activateTrial
+     *
+     * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
+     * @expectedExceptionMessage Content is not json
+     */
+    public function testActivateTrialThrowsRepositoryException()
+    {
+        $accountUID = 'foo-bar-baz';
+        $arguments = ['phone' => '123'];
+
+        $this->client
+            ->expects($this->once())
+            ->method('requestPost')
+            ->with(
+                'account/' . $accountUID . '/activate_trial',
+                $arguments
+            )
+            ->willReturn($this->response);
+
+        $this->response
+            ->expects($this->once())
+            ->method('getStatusCode')
+            ->willReturn(200);
+
+        $this->response
+            ->expects($this->once())
+            ->method('getBody')
+            ->willReturn('not json');
 
         $this->trialRepository->activateTrial($accountUID, $arguments);
     }

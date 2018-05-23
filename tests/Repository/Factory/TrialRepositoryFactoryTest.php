@@ -39,8 +39,8 @@ class TrialRepositoryFactoryTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory::__construct
-     * @covers \CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory::makeSAP
+     * @covers \CallbackHunterAPIv2\Repository\Factory\TrialRepositoryFactory::__construct
+     * @covers \CallbackHunterAPIv2\Repository\Factory\TrialRepositoryFactory::makeSAP
      */
     public function testMakeSAP()
     {

@@ -2,16 +2,16 @@
 
 namespace CallbackHunterAPIv2\Tests\ValueObject;
 
-use CallbackHunterAPIv2\ValueObject\Trial;
+use CallbackHunterAPIv2\ValueObject\ActivateTrialArguments;
 use PHPUnit\Framework\TestCase;
 
-class TrialTest extends TestCase
+class ActivateTrialArgumentsTest extends TestCase
 {
-    /** @var Trial */
+    /** @var ActivateTrialArguments */
     private $trial;
 
     /**
-     * @covers \CallbackHunterAPIv2\ValueObject\Trial::offsetSet
+     * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::offsetSet
      */
     public function testOffsetSet()
     {
@@ -23,7 +23,7 @@ class TrialTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\ValueObject\Trial::offsetSet
+     * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::offsetSet
      */
     public function testOffsetSetWithoutOffset()
     {
@@ -34,7 +34,7 @@ class TrialTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\ValueObject\Trial::offsetExists
+     * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::offsetExists
      */
     public function testOffsetExists()
     {
@@ -42,11 +42,11 @@ class TrialTest extends TestCase
         $value = 'foo-bar-baz';
 
         $this->trial[$offset] = $value;
-        $this->assertNotNull($this->trial[$offset]);
+        $this->assertNotEmpty($this->trial[$offset]);
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\ValueObject\Trial::offsetUnset
+     * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::offsetUnset
      */
     public function testOffsetUnset()
     {
@@ -59,7 +59,7 @@ class TrialTest extends TestCase
     }
 
     /**
-     * @covers \CallbackHunterAPIv2\ValueObject\Trial::offsetGet
+     * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::offsetGet
      */
     public function testOffsetGet()
     {
@@ -73,6 +73,6 @@ class TrialTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->trial = new Trial();
+        $this->trial = new ActivateTrialArguments();
     }
 }

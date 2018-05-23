@@ -2,7 +2,7 @@
 
 namespace CallbackHunterAPIv2\ValueObject;
 
-class Trial implements \ArrayAccess
+class ActivateTrialArguments implements \ArrayAccess
 {
     /** @var array */
     private $arguments = [];

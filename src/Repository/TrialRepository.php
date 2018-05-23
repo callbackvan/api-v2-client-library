@@ -35,13 +35,17 @@ class TrialRepository
             $arguments
         );
 
-        if ($exception = ResponseHelper::extractException($response, [200])) {
+        $exception = ResponseHelper::extractException($response, [200]);
+        if ($exception !== null) {
             throw $exception;
         }
 
         $responseData = ResponseHelper::getBodyAsArray($response);
-        if (!isset($responseData['expire_date'])) {
-            return [];
+        if (!$responseData) {
+            throw new RepositoryException(
+                $response,
+                'Content is not json'
+            );
         }
 
         return $responseData;
