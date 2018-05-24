@@ -6,6 +6,7 @@ use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Exception\ActivateTrialNotAvailable;
 use CallbackHunterAPIv2\Helper\ResponseHelper;
 use CallbackHunterAPIv2\Repository\TrialRepository;
+use CallbackHunterAPIv2\ValueObject\ActivateTrialArguments;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -29,6 +30,9 @@ class TrialRepositoryTest extends TestCase
         'expire_date' => 'bar',
     ];
 
+    /** @var ActivateTrialArguments */
+    private $trialArguments;
+
     /**
      * @covers \CallbackHunterAPIv2\Repository\TrialRepository::__construct
      * @covers \CallbackHunterAPIv2\Repository\TrialRepository::activateTrial
@@ -43,6 +47,11 @@ class TrialRepositoryTest extends TestCase
      */
     public function testActivateTrial($accountUID, $arguments)
     {
+        $this->trialArguments
+            ->expects($this->once())
+            ->method('convertToArray')
+            ->willReturn($arguments);
+
         $this->client
             ->expects($this->once())
             ->method('requestPost')
@@ -62,7 +71,7 @@ class TrialRepositoryTest extends TestCase
             ->method('getBody')
             ->willReturn(json_encode($this->responseData));
 
-        $this->assertEquals($this->responseData, $this->trialRepository->activateTrial($accountUID, $arguments));
+        $this->assertEquals($this->responseData, $this->trialRepository->activateTrial($accountUID, $this->trialArguments));
     }
 
     public function activateTrialDataProvider()
@@ -97,15 +106,14 @@ class TrialRepositoryTest extends TestCase
                 'был активирован тестовый период, а ' .
                 'также не подключён платный тариф. ' .
                 'Для проверки, зайдите к себе в личный кабинет ' .
-                '[API](https://callbackhunter.com/cabinet/), ' .
+                '(https://callbackhunter.com/cabinet/), ' .
                 'чтобы убедится в этом. ',
-            'invalidParams' => [
-                [
-                    'status'   => 'false',
-                    'title' => 'Activation is not available.',
-                ],
-            ],
         ];
+
+        $this->trialArguments
+            ->expects($this->once())
+            ->method('convertToArray')
+            ->willReturn($arguments);
 
         $this->client
             ->expects($this->once())
@@ -123,7 +131,7 @@ class TrialRepositoryTest extends TestCase
             ->method('getStatusCode')
             ->willReturn(403);
 
-        $this->trialRepository->activateTrial($accountUID, $arguments);
+        $this->trialRepository->activateTrial($accountUID, $this->trialArguments);
     }
 
     /**
@@ -137,6 +145,11 @@ class TrialRepositoryTest extends TestCase
     {
         $accountUID = 'foo-bar-baz';
         $arguments = ['phone' => '123'];
+
+        $this->trialArguments
+            ->expects($this->once())
+            ->method('convertToArray')
+            ->willReturn($arguments);
 
         $this->client
             ->expects($this->once())
@@ -157,7 +170,7 @@ class TrialRepositoryTest extends TestCase
             ->method('getBody')
             ->willReturn('not json');
 
-        $this->trialRepository->activateTrial($accountUID, $arguments);
+        $this->trialRepository->activateTrial($accountUID, $this->trialArguments);
     }
 
     protected function setUp()
@@ -166,6 +179,7 @@ class TrialRepositoryTest extends TestCase
         $this->client = $this->createMock(ClientInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
         $this->responseHelper = $this->createMock(ResponseHelper::class);
+        $this->trialArguments = $this->createMock(ActivateTrialArguments::class);
 
         $this->trialRepository = new TrialRepository(
             $this->client

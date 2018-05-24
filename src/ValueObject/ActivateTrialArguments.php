@@ -47,4 +47,12 @@ class ActivateTrialArguments implements \ArrayAccess
     {
         return isset($this->arguments[$offset]) ? $this->arguments[$offset] : null;
     }
+
+    /**
+     * @return array
+     */
+    public function convertToArray()
+    {
+       return $this->arguments;
+    }
 }

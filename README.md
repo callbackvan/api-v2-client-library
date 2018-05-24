@@ -127,10 +127,10 @@ $key = 'test';
 $accountUID = 12345;
 
 try {
-    $arguments = new ActivateTrialArguments();
-    $arguments['test'] = '12345';
+    $trialArguments = new ActivateTrialArguments();
+    $trialArguments['test'] = '12345';
     $repository = MainFactory::makeTrialRepositoryFactory()->make($userId, $key);
-    $result = $repository->activateTrial($accountUID, $arguments);
+    $result = $repository->activateTrial($accountUID, $trialArguments);
     var_dump($result);
 } catch (RepositoryException $ex) {
     echo $ex->getMessage();

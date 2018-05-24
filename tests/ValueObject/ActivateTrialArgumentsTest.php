@@ -10,6 +10,11 @@ class ActivateTrialArgumentsTest extends TestCase
     /** @var ActivateTrialArguments */
     private $trial;
 
+    /** @var array */
+    private $arguments = [
+        'accountUID' => 'foo-bar-baz'
+    ];
+
     /**
      * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::offsetSet
      */
@@ -68,6 +73,18 @@ class ActivateTrialArgumentsTest extends TestCase
 
         $this->trial[$offset] = $value;
         $this->assertNotEmpty($this->trial[$offset]);
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\ValueObject\ActivateTrialArguments::convertToArray
+     */
+    public function testConvertToArray()
+    {
+        $offset = 'accountUID';
+        $value = 'foo-bar-baz';
+
+        $this->trial[$offset] = $value;
+        $this->assertEquals($this->arguments, $this->trial->convertToArray());
     }
 
     protected function setUp()

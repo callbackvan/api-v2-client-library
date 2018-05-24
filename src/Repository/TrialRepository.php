@@ -23,17 +23,18 @@ class TrialRepository
 
     /**
      * @param int|string $accountUID
-     * @param ActivateTrialArguments $arguments
+     * @param ActivateTrialArguments|null $trialArguments
      *
      * @return array
+     *
      * @throws RepositoryException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function activateTrial($accountUID, $arguments)
+    public function activateTrial($accountUID, $trialArguments = null)
     {
         $response = $this->client->requestPost(
             'account/' . $accountUID . '/activate_trial',
-            $arguments
+            $trialArguments === null ?: $trialArguments->convertToArray()
         );
 
         $exception = ResponseHelper::extractException($response, [200]);
