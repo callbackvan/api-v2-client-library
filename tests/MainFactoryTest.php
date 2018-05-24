@@ -6,6 +6,7 @@ use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
 use CallbackHunterAPIv2\MainFactory;
 use CallbackHunterAPIv2\Repository\Factory\CurrentProfileRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
+use CallbackHunterAPIv2\Repository\Factory\TrialRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\TariffStatusRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory;
@@ -76,6 +77,17 @@ class MainFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             UploadedRepositoryFactory::class,
             MainFactory::makeUploadedRepositoryFactory()
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\MainFactory::makeTrialRepositoryFactory
+     */
+    public function testMakeTrialRepositoryFactory()
+    {
+        $this->assertInstanceOf(
+            TrialRepositoryFactory::class,
+            MainFactory::makeTrialRepositoryFactory()
         );
     }
 
