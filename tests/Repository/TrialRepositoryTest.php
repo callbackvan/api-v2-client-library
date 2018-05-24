@@ -71,7 +71,10 @@ class TrialRepositoryTest extends TestCase
             ->method('getBody')
             ->willReturn(json_encode($this->responseData));
 
-        $this->assertEquals($this->responseData, $this->trialRepository->activateTrial($accountUID, $this->trialArguments));
+        $this->assertEquals(
+            $this->responseData,
+            $this->trialRepository->activateTrial($accountUID, $this->trialArguments)
+        );
     }
 
     public function activateTrialDataProvider()
