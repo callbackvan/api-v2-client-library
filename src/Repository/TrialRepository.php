@@ -5,7 +5,6 @@ namespace CallbackHunterAPIv2\Repository;
 use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Exception\RepositoryException;
 use CallbackHunterAPIv2\Helper\ResponseHelper;
-use CallbackHunterAPIv2\ValueObject\ActivateTrialArguments;
 
 class TrialRepository
 {
@@ -23,18 +22,18 @@ class TrialRepository
 
     /**
      * @param int|string $accountUID
-     * @param ActivateTrialArguments|null $trialArguments
+     * @param array $arguments
      *
      * @return array
      *
      * @throws RepositoryException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function activateTrial($accountUID, $trialArguments = null)
+    public function activateTrial($accountUID, array $arguments = [])
     {
         $response = $this->client->requestPost(
             'account/' . $accountUID . '/activate_trial',
-            $trialArguments === null ?: $trialArguments->convertToArray()
+            $arguments
         );
 
         $exception = ResponseHelper::extractException($response, [200]);
