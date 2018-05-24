@@ -53,6 +53,6 @@ class ActivateTrialArguments implements \ArrayAccess
      */
     public function convertToArray()
     {
-       return $this->arguments;
+        return $this->arguments;
     }
 }
