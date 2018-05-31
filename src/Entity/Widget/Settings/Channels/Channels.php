@@ -17,6 +17,7 @@ class Channels implements BaseEntityInterface
             'facebook',
             'viber',
             'skype',
+            'email',
         ];
 
     const AMO_CHANNELS_LIST
@@ -43,6 +44,8 @@ class Channels implements BaseEntityInterface
     private $viber;
     /** @var Channel */
     private $skype;
+    /** @var Channel */
+    private $email;
 
     /**
      * @param Channel               $callback
@@ -53,6 +56,7 @@ class Channels implements BaseEntityInterface
      * @param ChannelWithConnection $facebook
      * @param ChannelMobileOnly     $viber
      * @param ChannelWithConnection $skype
+     * @param Channel               $email
      */
     public function __construct(
         Channel $callback,
@@ -62,7 +66,8 @@ class Channels implements BaseEntityInterface
         ChannelWithConnection $vk,
         ChannelWithConnection $facebook,
         ChannelMobileOnly $viber,
-        ChannelWithConnection $skype
+        ChannelWithConnection $skype,
+        Channel $email
     ) {
         $this->callback = $callback;
         $this->sms = $sms;
@@ -72,6 +77,7 @@ class Channels implements BaseEntityInterface
         $this->facebook = $facebook;
         $this->viber = $viber;
         $this->skype = $skype;
+        $this->email = $email;
     }
 
     /**
@@ -139,6 +145,14 @@ class Channels implements BaseEntityInterface
     }
 
     /**
+     * @return Channel
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * @param string  $channel
      * @param string  $key
      * @param boolean $value
@@ -195,6 +209,9 @@ class Channels implements BaseEntityInterface
                 break;
             case 'skype':
                 $obj = $this->getSkype();
+                break;
+            case 'email':
+                $obj = $this->getEmail();
                 break;
             default:
                 throw new Exception\InvalidArgumentException(

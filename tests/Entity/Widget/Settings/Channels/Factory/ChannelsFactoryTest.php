@@ -29,6 +29,10 @@ class ChannelsFactoryTest extends TestCase
             $sampleData['sms']
         );
         $this->checkChannel(
+            $channels->getEmail(),
+            $sampleData['email']
+        );
+        $this->checkChannel(
             $channels->getCallback(),
             $sampleData['callback']
         );

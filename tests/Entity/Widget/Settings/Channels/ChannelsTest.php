@@ -38,6 +38,15 @@ class ChannelsTest extends TestCase
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getEmail
+     */
+    public function testGetEmail()
+    {
+        $this->assertSame($this->channels['email'], $this->entity->getEmail());
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channels::getBuiltIn
      */
     public function testGetBuiltIn()
@@ -138,6 +147,8 @@ class ChannelsTest extends TestCase
             'viber_isMobileEnabled'     => ['viber', 'mobileEnabled'],
             'skype_isDesktopEnabled'    => ['skype', 'desktopEnabled'],
             'skype_isMobileEnabled'     => ['skype', 'mobileEnabled'],
+            'email_isDesktopEnabled'    => ['email', 'desktopEnabled'],
+            'email_isMobileEnabled'     => ['email', 'mobileEnabled'],
         ];
     }
 
@@ -219,6 +230,9 @@ class ChannelsTest extends TestCase
             ),
             $this->channels['skype'] = $this->createMock(
                 ChannelWithConnection::class
+            ),
+            $this->channels['email'] = $this->createMock(
+                Channel::class
             )
         );
     }
