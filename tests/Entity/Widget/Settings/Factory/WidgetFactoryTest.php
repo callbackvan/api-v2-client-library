@@ -2,8 +2,10 @@
 
 namespace CallbackHunterAPIv2\Tests\Entity\Widget\Factory;
 
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
 use CallbackHunterAPIv2\Entity\Widget;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
+use CallbackHunterAPIv2\Entity\Widget\Phone\Factory\PhoneFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use PHPUnit\Framework\TestCase;
@@ -20,12 +22,26 @@ class WidgetFactoryTest extends TestCase
     private $widgetDataSample;
 
     /**
+     * @var PhonesCollection
+     */
+    private $phonesCollection;
+
+    /**
+     * @var PhoneFactory
+     */
+    private $phoneFactory;
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::fromAPI
+     *
+     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
      */
     public function testFromAPI()
     {
         $settings = $this->createMock(Settings::class);
+
+        $phones = $this->createMock(PhonesCollection::class);
 
         $this->settingsFactory
             ->expects($this->once())
@@ -33,7 +49,7 @@ class WidgetFactoryTest extends TestCase
             ->with($this->widgetDataSample['settings'])
             ->willReturn($settings);
 
-        $expected = (new Widget\Widget($settings))
+        $expected = (new Widget\Widget($settings, $phones))
             ->setUid($this->widgetDataSample['uid'])
             ->setActive($this->widgetDataSample['active'])
             ->setSite($this->widgetDataSample['site'])
@@ -128,6 +144,9 @@ class WidgetFactoryTest extends TestCase
             Factory\SettingsFactory::class
         );
 
-        $this->widgetFactory = new WidgetFactory($this->settingsFactory);
+        $this->phonesCollection = $this->createMock(PhonesCollection::class);
+        $this->phoneFactory = $this->createMock(PhoneFactory::class);
+
+        $this->widgetFactory = new WidgetFactory($this->settingsFactory, $this->phonesCollection, $this->phoneFactory);
     }
 }
