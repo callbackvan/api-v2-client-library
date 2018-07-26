@@ -2,6 +2,8 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget\Factory;
 
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
+use CallbackHunterAPIv2\Entity\Widget\Phone\Factory\PhoneFactory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory\SettingsFactory;
 use CallbackHunterAPIv2\Entity\Widget\Widget;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
@@ -13,9 +15,31 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
      */
     private $settingsFactory;
 
-    public function __construct(SettingsFactory $settingsFactory)
-    {
+    /**
+     * @var PhonesCollection
+     */
+    private $phonesCollection;
+
+    /**
+     * @var PhoneFactory
+     */
+    private $phoneFactory;
+
+    /**
+     * WidgetFactory constructor.
+     *
+     * @param SettingsFactory  $settingsFactory
+     * @param PhonesCollection $phonesCollection
+     * @param PhoneFactory     $phoneFactory
+     */
+    public function __construct(
+        SettingsFactory $settingsFactory,
+        PhonesCollection $phonesCollection,
+        PhoneFactory $phoneFactory
+    ) {
         $this->settingsFactory = $settingsFactory;
+        $this->phonesCollection = $phonesCollection;
+        $this->phoneFactory = $phoneFactory;
     }
 
     /**
@@ -30,7 +54,13 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
             isset($data['settings']) ? $data['settings'] : []
         );
 
-        $widget = new Widget($settings);
+        if (!empty($data['_embedded']['phones'])) {
+            foreach ($data['_embedded']['phones'] as $phone) {
+                $this->phonesCollection->attach($this->phoneFactory->fromAPI($phone));
+            }
+        }
+
+        $widget = new Widget($settings, $this->phonesCollection);
 
         foreach ($data as $k => $v) {
             $setterMethod = 'set'.ucfirst($k);
