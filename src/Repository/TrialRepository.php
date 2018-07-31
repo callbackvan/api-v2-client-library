@@ -32,7 +32,7 @@ class TrialRepository
     public function activateTrial($accountUID, array $arguments = [])
     {
         $response = $this->client->requestPost(
-            'account/' . $accountUID . '/activate_trial',
+            'accounts/' . $accountUID . '/activate_trial',
             $arguments
         );
 
