@@ -23,13 +23,13 @@ class PhoneFactoryTest extends TestCase
     public function testFromAPI()
     {
         $example = [
-            'id' => 123,
+            'uid' => 123,
             'phone' => '911',
         ];
 
         $phone = $this->factory->fromAPI($example);
 
-        $this->assertSame($example['id'], $phone->getId());
+        $this->assertSame($example['uid'], $phone->getId());
         $this->assertSame($example['phone'], $phone->getPhone());
     }
 
