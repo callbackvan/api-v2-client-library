@@ -12,7 +12,7 @@ class TariffStatusRepository implements TariffStatusRepositoryInterface
     /** @var ClientInterface */
     private $client;
 
-    const PATH = '/account/{mixedId}/tariff/status/';
+    const PATH = '/accounts/{mixedId}/subscription';
 
     public function __construct(ClientInterface $client)
     {

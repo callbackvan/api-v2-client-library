@@ -34,13 +34,46 @@ class WidgetPhoneRepository
      *
      * @return array
      *
+     * @throws RepositoryException
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
      */
-    public function updatePhone($uid, $phone)
+    public function addPhone($uid, $phone)
     {
         $response = $this->client->requestPost(
-            '/widgets/' . $uid . '/phone/update',
+            '/widgets/' . $uid . '/phones',
+            ['phone' => $phone]
+        );
+
+        $exception = ResponseHelper::extractException($response, [200]);
+        if ($exception !== null) {
+            throw $exception;
+        }
+
+        $responseData = ResponseHelper::getBodyAsArray($response);
+        if (!$responseData) {
+            throw new RepositoryException(
+                $response,
+                'Content is not json'
+            );
+        }
+
+        return $responseData;
+    }
+
+    /**
+     * @param string $widgetUID
+     * @param string $phoneUID
+     * @param string $phone
+     *
+     * @return array
+     *
+     * @throws RepositoryException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function updatePhone($widgetUID, $phoneUID, $phone)
+    {
+        $response = $this->client->requestPost(
+            '/widgets/' . $widgetUID . '/phones/' . $phoneUID,
             ['phone' => $phone]
         );
 

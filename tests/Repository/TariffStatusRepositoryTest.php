@@ -67,6 +67,8 @@ class TariffStatusRepositoryTest extends TestCase
      * @covers \CallbackHunterAPIv2\Repository\TariffStatusRepository::get()
      *
      * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetWithException()
     {

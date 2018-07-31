@@ -21,8 +21,8 @@ class PhoneFactory implements BaseFactoryInterface, PhoneFactoryInterface
     {
         $phone = new Phone;
 
-        if (isset($data['id'])) {
-            $phone->setId($data['id']);
+        if (isset($data['uid'])) {
+            $phone->setId($data['uid']);
         }
 
         if (isset($data['phone'])) {
