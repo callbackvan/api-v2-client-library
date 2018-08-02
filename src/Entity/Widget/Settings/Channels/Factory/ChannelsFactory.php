@@ -57,7 +57,8 @@ class ChannelsFactory implements BaseFactoryInterface
             $availableChannels['vk'],
             $availableChannels['facebook'],
             $availableChannels['viber'],
-            $availableChannels['skype']
+            $availableChannels['skype'],
+            $availableChannels['email']
         );
     }
 }
