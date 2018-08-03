@@ -92,10 +92,10 @@ class WidgetRepository implements WidgetRepositoryInterface
         $phones->removeAll($saved->getPhonesCollection());
 
         /** @var PhoneInterface $phone */
-        foreach($widget->getPhonesCollection() as $phone) {
-           if ($this->phoneRepository->save($saved->getUid(), $phone)) {
-               $phones->attach($phone);
-           }
+        foreach ($widget->getPhonesCollection() as $phone) {
+            if ($this->phoneRepository->save($saved->getUid(), $phone)) {
+                $phones->attach($phone);
+            }
         }
 
         return $saved;
