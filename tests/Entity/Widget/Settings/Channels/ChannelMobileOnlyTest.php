@@ -40,6 +40,20 @@ class ChannelMobileOnlyTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::__construct
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::setIsEditable
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::isEditable
+     */
+    public function testIsEditable()
+    {
+        $this->channel->setIsEditable(true);
+        $this->assertTrue(true, $this->channel->isEditable());
+
+        $this->channel->setIsEditable(false);
+        $this->assertFalse(false, $this->channel->isEditable());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\ChannelMobileOnly::toAPI()
      */
     public function testToAPIAll()

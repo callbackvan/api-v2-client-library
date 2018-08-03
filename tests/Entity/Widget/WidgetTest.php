@@ -2,6 +2,7 @@
 
 namespace CallbackHunterAPIv2\Tests\Entity\Widget;
 
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use CallbackHunterAPIv2\Entity\Widget\Widget;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,11 @@ class WidgetTest extends TestCase
     private $example;
     /** @var Settings */
     private $settings;
+
+    /**
+     * @var PhonesCollection
+     */
+    private $phonesCollection;
 
     /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::setActive
@@ -116,6 +122,14 @@ class WidgetTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::getPhonesCollection
+     */
+    public function testGetPhonesCollection()
+    {
+        $this->assertSame($this->phonesCollection, $this->entity->getPhonesCollection());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Widget::toAPI()
      */
     public function testToAPI()
@@ -158,6 +172,7 @@ class WidgetTest extends TestCase
         ];
 
         $this->settings = $this->createMock(Settings::class);
-        $this->entity = new Widget($this->settings);
+        $this->phonesCollection = $this->createMock(PhonesCollection::class);
+        $this->entity = new Widget($this->settings, $this->phonesCollection);
     }
 }

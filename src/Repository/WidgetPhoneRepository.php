@@ -3,16 +3,25 @@
 namespace CallbackHunterAPIv2\Repository;
 
 use CallbackHunterAPIv2\ClientInterface;
+use CallbackHunterAPIv2\Entity\Widget\Phone\PhoneInterface;
 use CallbackHunterAPIv2\Exception\RepositoryException;
 use CallbackHunterAPIv2\Helper\ResponseHelper;
 
-class TrialRepository
+/**
+ * Class WidgetPhoneRepository
+ *
+ * @package CallbackHunterAPIv2\Repository
+ */
+class WidgetPhoneRepository
 {
-
-    /** @var ClientInterface */
+    /**
+     * @var ClientInterface
+     */
     private $client;
 
     /**
+     * WidgetPhoneRepository constructor.
+     *
      * @param ClientInterface $client
      */
     public function __construct(ClientInterface $client)
@@ -21,20 +30,29 @@ class TrialRepository
     }
 
     /**
-     * @param int|string $accountUID
-     * @param array $arguments
+     * Добавление или обновление телефона виджета
+     *
+     * @param string         $widgetUID
+     * @param PhoneInterface $phone
      *
      * @return array
      *
      * @throws RepositoryException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function activateTrial($accountUID, array $arguments = [])
+    public function save($widgetUID, PhoneInterface $phone)
     {
-        $response = $this->client->requestPost(
-            'accounts/' . $accountUID . '/activate_trial',
-            $arguments
-        );
+        if ($phone->getId()) {
+            $response = $this->client->requestPost(
+                '/widgets/' . $widgetUID . '/phones/' . $phone->getId(),
+                ['phone' => $phone->getPhone()]
+            );
+        } else {
+            $response = $this->client->requestPost(
+                '/widgets/' . $widgetUID . '/phones',
+                ['phone' => $phone->getPhone()]
+            );
+        }
 
         $exception = ResponseHelper::extractException($response, [200]);
         if ($exception !== null) {

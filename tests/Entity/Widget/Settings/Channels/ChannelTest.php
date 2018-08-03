@@ -49,6 +49,19 @@ class ChannelTest extends TestCase
     }
 
     /**
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::setIsEditable
+     * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::isEditable
+     */
+    public function testIsEditable()
+    {
+        $this->channel->setIsEditable(true);
+        $this->assertTrue(true, $this->channel->isEditable());
+
+        $this->channel->setIsEditable(false);
+        $this->assertFalse(false, $this->channel->isEditable());
+    }
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Settings\Channels\Channel::toAPI()
      */
     public function testToAPIAll()

@@ -4,6 +4,7 @@ namespace CallbackHunterAPIv2\Repository;
 
 use CallbackHunterAPIv2\ClientInterface;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
+use CallbackHunterAPIv2\Entity\Widget\Phone\PhoneInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
 use CallbackHunterAPIv2\Exception;
@@ -20,12 +21,26 @@ class WidgetRepository implements WidgetRepositoryInterface
     /** @var WidgetFactoryInterface */
     private $widgetFactory;
 
+    /**
+     * @var WidgetPhoneRepository
+     */
+    private $phoneRepository;
+
+    /**
+     * WidgetRepository constructor.
+     *
+     * @param ClientInterface        $client
+     * @param WidgetFactoryInterface $widgetFactory
+     * @param WidgetPhoneRepository  $phoneRepository
+     */
     public function __construct(
         ClientInterface $client,
-        WidgetFactoryInterface $widgetFactory
+        WidgetFactoryInterface $widgetFactory,
+        WidgetPhoneRepository $phoneRepository
     ) {
         $this->client = $client;
         $this->widgetFactory = $widgetFactory;
+        $this->phoneRepository = $phoneRepository;
     }
 
     /**
@@ -72,6 +87,16 @@ class WidgetRepository implements WidgetRepositoryInterface
 
         $imageNames = $this->uploadImages($saved, $imagesForUpload);
         $this->setResultWidgetImageNames($imageNames, $saved);
+
+        $phones = $saved->getPhonesCollection();
+        $phones->removeAll($saved->getPhonesCollection());
+
+        /** @var PhoneInterface $phone */
+        foreach ($widget->getPhonesCollection() as $phone) {
+            if ($this->phoneRepository->save($saved->getUid(), $phone)) {
+                $phones->attach($phone);
+            }
+        }
 
         return $saved;
     }

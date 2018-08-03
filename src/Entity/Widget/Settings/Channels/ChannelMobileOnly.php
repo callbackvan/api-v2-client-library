@@ -11,6 +11,7 @@ class ChannelMobileOnly extends Channel
     {
         $this->mobileEnabled = true;
         $this->desktopEnabled = false;
+        $this->isEditable = true;
     }
 
     /**

@@ -7,10 +7,12 @@ use CallbackHunterAPIv2\MainFactory;
 use CallbackHunterAPIv2\Repository\Factory\CurrentProfileRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\DeprecatedWidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\TrialRepositoryFactory;
+use CallbackHunterAPIv2\Repository\Factory\WidgetPhoneRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Factory\TariffStatusRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Uploaded\Widget\Image\Factory\UploadedRepositoryFactory;
 use CallbackHunterAPIv2\Repository\Variant\Widget\Image\Factory\BackgroundRepositoryFactory;
+use CallbackHunterAPIv2\Repository\WidgetPhoneRepository;
 
 class MainFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,7 +45,9 @@ class MainFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             WidgetRepositoryFactory::class,
-            MainFactory::makeWidgetRepositoryFactory()
+            MainFactory::makeWidgetRepositoryFactory(
+                $phoneRepository = $this->createMock(WidgetPhoneRepository::class)
+            )
         );
     }
 
@@ -99,6 +103,17 @@ class MainFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             TariffStatusRepositoryFactory::class,
             MainFactory::makeTariffStatusRepositoryFactory()
+        );
+    }
+
+    /**
+     * @covers \CallbackHunterAPIv2\MainFactory::makeWidgetPhoneRepositoryFactory
+     */
+    public function testMakeWidgetPhoneRepositoryFactory()
+    {
+        $this->assertInstanceOf(
+            WidgetPhoneRepositoryFactory::class,
+            MainFactory::makeWidgetPhoneRepositoryFactory()
         );
     }
 }

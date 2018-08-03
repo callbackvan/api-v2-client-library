@@ -2,6 +2,8 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
+
 interface WidgetInterface extends BaseEntityInterface
 {
     /**
@@ -83,6 +85,11 @@ interface WidgetInterface extends BaseEntityInterface
      * @return string
      */
     public function getOperatorChatLink();
+
+    /**
+     * @return PhonesCollection
+     */
+    public function getPhonesCollection();
 
     /**
      * @return array

@@ -46,7 +46,7 @@ class TrialRepositoryTest extends TestCase
             ->expects($this->once())
             ->method('requestPost')
             ->with(
-                'account/' . $accountUID . '/activate_trial',
+                'accounts/' . $accountUID . '/activate_trial',
                 $arguments
             )
             ->willReturn($this->response);
@@ -83,11 +83,14 @@ class TrialRepositoryTest extends TestCase
      *
      * @expectedException \CallbackHunterAPIv2\Exception\ActivateTrialNotAvailable
      * @expectedExceptionMessage Активация тестового периода не доступна.
+     *
+     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testActivateTrialThrowsActivateTrialNotAvailable()
     {
         $accountUID = 'foo-bar-baz';
-        $path = 'account/' . $accountUID . '/activate_trial';
+        $path = 'accounts/' . $accountUID . '/activate_trial';
         $arguments = ['phone' => '123'];
 
         $errorResponseBody = [
@@ -128,6 +131,9 @@ class TrialRepositoryTest extends TestCase
      *
      * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
      * @expectedExceptionMessage Content is not json
+     *
+     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testActivateTrialThrowsRepositoryException()
     {
@@ -138,7 +144,7 @@ class TrialRepositoryTest extends TestCase
             ->expects($this->once())
             ->method('requestPost')
             ->with(
-                'account/' . $accountUID . '/activate_trial',
+                'accounts/' . $accountUID . '/activate_trial',
                 $arguments
             )
             ->willReturn($this->response);

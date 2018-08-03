@@ -138,3 +138,31 @@ try {
     echo $ex->getMessage();
 }
 ```
+
+Добавление телефона виджету
+
+```php
+use CallbackHunterAPIv2\MainFactory;
+use CallbackHunterAPIv2\Entity\Widget\Phone\Phone;
+
+$userId = 123;
+$key = 'test';
+
+$uid = md5('test');
+
+$phone = new Phone;
+$phone->setPhone('911');
+
+$repository = MainFactory::makeWidgetPhoneRepositoryFactory()->make($userId, $key);
+
+try {
+    $response = $repository->save($uid, $phone);
+    var_dump($response);
+} catch (\CallbackHunterAPIv2\Exception\RepositoryException $e) {
+    echo $e->getMessage();
+} catch (\GuzzleHttp\Exception\GuzzleException $e) {
+    echo $e->getMessage();
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
+```

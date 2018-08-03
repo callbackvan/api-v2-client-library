@@ -2,8 +2,11 @@
 
 namespace CallbackHunterAPIv2\Tests\Entity\Widget\Factory;
 
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
 use CallbackHunterAPIv2\Entity\Widget;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory;
+use CallbackHunterAPIv2\Entity\Widget\Phone\Factory\PhoneFactory;
+use CallbackHunterAPIv2\Entity\Widget\Phone\PhoneInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Factory;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Settings;
 use PHPUnit\Framework\TestCase;
@@ -20,8 +23,20 @@ class WidgetFactoryTest extends TestCase
     private $widgetDataSample;
 
     /**
+     * @var PhonesCollection
+     */
+    private $phonesCollection;
+
+    /**
+     * @var PhoneFactory
+     */
+    private $phoneFactory;
+
+    /**
      * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::__construct
      * @covers \CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactory::fromAPI
+     *
+     * @throws \CallbackHunterAPIv2\Exception\InvalidArgumentException
      */
     public function testFromAPI()
     {
@@ -33,7 +48,17 @@ class WidgetFactoryTest extends TestCase
             ->with($this->widgetDataSample['settings'])
             ->willReturn($settings);
 
-        $expected = (new Widget\Widget($settings))
+        $this->phoneFactory
+            ->expects($this->once())
+            ->method('fromAPI')
+            ->with($this->widgetDataSample['_embedded']['phones'][0])
+            ->willReturn(
+                $phone = new Widget\Phone\Phone
+            );
+
+        $this->phonesCollection->attach($phone);
+
+        $expected = (new Widget\Widget($settings, $this->phonesCollection))
             ->setUid($this->widgetDataSample['uid'])
             ->setActive($this->widgetDataSample['active'])
             ->setSite($this->widgetDataSample['site'])
@@ -122,12 +147,23 @@ class WidgetFactoryTest extends TestCase
                     'href' => '/cabinet/widgets/31dbfcf288e7076e0e891fb644552f78b8a0b0af',
                 ],
             ],
+            '_embedded' => [
+                'phones' => [
+                    0 => [
+                        'id' => 123,
+                        'phone' => '911',
+                    ],
+                ],
+            ],
         ];
 
         $this->settingsFactory = $this->createMock(
             Factory\SettingsFactory::class
         );
 
-        $this->widgetFactory = new WidgetFactory($this->settingsFactory);
+        $this->phonesCollection = new PhonesCollection;
+        $this->phoneFactory = $this->createMock(PhoneFactory::class);
+
+        $this->widgetFactory = new WidgetFactory($this->settingsFactory, $this->phoneFactory);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace CallbackHunterAPIv2\Entity\Widget;
 
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
 use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 
 class Widget implements WidgetInterface
@@ -62,13 +63,21 @@ class Widget implements WidgetInterface
      * @var Settings\Settings
      */
     private $settings;
+    /**
+     * @var PhonesCollection
+     */
+    private $phonesCollection;
 
     /**
      * @param SettingsInterface $settings
+     * @param PhonesCollection  $phonesCollection
      */
-    public function __construct(SettingsInterface $settings)
-    {
+    public function __construct(
+        SettingsInterface $settings,
+        PhonesCollection $phonesCollection
+    ) {
         $this->settings = $settings;
+        $this->phonesCollection = $phonesCollection;
     }
 
     /**
@@ -229,6 +238,14 @@ class Widget implements WidgetInterface
     public function getSettings()
     {
         return $this->settings;
+    }
+
+    /**
+     * @return PhonesCollection
+     */
+    public function getPhonesCollection()
+    {
+        return $this->phonesCollection;
     }
 
     /**

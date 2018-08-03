@@ -29,6 +29,11 @@ class Channel implements BaseEntityInterface
     protected $mobileEnabled;
 
     /**
+     * @var boolean
+     */
+    protected $isEditable = true;
+
+    /**
      * @return string
      */
     public function getChannelId()
@@ -82,6 +87,22 @@ class Channel implements BaseEntityInterface
         $this->desktopEnabled = !empty($isEnabled);
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEditable()
+    {
+        return (bool)$this->isEditable;
+    }
+
+    /**
+     * @param bool $isEditable
+     */
+    public function setIsEditable($isEditable)
+    {
+        $this->isEditable = $isEditable;
     }
 
     /**

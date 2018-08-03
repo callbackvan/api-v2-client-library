@@ -6,6 +6,7 @@ use CallbackHunterAPIv2\Client;
 use CallbackHunterAPIv2\ClientFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
 use CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory;
+use CallbackHunterAPIv2\Repository\WidgetPhoneRepository;
 use CallbackHunterAPIv2\Repository\WidgetRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -17,6 +18,11 @@ class WidgetRepositoryFactoryTest extends TestCase
     private $clientFactory;
     /** @var  $widgetRepositoryFactory */
     private $widgetRepositoryFactory;
+
+    /**
+     * @var WidgetPhoneRepository
+     */
+    private $phoneRepository;
 
     /**
      * @covers \CallbackHunterAPIv2\Repository\Factory\WidgetRepositoryFactory::__construct
@@ -67,9 +73,12 @@ class WidgetRepositoryFactoryTest extends TestCase
 
         $this->clientFactory = $this->createMock(ClientFactory::class);
         $this->widgetFactory = $this->createMock(WidgetFactoryInterface::class);
+        $this->phoneRepository = $this->createMock(WidgetPhoneRepository::class);
+
         $this->widgetRepositoryFactory = new WidgetRepositoryFactory(
             $this->clientFactory,
-            $this->widgetFactory
+            $this->widgetFactory,
+            $this->phoneRepository
         );
     }
 }
