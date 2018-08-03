@@ -143,43 +143,20 @@ try {
 
 ```php
 use CallbackHunterAPIv2\MainFactory;
+use CallbackHunterAPIv2\Entity\Widget\Phone\Phone;
 
 $userId = 123;
 $key = 'test';
 
 $uid = md5('test');
-$phone = '8-800-200-02-02';
+
+$phone = new Phone;
+$phone->setPhone('911');
 
 $repository = MainFactory::makeWidgetPhoneRepositoryFactory()->make($userId, $key);
 
 try {
-    $response = $repository->addPhone($uid, $phone);
-    var_dump($response);
-} catch (\CallbackHunterAPIv2\Exception\RepositoryException $e) {
-    echo $e->getMessage();
-} catch (\GuzzleHttp\Exception\GuzzleException $e) {
-    echo $e->getMessage();
-} catch (\Exception $e) {
-    echo $e->getMessage();
-}
-```
-
-Обновление телефона у виджета
-
-```php
-use CallbackHunterAPIv2\MainFactory;
-
-$userId = 123;
-$key = 'test';
-
-$uid = md5('test');
-$phoneUID = '111';
-$phone = '8-800-200-02-02';
-
-$repository = MainFactory::makeWidgetPhoneRepositoryFactory()->make($userId, $key);
-
-try {
-    $response = $repository->updatePhone($uid, $phoneUID, $phone);
+    $response = $repository->save($uid, $phone);
     var_dump($response);
 } catch (\CallbackHunterAPIv2\Exception\RepositoryException $e) {
     echo $e->getMessage();
