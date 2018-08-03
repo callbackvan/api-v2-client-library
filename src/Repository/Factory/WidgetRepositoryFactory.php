@@ -4,6 +4,7 @@ namespace CallbackHunterAPIv2\Repository\Factory;
 
 use CallbackHunterAPIv2\ClientFactory;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
+use CallbackHunterAPIv2\Repository\WidgetPhoneRepository;
 use CallbackHunterAPIv2\Repository\WidgetRepository;
 
 /**
@@ -21,17 +22,25 @@ class WidgetRepositoryFactory
     private $widgetFactory;
 
     /**
+     * @var WidgetPhoneRepository
+     */
+    private $phoneRepository;
+
+    /**
      * WidgetRepositoryFactory constructor.
      *
-     * @param ClientFactory          $clientFactory
+     * @param ClientFactory $clientFactory
      * @param WidgetFactoryInterface $widgetFactory
+     * @param WidgetPhoneRepository $phoneRepository
      */
     public function __construct(
         ClientFactory $clientFactory,
-        WidgetFactoryInterface $widgetFactory
+        WidgetFactoryInterface $widgetFactory,
+        WidgetPhoneRepository $phoneRepository
     ) {
         $this->clientFactory = $clientFactory;
         $this->widgetFactory = $widgetFactory;
+        $this->phoneRepository = $phoneRepository;
     }
 
     /**
@@ -49,7 +58,7 @@ class WidgetRepositoryFactory
             $config
         );
 
-        return new WidgetRepository($client, $this->widgetFactory);
+        return new WidgetRepository($client, $this->widgetFactory, $this->phoneRepository);
     }
 
     /**
@@ -65,6 +74,6 @@ class WidgetRepositoryFactory
             $config
         );
 
-        return new WidgetRepository($client, $this->widgetFactory);
+        return new WidgetRepository($client, $this->widgetFactory, $this->phoneRepository);
     }
 }

@@ -16,11 +16,6 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
     private $settingsFactory;
 
     /**
-     * @var PhonesCollection
-     */
-    private $phonesCollection;
-
-    /**
      * @var PhoneFactory
      */
     private $phoneFactory;
@@ -29,16 +24,13 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
      * WidgetFactory constructor.
      *
      * @param SettingsFactory  $settingsFactory
-     * @param PhonesCollection $phonesCollection
      * @param PhoneFactory     $phoneFactory
      */
     public function __construct(
         SettingsFactory $settingsFactory,
-        PhonesCollection $phonesCollection,
         PhoneFactory $phoneFactory
     ) {
         $this->settingsFactory = $settingsFactory;
-        $this->phonesCollection = $phonesCollection;
         $this->phoneFactory = $phoneFactory;
     }
 
@@ -54,13 +46,15 @@ class WidgetFactory implements BaseFactoryInterface, WidgetFactoryInterface
             isset($data['settings']) ? $data['settings'] : []
         );
 
+        $phoneCollection = new PhonesCollection;
+
         if (!empty($data['_embedded']['phones'])) {
             foreach ($data['_embedded']['phones'] as $phone) {
-                $this->phonesCollection->attach($this->phoneFactory->fromAPI($phone));
+                $phoneCollection->attach($this->phoneFactory->fromAPI($phone));
             }
         }
 
-        $widget = new Widget($settings, $this->phonesCollection);
+        $widget = new Widget($settings, $phoneCollection);
 
         foreach ($data as $k => $v) {
             $setterMethod = 'set'.ucfirst($k);

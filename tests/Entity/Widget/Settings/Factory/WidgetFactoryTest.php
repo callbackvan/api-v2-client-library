@@ -53,13 +53,10 @@ class WidgetFactoryTest extends TestCase
             ->method('fromAPI')
             ->with($this->widgetDataSample['_embedded']['phones'][0])
             ->willReturn(
-                $phone = $this->createMock(PhoneInterface::class)
+                $phone = new Widget\Phone\Phone
             );
 
-        $this->phonesCollection
-            ->expects($this->once())
-            ->method('attach')
-            ->with($phone);
+        $this->phonesCollection->attach($phone);
 
         $expected = (new Widget\Widget($settings, $this->phonesCollection))
             ->setUid($this->widgetDataSample['uid'])
@@ -164,9 +161,9 @@ class WidgetFactoryTest extends TestCase
             Factory\SettingsFactory::class
         );
 
-        $this->phonesCollection = $this->createMock(PhonesCollection::class);
+        $this->phonesCollection = new PhonesCollection;
         $this->phoneFactory = $this->createMock(PhoneFactory::class);
 
-        $this->widgetFactory = new WidgetFactory($this->settingsFactory, $this->phonesCollection, $this->phoneFactory);
+        $this->widgetFactory = new WidgetFactory($this->settingsFactory, $this->phoneFactory);
     }
 }

@@ -3,11 +3,15 @@
 namespace CallbackHunterAPIv2\Tests\Repository;
 
 use CallbackHunterAPIv2\ClientInterface;
+use CallbackHunterAPIv2\Entity\Collection\PhonesCollection;
 use CallbackHunterAPIv2\Entity\Widget\Factory\WidgetFactoryInterface;
+use CallbackHunterAPIv2\Entity\Widget\Phone\Phone;
+use CallbackHunterAPIv2\Entity\Widget\Phone\PhoneInterface;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\AbstractImage;
 use CallbackHunterAPIv2\Entity\Widget\Settings\Images\Images;
 use CallbackHunterAPIv2\Entity\Widget\Settings\SettingsInterface;
 use CallbackHunterAPIv2\Entity\Widget\WidgetInterface;
+use CallbackHunterAPIv2\Repository\WidgetPhoneRepository;
 use CallbackHunterAPIv2\Repository\WidgetRepository;
 use CallbackHunterAPIv2\Type\FileForUploadInterface;
 use CallbackHunterAPIv2\ValueObject\Pagination;
@@ -56,9 +60,20 @@ class WidgetRepositoryTest extends TestCase
         ];
 
     /**
+     * @var WidgetPhoneRepository
+     */
+    private $phoneRepository;
+    private $phonesCollection;
+    private $phone;
+
+    /**
      * @param string $uid
      *
+     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
      * @covers       \CallbackHunterAPIv2\Repository\WidgetRepository::save
+     *
      * @dataProvider widgetUidProvider
      */
     public function testSave($uid)
@@ -135,6 +150,42 @@ class WidgetRepositoryTest extends TestCase
             ->method('getBackgroundSlider')
             ->willReturn($backgroundSlider);
 
+        $this->phone->setPhone('911');
+        $phonesCollection = $this->createMock(PhonesCollection::class);
+
+        $this->widget
+            ->expects($this->once())
+            ->method('getPhonesCollection')
+            ->willReturn($this->phonesCollection);
+
+        $resultWidget
+            ->expects($this->exactly(2))
+            ->method('getPhonesCollection')
+            ->willReturn($phonesCollection);
+
+        $resultWidget
+            ->expects($this->exactly(2))
+            ->method('getUid')
+            ->willReturn($uid);
+
+        $phones = $phonesCollection;
+
+        $phones
+            ->expects($this->once())
+            ->method('removeAll')
+            ->with($phonesCollection);
+
+        $this->phoneRepository
+            ->expects($this->once())
+            ->method('save')
+            ->with($uid, $this->phone)
+            ->willReturn(['foo' => 'bar']);
+
+        $phones
+            ->expects($this->once())
+            ->method('attach')
+            ->with($this->phone);
+
         $this->assertSame(
             $resultWidget,
             $this->widgetRepository->save($widget)
@@ -156,7 +207,11 @@ class WidgetRepositoryTest extends TestCase
      * @param $responseBody
      * @param $method
      *
+     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
      * @covers       \CallbackHunterAPIv2\Repository\WidgetRepository::save
+     *
      * @dataProvider widgetDataProvider
      */
     public function testSaveWithSetImage(
@@ -236,7 +291,7 @@ class WidgetRepositoryTest extends TestCase
 
         $responseUploadImage = $this->createMock(ResponseInterface::class);
 
-        $resultWidget->expects($this->once())
+        $resultWidget->expects($this->exactly(2))
             ->method('getUid')
             ->willReturn($uid);
 
@@ -291,6 +346,37 @@ class WidgetRepositoryTest extends TestCase
         $resultLogo->expects($this->once())
             ->method('setName')
             ->with($responseBody['value']);
+
+        $this->phone->setPhone('911');
+        $phonesCollection = $this->createMock(PhonesCollection::class);
+
+        $this->widget
+            ->expects($this->once())
+            ->method('getPhonesCollection')
+            ->willReturn($this->phonesCollection);
+
+        $resultWidget
+            ->expects($this->exactly(2))
+            ->method('getPhonesCollection')
+            ->willReturn($phonesCollection);
+
+        $phones = $phonesCollection;
+
+        $phones
+            ->expects($this->once())
+            ->method('removeAll')
+            ->with($phonesCollection);
+
+        $this->phoneRepository
+            ->expects($this->once())
+            ->method('save')
+            ->with($uid, $this->phone)
+            ->willReturn(['foo' => 'bar']);
+
+        $phones
+            ->expects($this->once())
+            ->method('attach')
+            ->with($this->phone);
 
         $this->assertSame(
             $resultWidget,
@@ -577,7 +663,7 @@ class WidgetRepositoryTest extends TestCase
         $this->widgetFactory
             ->expects($this->once())
             ->method('fromAPI')
-            ->willReturn($this->createMock(WidgetInterface::class));
+            ->willReturn($resultWidget = $this->createMock(WidgetInterface::class));
 
         foreach (Images::TYPES as $type) {
             $images
@@ -588,6 +674,43 @@ class WidgetRepositoryTest extends TestCase
                 );
         }
 
+        $this->phone->setPhone('911');
+        $uid = md5('test');
+
+        $phonesCollection = $this->createMock(PhonesCollection::class);
+
+        $this->widget
+            ->expects($this->once())
+            ->method('getPhonesCollection')
+            ->willReturn($this->phonesCollection);
+
+        $resultWidget
+            ->expects($this->exactly(2))
+            ->method('getPhonesCollection')
+            ->willReturn($phonesCollection);
+
+        $resultWidget
+            ->expects($this->exactly(2))
+            ->method('getUid')
+            ->willReturn($uid);
+
+        $phones = $phonesCollection;
+
+        $phones
+            ->expects($this->once())
+            ->method('removeAll')
+            ->with($phonesCollection);
+
+        $this->phoneRepository
+            ->expects($this->once())
+            ->method('save')
+            ->with($uid, $this->phone)
+            ->willReturn(['foo' => 'bar']);
+
+        $phones
+            ->expects($this->once())
+            ->method('attach')
+            ->with($this->phone);
 
         $this->widgetRepository->save($this->widget);
     }
@@ -791,9 +914,17 @@ class WidgetRepositoryTest extends TestCase
         $this->widgetFactory = $this->createMock(WidgetFactoryInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
         $this->widget = $this->createMock(WidgetInterface::class);
+        $this->phoneRepository = $this->createMock(WidgetPhoneRepository::class);
+
+        $this->phonesCollection = new PhonesCollection;
+        $this->phone = new Phone;
+
+        $this->phonesCollection->attach($this->phone);
+
         $this->widgetRepository = new WidgetRepository(
             $this->client,
-            $this->widgetFactory
+            $this->widgetFactory,
+            $this->phoneRepository
         );
     }
 

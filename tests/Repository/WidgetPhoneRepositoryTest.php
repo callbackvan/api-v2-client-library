@@ -3,6 +3,7 @@
 namespace CallbackHunterAPIv2\Tests\Repository;
 
 use CallbackHunterAPIv2\ClientInterface;
+use CallbackHunterAPIv2\Entity\Widget\Phone\PhoneInterface;
 use CallbackHunterAPIv2\Helper\ResponseHelper;
 use CallbackHunterAPIv2\Repository\WidgetPhoneRepository;
 use PHPUnit\Framework\TestCase;
@@ -36,28 +37,48 @@ class WidgetPhoneRepositoryTest extends TestCase
     private $responseHelper;
 
     /**
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::updatePhone
+     * @covers       \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
+     * @covers       \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::save
+     *
+     * @dataProvider saveDataProvider
+     *
+     * @param $phoneUID
      *
      * @throws \CallbackHunterAPIv2\Exception\RepositoryException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function testUpdatePhone()
+    public function testSave($phoneUID)
     {
-        $widgetUID= md5('test');
-        $phoneUID = md5('test1');
-        $phone = '911';
+        $phoneId = 1234;
+        $phoneNumber = '8(800)200-02-02';
+        $uid = md5('test');
+
+        $pathForUpdate = '/widgets/' . $uid . '/phones/' . $phoneId;
+        $pathForAdd = '/widgets/' . $uid . '/phones';
+        $phone = $this->createMock(PhoneInterface::class);
 
         $responseData = [
             'foo' => 'bar',
         ];
 
+        $phone
+            ->expects($phoneUID ? $this->exactly(2) : $this->once())
+            ->method('getId')
+            ->willReturn($phoneUID ? $phoneId : null);
+
+        $phone
+            ->expects($this->once())
+            ->method('getPhone')
+            ->willReturn($phoneNumber);
+
         $this->client
             ->expects($this->once())
             ->method('requestPost')
             ->with(
-                '/widgets/' . $widgetUID . '/phones/' . $phoneUID,
-                ['phone' => $phone]
+                $phoneUID ? $pathForUpdate : $pathForAdd,
+                [
+                    'phone' => $phoneNumber
+                ]
             )
             ->willReturn($this->response);
 
@@ -71,12 +92,17 @@ class WidgetPhoneRepositoryTest extends TestCase
             ->method('getBody')
             ->willReturn(json_encode($responseData));
 
-        $this->assertEquals($responseData, $this->widgetPhoneRepository->updatePhone($widgetUID, $phoneUID, $phone));
+        $this->assertEquals($responseData, $this->widgetPhoneRepository->save($uid, $phone));
+    }
+
+    public function saveDataProvider()
+    {
+        return [[true], [false]];
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::updatePhone
+     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::save
      *
      * @expectedException \CallbackHunterAPIv2\Exception\DataValidateException
      *
@@ -87,10 +113,10 @@ class WidgetPhoneRepositoryTest extends TestCase
      */
     public function testUpdatePhoneThrowsWidgetPhoneValidateException()
     {
-        $widgetUID= md5('test');
-        $phoneUID = md5('test1');
-        $phone = '911';
-        $path = '/widgets/' . $widgetUID . '/phones/' . $phoneUID;
+        $uid = md5('test');
+        $phone = $this->createMock(PhoneInterface::class);
+        $path = '/widgets/' . $uid . '/phones';
+        $phoneNumber= ' 891';
 
         $errorResponseBody = [
             'type'          => 'https://developers.callbackhunter.com/#errorWidgetValidation',
@@ -109,10 +135,15 @@ class WidgetPhoneRepositoryTest extends TestCase
             ],
         ];
 
+        $phone
+            ->expects($this->once())
+            ->method('getPhone')
+            ->willReturn($phoneNumber);
+
         $this->client
             ->expects($this->once())
             ->method('requestPost')
-            ->with($path, ['phone' => $phone])
+            ->with($path, ['phone' => $phoneNumber])
             ->willReturn($this->response);
 
         $this->response
@@ -125,12 +156,12 @@ class WidgetPhoneRepositoryTest extends TestCase
             ->method('getStatusCode')
             ->willReturn(400);
 
-        $this->widgetPhoneRepository->updatePhone($widgetUID, $phoneUID, $phone);
+        $this->widgetPhoneRepository->save($uid, $phone);
     }
 
     /**
      * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::updatePhone
+     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::save
      *
      * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
      *
@@ -140,16 +171,21 @@ class WidgetPhoneRepositoryTest extends TestCase
      */
     public function testUpdatePhoneThrowsRepositoryException()
     {
-        $widgetUID= md5('test');
-        $phoneUID = md5('test1');
-        $phone = '911';
+        $uid = md5('test');
+        $phoneNumber = '911';
+
+        $phone = $this->createMock(PhoneInterface::class);
+        $phone
+            ->expects($this->once())
+            ->method('getPhone')
+            ->willReturn($phoneNumber);
 
         $this->client
             ->expects($this->once())
             ->method('requestPost')
             ->with(
-                '/widgets/' . $widgetUID . '/phones/' . $phoneUID,
-                ['phone' => $phone]
+                '/widgets/' . $uid . '/phones',
+                ['phone' => $phoneNumber]
             )
             ->willReturn($this->response);
 
@@ -163,135 +199,7 @@ class WidgetPhoneRepositoryTest extends TestCase
             ->method('getBody')
             ->willReturn('not json');
 
-        $this->widgetPhoneRepository->updatePhone($widgetUID, $phoneUID, $phone);
-    }
-
-    /**
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::addPhone
-     *
-     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function testAddPhone()
-    {
-        $widgetUID= md5('test');
-        $phone = '911';
-
-        $responseData = [
-            'foo' => 'bar',
-        ];
-
-        $this->client
-            ->expects($this->once())
-            ->method('requestPost')
-            ->with(
-                '/widgets/' . $widgetUID . '/phones',
-                ['phone' => $phone]
-            )
-            ->willReturn($this->response);
-
-        $this->response
-            ->expects($this->once())
-            ->method('getStatusCode')
-            ->willReturn(200);
-
-        $this->response
-            ->expects($this->once())
-            ->method('getBody')
-            ->willReturn(json_encode($responseData));
-
-        $this->assertEquals($responseData, $this->widgetPhoneRepository->addPhone($widgetUID, $phone));
-    }
-
-    /**
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::addPhone
-     *
-     * @expectedException \CallbackHunterAPIv2\Exception\DataValidateException
-     *
-     * @expectedExceptionMessage Переданы неверные настройки виджета
-     *
-     * @throws \CallbackHunterAPIv2\Exception\RepositoryException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function testAddPhoneThrowsWidgetPhoneValidateException()
-    {
-        $widgetUID= md5('test');
-        $phone = '911';
-        $path = '/widgets/' . $widgetUID . '/phones';
-
-        $errorResponseBody = [
-            'type'          => 'https://developers.callbackhunter.com/#errorWidgetValidation',
-            'title'         => 'Переданы неверные настройки виджета',
-            'status'        => 400,
-            'detail'        => 'Один или несколько параметров виджета '.
-                'были переданы в неверном формате. Обратите внимание,'.
-                ' что список доступных параметров с указанием ограничений '.
-                'по ним можно увидеть в документации по адресу '.
-                'https://developers.callbackhunter.com/#WidgetNotSaved',
-            'invalidParams' => [
-                [
-                    'name'   => 'site',
-                    'reason' => 'Поле "сайт" не может быть пустым.',
-                ],
-            ],
-        ];
-
-        $this->client
-            ->expects($this->once())
-            ->method('requestPost')
-            ->with($path, ['phone' => $phone])
-            ->willReturn($this->response);
-
-        $this->response
-            ->expects($this->once())
-            ->method('getBody')
-            ->willReturn(json_encode($errorResponseBody));
-
-        $this->response
-            ->expects($this->once())
-            ->method('getStatusCode')
-            ->willReturn(400);
-
-        $this->widgetPhoneRepository->addPhone($widgetUID, $phone);
-    }
-
-    /**
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::__construct
-     * @covers \CallbackHunterAPIv2\Repository\WidgetPhoneRepository::addPhone
-     *
-     * @expectedException \CallbackHunterAPIv2\Exception\RepositoryException
-     *
-     * @expectedExceptionMessage Content is not json
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function testAddPhoneThrowsRepositoryException()
-    {
-        $widgetUID= md5('test');
-        $phone = '911';
-
-        $this->client
-            ->expects($this->once())
-            ->method('requestPost')
-            ->with(
-                '/widgets/' . $widgetUID . '/phones',
-                ['phone' => $phone]
-            )
-            ->willReturn($this->response);
-
-        $this->response
-            ->expects($this->once())
-            ->method('getStatusCode')
-            ->willReturn(200);
-
-        $this->response
-            ->expects($this->once())
-            ->method('getBody')
-            ->willReturn('not json');
-
-        $this->widgetPhoneRepository->addPhone($widgetUID, $phone);
+        $this->widgetPhoneRepository->save($uid, $phone);
     }
 
     protected function setUp()
